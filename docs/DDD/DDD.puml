@@ -1,0 +1,127 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+hide field
+hide methods
+
+title Domain Driven Design
+
+
+rectangle Authz #808080{
+    class Profile<<Entity>><<Strategy>>
+
+    class NullProfile<<Entity>><<Null Object>>
+    class StudentProfile<<Entity>> extends Profile
+    class TeacherProfile<<Entity>> extends Profile
+
+    class User<<Root>><<Entity>>
+    class Email<<Value Object>><<Id>>
+    class Name<<Value Object>>
+    class FullName<<Value Object>>
+    class Password<<Value Object>>
+    class Role<<Value Object>>
+
+    class BirthDate<<Value Object>>
+    class TaxNumber<<Value Object>>
+    class Acronym<<Value Object>>
+
+    class MechanographicNumber<<Value Object>>
+
+
+    User"1" *-->"1"Email : email
+    User"1" *--> "1"Name : shortName
+    User"1" *-->"1"FullName : fullName
+    User"1" *-->"1"Password : password
+    User"1" *-->"1"Role : role
+    User"1" *-->"1"Profile : profile
+
+    StudentProfile"1" *--> "1"MechanographicNumber : mechanographicNumber
+    TeacherProfile"1" *--> "1"Acronym : acronym
+
+    Profile"1" *--> "1"TaxNumber : taxNumber
+    Profile"1" *--> "1"BirthDate : birthDate
+    NullProfile --down|> Profile
+
+}
+
+
+
+rectangle Examination #aabbaa{
+    class ExamPrototype<<Root>><<Entity>><<Prototype>>
+    class Title<<Value Object>>
+    class Header<<Entity>>
+    class Section<<Entity>>
+    class QuestionPool<<Entity>><<Object Pool>>
+    class QuestionBuildConfig<<Entity>>
+    class Question<<Entity>>
+    class Prompt<<Value Object>>
+    class QuestionType<<Value Object>>
+    class QuestionSupportObject<<Value Object>>
+    class Description<<Value Object>>
+    class FeedbackType<<Value Objects>>
+    class GradingType<<Value Object>>
+    class Quantity<<Value Object>>
+    class MaxDifficulty<<Value Object>>
+    class Difficulty<<Value Object>>
+
+    ExamPrototype"1"*-->"1..*"Section : sections
+    ExamPrototype"1"*-->"1"Title : title
+    ExamPrototype"1"*-->"1"Header
+    Section"1"*-left->"1"Title: title
+    Section"1" o-->"1"QuestionPool : questionPool
+    Section"1" o-->"1"QuestionBuildConfig : config
+    Section"1" *--> "1"Description : description
+    QuestionPool"1" o-->"1..*"Question : pool
+    Question"1"*--> "1"Prompt: prompt
+    Question"1"*-->"1"QuestionType: type
+    Question"1"*-->"0..1"QuestionSupportObject: supportingObject
+    Question"1"*-->"1"Difficulty: difficulty
+    Header"1"*-->"1"Description: description
+    Header"1"*-->"1"FeedbackType : feedback
+    Header"1"*-->"1"GradingType : grading
+    QuestionBuildConfig"1"*-->"1"Quantity: numberOfQuestions
+    QuestionBuildConfig"1"*-->"1"MaxDifficulty: maxDifficulty
+}
+
+rectangle Grading #bbaaaa{
+
+    class ConcreteTest<<Root>><<Entity>>
+    class Feedback<<Value Object>>
+    class ConcreteQuestion<<Entity>>
+    class Grading<<Value Object>>
+    class Awnser<<Value Object>>
+
+    ConcreteTest"1"*-->"1"ExamPrototype : reference
+    ConcreteTest"1"*-->"1..*"ConcreteQuestion : questions
+    ConcreteTest"1"*-->"1"Grading : finalGrade
+    ConcreteQuestion"1"*-->"1"Grading : grade
+    ConcreteQuestion"1"*-->"1"Awnser : awnser
+    ConcreteTest"1"*-->"0..1"Feedback : feedback
+    User"1"*-up->"*"ConcreteTest : examinations
+}
+
+rectangle Course #aaaabb{
+
+    class Course<<Root>><<Entity>>
+    class Title<<Value Object>>
+    class Code<<Value Object>><<Unique>>
+    class CourseState<<Value Object>>
+    class MaxCapacity<<Value Object>>
+
+    Course"1" *--> "1"Title : title
+    Course"1" *--> "1"Code: uniqueCode
+    Course"1"*-->"1"CourseState: state
+
+    Course"1" o-->"1"User : responsibleTeacher
+    Course"1" o-->"*"User : auxiliaryTeachers
+    Course"1" o-->"1.*"User: enrolledStudents
+    Course"1" o-->"1"MaxCapacity: maxEnrollments
+
+    User"1" o-->"*"Course: accessibleCourses
+
+}
+
+
+
+
+@enduml
