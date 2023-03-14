@@ -1,0 +1,37 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+Title Domain Model
+
+
+hide method
+hide field
+
+left to right direction
+
+
+class User
+class Teacher
+class Student
+class Manager
+
+class Course
+class Meeting
+class Exam
+class SharedBoard
+
+
+
+Teacher -- User : perform as >
+Student -- User : perform as >
+Manager -- User : perform as >
+Course -- Teacher : teaches >
+Teacher -left- Exam : defines >
+Student -down- Exam : takes >
+User -right- SharedBoard : manages >
+Student -- Course : enrolls >
+Manager -- Course : manages >
+User -- Meeting : attends and/or creates >
+
+
+@enduml
