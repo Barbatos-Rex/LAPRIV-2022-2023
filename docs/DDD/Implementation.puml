@@ -1,0 +1,38 @@
+@startuml
+
+skinparam linetype ortho
+
+
+package shared
+package exams
+package grading
+package personal_info
+package course
+package meeting
+package authz
+package board
+
+meeting ..> authz
+personal_info ...> meeting
+course...>authz
+authz...>course
+authz...>grading
+authz...>personal_info
+board...>authz
+grading...>exams
+course..>exams
+
+
+personal_info....>shared
+course....>shared
+meeting....>shared
+authz....>shared
+board....>shared
+grading....>shared
+exams....>shared
+
+
+
+
+
+@enduml
