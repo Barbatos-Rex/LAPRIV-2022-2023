@@ -1,0 +1,181 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+hide field
+hide methods
+
+title Domain Driven Design
+
+skinparam linetype ortho
+
+rectangle "Personal Info" #bbaabb{
+    class Profile<<Root>><<Entity>><<Strategy>>
+    class NullProfile<<Entity>><<Null Object>>
+    class StudentProfile<<Entity>> extends Profile
+    class TeacherProfile<<Entity>> extends Profile
+    class Acronym<<Value Object>>
+    class MechanographicNumber<<Value Object>>
+    class Calendar<<Entity>><<Wrapper Map>>
+    class Day<<Value Object>>
+    class BirthDate<<Value Object>>
+    class TaxNumber<<Value Object>>
+    StudentProfile"1" *--> "1"MechanographicNumber : mechanographicNumber
+    TeacherProfile"1" *--> "1"Acronym : acronym
+    Profile"1" *--> "1"TaxNumber : taxNumber
+    Profile"1" *--> "1"BirthDate : birthDate
+    NullProfile --down|> Profile
+    Calendar"1"-->"*"Day : mapOfMeetings
+    Profile"1"-->"1"Calendar : personalCalendar
+}
+
+
+rectangle Authz #808080{
+    class User<<Root>><<Entity>>
+    class Email<<Value Object>><<Id>>
+    class Name<<Entity>>
+    class ShortName<<Value Object>>
+    class FullName<<Value Object>>
+    class Password<<Value Object>>
+    class Role<<Value Object>>
+    User"1" *-left->"1"Email : email
+    User"1" *--> "1"Name : name
+    Name"1" *-->"1"FullName : fullName
+    Name"1" *-->"1"ShortName : shortName
+    User"1" *-->"1"Password : password
+    User"1" *-->"1"Role : role
+
+}
+
+User"1" *-->"1"Profile : profile
+
+
+rectangle Examination #aabbaa{
+    class ExamPrototype<<Root>><<Entity>><<Prototype>>
+    class Title<<Value Object>>
+    class Header<<Entity>>
+    class Section<<Entity>>
+    class QuestionPool<<Entity>><<Object Pool>>
+    class QuestionBuildConfig<<Entity>>
+    class Question<<Entity>>
+    class Prompt<<Value Object>>
+    class QuestionType<<Value Object>>
+    class QuestionSupportObject<<Value Object>>
+    class Description<<Value Object>>
+    class FeedbackType<<Value Objects>>
+    class GradingType<<Value Object>>
+    class Quantity<<Value Object>>
+    class MaxDifficulty<<Value Object>>
+    class Difficulty<<Value Object>>
+    ExamPrototype"1"*-->"1..*"Section : sections
+    ExamPrototype"1"*-->"1"Title : title
+    ExamPrototype"1"*-->"1"Header
+    Section"1"*-left->"1"Title: title
+    Section"1" o-->"1"QuestionPool : questionPool
+    Section"1" o-->"1"QuestionBuildConfig : config
+    Section"1" *--> "1"Description : description
+    QuestionPool"1" o-->"1..*"Question : pool
+    Question"1"*--> "1"Prompt: prompt
+    Question"1"*-->"1"QuestionType: type
+    Question"1"*-->"0..1"QuestionSupportObject: supportingObject
+    Question"1"*-left->"1"Difficulty: difficulty
+    Header"1"*-->"1"Description: description
+    Header"1"*-->"1"FeedbackType : feedback
+    Header"1"*-->"1"GradingType : grading
+    QuestionBuildConfig"1"*-->"1"Quantity: numberOfQuestions
+    QuestionBuildConfig"1"*-->"1"MaxDifficulty: maxDifficulty
+}
+
+rectangle Grading #bbaaaa{
+    class ConcreteTest<<Root>><<Entity>>
+    class Feedback<<Value Object>>
+    class ConcreteQuestion<<Entity>>
+    class Grading<<Value Object>>
+    class Awnser<<Value Object>>
+    ConcreteTest"1"*-left->"1"ExamPrototype : reference
+    ConcreteTest"1"*-->"1..*"ConcreteQuestion : questions
+    ConcreteTest"1"*-->"1"Grading : finalGrade
+    ConcreteQuestion"1"*-->"1"Grading : grade
+    ConcreteQuestion"1"*-->"1"Awnser : awnser
+    ConcreteTest"1"*-->"0..1"Feedback : feedback
+    User"1"*-up->"*"ConcreteTest : examinations
+}
+
+rectangle Course #aaaabb{
+    class Course<<Root>><<Entity>>
+    class Title<<Value Object>>
+    class Code<<Value Object>><<Unique>>
+    class CourseState<<Value Object>>
+    class MaxCapacity<<Value Object>>
+    Course"1" *--> "1"Title : title
+    Course"1" *--> "1"Code: uniqueCode
+    Course"1"*-->"1"CourseState: state
+    Course"1" o-->"1"User : responsibleTeacher
+    Course"1" o-->"*"User : auxiliaryTeachers
+    Course"1" o-->"1.*"User: enrolledStudents
+    Course"1" o-->"1"MaxCapacity: maxEnrollments
+    User"1" o-->"*"Course: accessibleCourses
+}
+
+rectangle Class #bbbbaa{
+    class Meeting<<Root>><<Entity>>
+    class StartSchedule<<Value Object>>
+    class Duration<<Value Object>>
+    class Responsible<<Entity>>
+    class Participant<<Entity>>
+    class Permission<<Value Object>>
+    Participant"1"-->"1"User : user
+    Participant"1"-->"1"Permission : userPermissions
+    Meeting"1"-->"1"Permission: defaultPermissions
+    Meeting"1"-->"1"StartSchedule : startTime
+    Meeting"1"-->"1"Responsible : responsible
+    Meeting"1"-->"1"Duration : duration
+    Meeting"1"-->"1..*"Participant : participants
+    Calendar"1"-->"*"Meeting : mapOfMeetings
+}
+
+
+rectangle Board #aabbbb{
+    class SharedBoard<<Root>><<Entity>>
+    class Title<<Value Object>>
+    class Collumn<<Entity>>
+    class Row<<Entity>>
+    class BoardCreationConfig<<Entity>>
+    class BoardLog<<Entity>>
+    class BoardStateMemento<<Entity>><<Memento>>
+    class Number<<Value Object>>
+    class AccessLevel<<Value Object>>
+    class Participant<<Entity>>
+    class Post<<Entity>>
+    class PostContent<<Value Object>>
+    class CreationTimeStamp<<Value Object>>
+    class BoardState<<Value Object>>
+    class Alteration<<Value Object>>
+    SharedBoard"1"-left->"1"Participant : owner
+    SharedBoard"1"-->"1"Title : boardName
+    SharedBoard"1"-->"1"Collumn : colList
+    SharedBoard"1"-->"1"Row: rowList
+    SharedBoard"1".left.>"1"BoardCreationConfig: creationConfig
+    SharedBoard"1"--right->"1"BoardLog : boardLog
+    SharedBoard"1"-up->"1"BoardStateMemento : memento
+    BoardStateMemento"1"-->"0..1"BoardStateMemento: previousState
+    SharedBoard"1"-up->"1"BoardState : state
+    Row"1"-up->"1"Title : rowName
+    Collumn"1"-up->"1"Title: colName
+    Post"1"-->"1"Row: row
+    Post"1"--->"1"CreationTimeStamp : creation
+    SharedBoard"1"-->"*"Participant : participants
+    SharedBoard"1"-->"*"Post : posts
+    Post"1"-->"1"PostContent : content
+    Participant"1"-up->"1"User : user
+    Participant"1"-->"1"AccessLevel : accessLevel
+    BoardLog"1"-->"1"Post : alteredPost
+    BoardLog"1"-->"1"Alteration : alteration
+    BoardLog"1"-->"1"Participant : actor
+    BoardCreationConfig"1"-->"1"Number : maxCols
+    BoardCreationConfig"1"-->"1"Number : maxRows
+    Collumn"1"-->"1"Number : colNumber
+    Row"1"-->"1"Number : rowNumber
+}
+
+
+@enduml
