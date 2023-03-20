@@ -32,15 +32,13 @@ rectangle "Personal Info" #bbaabb{
 rectangle Authz #808080{
     class User<<Root>><<Entity>>
     class Email<<Value Object>><<Id>>
-    class Name<<Entity>>
-    class ShortName<<Value Object>>
+    class Name<<Value Object>>
     class FullName<<Value Object>>
     class Password<<Value Object>>
     class Role<<Value Object>>
-    User"1" *-left->"1"Email : email
-    User"1" *--> "1"Name : name
-    Name"1" *-->"1"FullName : fullName
-    Name"1" *-->"1"ShortName : shortName
+    User"1" *-->"1"Email : email
+    User"1" *--> "1"Name : shortName
+    User"1" *-->"1"FullName : fullName
     User"1" *-->"1"Password : password
     User"1" *-->"1"Role : role
 
@@ -77,7 +75,7 @@ rectangle Examination #aabbaa{
     Question"1"*--> "1"Prompt: prompt
     Question"1"*-->"1"QuestionType: type
     Question"1"*-->"0..1"QuestionSupportObject: supportingObject
-    Question"1"*-left->"1"Difficulty: difficulty
+    Question"1"*-->"1"Difficulty: difficulty
     Header"1"*-->"1"Description: description
     Header"1"*-->"1"FeedbackType : feedback
     Header"1"*-->"1"GradingType : grading
@@ -91,7 +89,7 @@ rectangle Grading #bbaaaa{
     class ConcreteQuestion<<Entity>>
     class Grading<<Value Object>>
     class Awnser<<Value Object>>
-    ConcreteTest"1"*-left->"1"ExamPrototype : reference
+    ConcreteTest"1"*-->"1"ExamPrototype : reference
     ConcreteTest"1"*-->"1..*"ConcreteQuestion : questions
     ConcreteTest"1"*-->"1"Grading : finalGrade
     ConcreteQuestion"1"*-->"1"Grading : grade
@@ -114,6 +112,8 @@ rectangle Course #aaaabb{
     Course"1" o-->"1.*"User: enrolledStudents
     Course"1" o-->"1"MaxCapacity: maxEnrollments
     User"1" o-->"*"Course: accessibleCourses
+    ExamPrototype"1" o-->"1"Course : course
+    Course"1" o-->"*"ExamPrototype : requieredExams
 }
 
 rectangle Class #bbbbaa{
@@ -123,14 +123,14 @@ rectangle Class #bbbbaa{
     class Responsible<<Entity>>
     class Participant<<Entity>>
     class Permission<<Value Object>>
-    Participant"1"-->"1"User : user
-    Participant"1"-->"1"Permission : userPermissions
-    Meeting"1"-->"1"Permission: defaultPermissions
-    Meeting"1"-->"1"StartSchedule : startTime
-    Meeting"1"-->"1"Responsible : responsible
-    Meeting"1"-->"1"Duration : duration
-    Meeting"1"-->"1..*"Participant : participants
-    Calendar"1"-->"*"Meeting : mapOfMeetings
+    Participant"1" o-->"1"User : user
+    Participant"1" *-->"1"Permission : userPermissions
+    Meeting"1"*-->"1"Permission: defaultPermissions
+    Meeting"1"*-->"1"StartSchedule : startTime
+    Meeting"1"*-->"1"Responsible : responsible
+    Meeting"1"*-->"1"Duration : duration
+    Meeting"1"*-->"1..*"Participant : participants
+    Calendar"1"*-->"*"Meeting : mapOfMeetings
 }
 
 
@@ -155,14 +155,14 @@ rectangle Board #aabbbb{
     SharedBoard"1"-->"1"Collumn : colList
     SharedBoard"1"-->"1"Row: rowList
     SharedBoard"1".left.>"1"BoardCreationConfig: creationConfig
-    SharedBoard"1"--right->"1"BoardLog : boardLog
+    SharedBoard"1"-right->"1"BoardLog : boardLog
     SharedBoard"1"-up->"1"BoardStateMemento : memento
     BoardStateMemento"1"-->"0..1"BoardStateMemento: previousState
     SharedBoard"1"-up->"1"BoardState : state
     Row"1"-up->"1"Title : rowName
     Collumn"1"-up->"1"Title: colName
     Post"1"-->"1"Row: row
-    Post"1"--->"1"CreationTimeStamp : creation
+    Post"1"-->"1"CreationTimeStamp : creation
     SharedBoard"1"-->"*"Participant : participants
     SharedBoard"1"-->"*"Post : posts
     Post"1"-->"1"PostContent : content

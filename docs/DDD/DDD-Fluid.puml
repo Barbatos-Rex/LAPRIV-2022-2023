@@ -110,6 +110,8 @@ rectangle Course #aaaabb{
     Course"1" o-->"1.*"User: enrolledStudents
     Course"1" o-->"1"MaxCapacity: maxEnrollments
     User"1" o-->"*"Course: accessibleCourses
+    ExamPrototype"1" o-->"1"Course : course
+    Course"1" o-->"*"ExamPrototype : requieredExams
 }
 
 rectangle Class #bbbbaa{
@@ -119,14 +121,14 @@ rectangle Class #bbbbaa{
     class Responsible<<Entity>>
     class Participant<<Entity>>
     class Permission<<Value Object>>
-    Participant"1"-->"1"User : user
-    Participant"1"-->"1"Permission : userPermissions
-    Meeting"1"-->"1"Permission: defaultPermissions
-    Meeting"1"-->"1"StartSchedule : startTime
-    Meeting"1"-->"1"Responsible : responsible
-    Meeting"1"-->"1"Duration : duration
-    Meeting"1"-->"1..*"Participant : participants
-    Calendar"1"-->"*"Meeting : mapOfMeetings
+    Participant"1" o-->"1"User : user
+    Participant"1" *-->"1"Permission : userPermissions
+    Meeting"1"*-->"1"Permission: defaultPermissions
+    Meeting"1"*-->"1"StartSchedule : startTime
+    Meeting"1"*-->"1"Responsible : responsible
+    Meeting"1"*-->"1"Duration : duration
+    Meeting"1"*-->"1..*"Participant : participants
+    Calendar"1"*-->"*"Meeting : mapOfMeetings
 }
 
 
