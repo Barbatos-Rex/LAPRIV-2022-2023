@@ -1,0 +1,50 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor Actor as actor
+participant ":UI" as ui
+participant ":Controller" as ctlr
+participant ":Service" as serv
+entity ":Entity" as ent
+participant ":Repository" as repo
+database Database as db
+
+
+activate actor
+actor -> ui : Requests functionality
+activate ui
+ui --> actor : Requests the necessary data
+deactivate
+actor->ui : Provides the necessary data
+activate ui
+ui -> ctlr : Formats the data and provides  it
+activate ctlr
+ctlr -> serv : Requests data manipulation
+activate serv
+serv -> repo : Retrives entity
+activate repo
+repo->db : Retrives entity data
+activate db
+deactivate
+deactivate
+serv -> ent : Manipulates data
+activate ent
+deactivate
+serv -> repo : Persistes data
+activate repo
+deactivate
+deactivate
+ctlr --> ui : Sends mutated data to UI
+deactivate ctrl
+ui--> actor : Shows result to actor
+deactivate
+deactivate actor
+
+
+
+
+
+
+@enduml

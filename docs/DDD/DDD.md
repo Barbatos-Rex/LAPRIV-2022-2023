@@ -1,6 +1,6 @@
 # 📝 Domain Driven Design - DDD
 
-## Domain View
+## 💾 Domain View
 
 ### Orthogonal View
 
@@ -25,7 +25,7 @@ It is not that changes may not occur, is that changes would be minimal.
 **Note 4**: Although this diagram is segregated by aggregates, the implemantation of each aggregate may
 bennifit from shared domain (i.e Having a shared package where shared *Value Objects*. e.g Title)
 
-## Implementation View
+## 📁 Implementation View
 
 ### General View
 

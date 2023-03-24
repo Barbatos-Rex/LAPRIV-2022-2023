@@ -1,6 +1,5 @@
-package barbatos_rex1.laprivcore.course.domain;
+package barbatos_rex1.laprivcore.user;
 
-import barbatos_rex1.laprivcore.shared.domain.ValueObject;
 import barbatos_rex1.laprivcore.shared.domain.exception.BuisnessRuleViolationException;
 import barbatos_rex1.laprivcore.shared.domain.exception.ValidationException;
 import barbatos_rex1.laprivcore.shared.utils.Validations;
@@ -12,18 +11,17 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @Getter
-public class Capacity implements ValueObject {
+public class FullName {
 
-    private int capacity;
+    private String name;
 
-    public static Capacity from(int value) throws BuisnessRuleViolationException {
+    public static FullName from(String name) throws BuisnessRuleViolationException {
         try {
-            Validations.isPositive(value);
+            Validations.areNonBlack(name);
+            Validations.matches(name,"^^(\\p{L}{2,} |\\p{L}{1,3}\\. )+\\p{L}{2,}$");
         } catch (ValidationException e) {
-            throw new BuisnessRuleViolationException("Capacity's rule violated!",e);
+            throw new BuisnessRuleViolationException("Name's rules violated!",e);
         }
-        return new Capacity(value);
+        return new FullName(name);
     }
-
-
 }

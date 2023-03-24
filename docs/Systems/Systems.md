@@ -26,7 +26,7 @@ events sent by the SBA of each client.
 An extreme attention to multithreaded programming must be paid
 in order to make this model working with less conflict of domain alteration, and client connection issues.
 A possible solution to such problems are, in the first case, the synchronization of the domain, preventing
-enteties from being manipulated by two users at the same time, having a Queue of actions;
+entities from being manipulated by two users at the same time, having a Queue of actions;
 in the second case, a confirmation based protocol is ideal for this situations,
 the client can send the information and wait from the server's response. If the time runs out, the packet will
 be resent and waits for confirmation again, until a threshold is met, making attention to the user
@@ -34,4 +34,19 @@ about their connection issues, on the client side, however, on the server side, 
 the client's request the server will sent the confirmation and if the user sends multiple packets with the same information,
 the server will confirm the action but not take ation, to avoid redundancy; this packet verification can be
 achieved with packet IDs.
+
+## 🗃️ Implementation
+
+![Deployment](Deployment.svg)
+
+
+
+## ➡️ Behaviour
+
+### General behaviour of UC
+
+![General Behaviour](General-Behaviour-0.svg)
+
+### 
+
 

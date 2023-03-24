@@ -1,6 +1,7 @@
 package barbatos_rex1.laprivcore.course.domain;
 
 import barbatos_rex1.laprivcore.shared.domain.value_objects.Title;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,6 +14,7 @@ public class CourseMapper {
                 domain.getTitle().getTitle(), domain.getState().name());
     }
 
+    @SneakyThrows
     public Course toDomain(CourseDTO dto) {
         Course.CourseBuilder builder = new Course.CourseBuilder();
         builder.uniqueCode(Code.from(dto.code)).maxCapacity(Capacity.from(dto.maxCapacity)).

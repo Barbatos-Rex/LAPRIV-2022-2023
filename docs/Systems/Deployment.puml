@@ -1,0 +1,17 @@
+@startuml
+
+
+node uvm01{
+    artifact "Shared Board Server" as sbs
+    component "Shared Board Server"" as csbs
+    sbs ..>csbs : <<Manifests>>
+}
+
+
+node Client{
+    component Browser
+}
+
+Client  -- uvm01 : Costume protocol based on TCP
+
+@enduml
