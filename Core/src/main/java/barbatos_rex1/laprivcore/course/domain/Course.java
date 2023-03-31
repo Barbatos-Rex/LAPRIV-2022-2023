@@ -1,8 +1,11 @@
 package barbatos_rex1.laprivcore.course.domain;
 
 import barbatos_rex1.laprivcore.shared.domain.value_objects.Title;
+import barbatos_rex1.laprivcore.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 
 @Entity
@@ -21,6 +24,15 @@ public class Course {
     @AttributeOverride(name = "capacity", column = @Column(name = "minCapacity"))
     private Capacity minCapacity;
     private Title title;
+
+    @ManyToOne
+    private User responsibleTeacher;
+
+    @ManyToMany
+    private List<User> auxilaryTeachers;
+
+    @ManyToMany
+    private List<User> enrolledStudents;
 
     @Enumerated(value = EnumType.STRING)
     private CourseState state;

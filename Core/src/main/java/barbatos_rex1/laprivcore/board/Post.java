@@ -1,8 +1,9 @@
-package barbatos_rex1.laprivcore.user;
+package barbatos_rex1.laprivcore.board;
 
 import barbatos_rex1.laprivcore.shared.domain.StringId;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 
 @Entity
@@ -11,23 +12,19 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @ToString
-public class User {
-
-
+public class Post {
     @EmbeddedId
     private StringId id;
 
-    private Email email;
+    @ManyToOne
+    private BoardRow boardRow;
 
-    private Name shortName;
+    @ManyToOne
+    private BoardColumn boardBoardColumn;
 
-    private FullName fullName;
+    private PostContent postContent;
 
-    private Password password;
-
-    private Role role;
-
-
+    private TimeStamp stamp;
 
 
 }

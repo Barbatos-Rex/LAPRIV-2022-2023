@@ -1,4 +1,4 @@
-package barbatos_rex1.laprivcore.user;
+package barbatos_rex1.laprivcore.user.domain;
 
 import barbatos_rex1.laprivcore.shared.domain.exception.BuisnessRuleViolationException;
 import barbatos_rex1.laprivcore.shared.domain.exception.ValidationException;

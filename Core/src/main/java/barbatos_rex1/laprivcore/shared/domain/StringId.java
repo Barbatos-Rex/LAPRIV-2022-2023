@@ -3,10 +3,12 @@ package barbatos_rex1.laprivcore.shared.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class StringId implements EntityId {
 
     @Column(length = 54)
@@ -33,6 +35,19 @@ public class StringId implements EntityId {
         }
         return sb.toString();
     }
+
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        StringId stringId = (StringId) o;
+//        return Objects.equals(getId(), stringId.getId());
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(getId());
+//    }
 
     private static boolean isValidId(String id) {
         return id.matches("^([\\da-f]{10}-){4}[\\da-f]{10}$");
