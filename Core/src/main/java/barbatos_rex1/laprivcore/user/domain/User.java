@@ -1,11 +1,12 @@
 package barbatos_rex1.laprivcore.user.domain;
 
 import barbatos_rex1.laprivcore.course.domain.Course;
-import barbatos_rex1.laprivcore.personal_info.Profile;
+import barbatos_rex1.laprivcore.personal_info.domain.Profile;
 import barbatos_rex1.laprivcore.shared.domain.StringId;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -35,11 +36,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Profile profile;
 
-    @ManyToMany
-    private List<Course> accessibleCourses;
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Course> accessibleCourses=new ArrayList<>();
 
     boolean enableUser() {
         if (status == Status.DISABLE) {
@@ -56,5 +57,4 @@ public class User {
         }
         return false;
     }
-
 }

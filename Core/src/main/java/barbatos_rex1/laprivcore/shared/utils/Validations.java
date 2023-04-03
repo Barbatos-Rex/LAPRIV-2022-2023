@@ -26,4 +26,16 @@ public class Validations {
             throw new ValidationException(String.format("String does not match regex \"%s\"!", s));
         }
     }
+
+    public void isTrue(boolean condition) {
+        if(!condition){
+            throw new ValidationException("Condition expected to be true, recieved false!");
+        }
+    }
+
+    public void isFalse(boolean condition){
+        if (condition){
+            throw new ValidationException("Condition expected to be false, recieved true!");
+        }
+    }
 }

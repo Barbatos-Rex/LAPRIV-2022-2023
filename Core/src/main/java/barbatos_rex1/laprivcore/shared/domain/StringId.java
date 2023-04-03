@@ -1,5 +1,6 @@
 package barbatos_rex1.laprivcore.shared.domain;
 
+import barbatos_rex1.laprivcore.shared.utils.Validations;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
@@ -36,19 +37,6 @@ public class StringId implements EntityId {
         return sb.toString();
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        StringId stringId = (StringId) o;
-//        return Objects.equals(getId(), stringId.getId());
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(getId());
-//    }
-
     private static boolean isValidId(String id) {
         return id.matches("^([\\da-f]{10}-){4}[\\da-f]{10}$");
     }
@@ -58,8 +46,15 @@ public class StringId implements EntityId {
     }
 
     public static StringId from(String id) {
-        if (!isValidId(id)) {
+        /*
+        If id is null all cases will demand a newId.
+        If for some reason a case where the id is null, and it is requiered that it is not null,
+        The domain rules are assured by the controllers
+        */
+        if (id == null) {
+            return newId();
         }
+        Validations.isTrue(isValidId(id));
         return new StringId(id);
     }
 
