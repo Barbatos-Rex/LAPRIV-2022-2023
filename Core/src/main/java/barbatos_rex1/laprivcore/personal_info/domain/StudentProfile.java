@@ -1,20 +1,26 @@
 package barbatos_rex1.laprivcore.personal_info.domain;
 
+import barbatos_rex1.laprivcore.shared.domain.StringId;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+//@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
 @ToString
 public class StudentProfile extends Profile {
 
     @AttributeOverride(name = "mechanographicNumber", column = @Column(unique = true))
     private MechanographicNumber mechanographicNumber;
 
-
+    StudentProfile(StringId userId, BirthDate birthDate, TaxNumber taxNumber, MechanographicNumber mechanographicNumber, Calendar calendar) {
+        super(userId, birthDate, taxNumber, calendar);
+        this.mechanographicNumber = mechanographicNumber;
+    }
 }

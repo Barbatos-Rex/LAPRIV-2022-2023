@@ -1,12 +1,12 @@
 package barbatos_rex1.laprivcore.event;
 
 
-import barbatos_rex1.laprivcore.event.handlers.NullHandler;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 public class EventListener {
+    @SuppressWarnings("java:S3014")
     ThreadGroup eventThreadGroup = new ThreadGroup("LAPRIV Event Listener");
     private Handler chain=new NullHandler();
 

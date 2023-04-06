@@ -25,6 +25,7 @@ public class Password {
         this.encryptedPassword = Encryption.encode(sb.toString());
     }
 
+    @SuppressWarnings("java:S1172")
     private Password(String salt, String encryptedPassword, String controll) {
         this.salt = salt;
         this.encryptedPassword = encryptedPassword;

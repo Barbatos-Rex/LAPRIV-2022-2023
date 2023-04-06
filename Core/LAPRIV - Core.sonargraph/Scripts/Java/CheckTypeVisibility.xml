@@ -1,0 +1,67 @@
+<?xml version="1.0" ?>
+<script version="12.3.0.766">
+    <description>Identifies 'public' types that could be made package private.</description>
+    <source><![CDATA[IJavaVisitor v = javaAccess.createVisitor()
+
+// Add two nodes to result tab "Tree"
+NodeAccess publicTypeUsedFromOwnPackageOnlyNode = result.addNode("Public type used from own package only");
+NodeAccess publicTypeWithoutAnyIncomingDependenciesNode = result.addNode("Public type without any incoming dependencies");
+
+v.onType
+{
+    JavaTypeAccess type ->
+    if (type.isExternal() || type.isExcluded() || type.ignoreIssues() || type.isInterface() || type.isAnonymous())
+    {
+        return;
+    }
+    
+    if (type.isPublic())
+    {
+        ILogicalNamespaceAccess systemNamespace = type.systemNamespace
+        List<IAggregatedDependencyAccess> incomingDependencies = type.getIncomingDependenciesRecursively(Aggregator.TYPE, false, true, JavaDependencyKind.values())
+        
+        boolean usedFromOwnPackageOnly = true;
+        if (incomingDependencies.isEmpty())
+        {
+            // No incoming dependencies at all
+            result.addNode(publicTypeWithoutAnyIncomingDependenciesNode, type);
+        }
+        else
+        {
+            // Check all incoming dependencies
+            for(IAggregatedDependencyAccess next : incomingDependencies)
+            {
+                ILogicalNamespaceAccess nextNamespace = next.from.systemNamespace
+                if (nextNamespace != systemNamespace)
+                {
+                    usedFromOwnPackageOnly = false
+                    break
+                }
+            }
+            if(usedFromOwnPackageOnly)
+            {
+                // Used from own package only
+                result.addNode(publicTypeUsedFromOwnPackageOnlyNode, type);
+            }
+        }
+    }
+    
+    v.visitChildren(type);
+}
+
+// Traverse the model
+javaAccess.visitModel(v)
+
+]]></source>
+    <parameterDefinitions>
+        <parameterDefinition name="timeout" type="Integer"
+                             description="When scripts are scheduled for automated execution they time out after the specified number of seconds. The timeout must be greater than '0'."
+                             defaultValue="10" candidates=""></parameterDefinition>
+        <parameterDefinition name="output" type="String"
+                             description="When a path is specified the output of the script is written into this file. The use of an absolute path (i.e. starting with '/' or 'C:/') is not recommended. It might not be cross-platform compatible."
+                             defaultValue="" candidates=""></parameterDefinition>
+    </parameterDefinitions>
+    <languages>
+        <language>Java</language>
+    </languages>
+</script>

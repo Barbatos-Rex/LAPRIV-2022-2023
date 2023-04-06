@@ -11,9 +11,9 @@ import lombok.*;
 @Getter
 public class Duration implements ValueObject {
     //In Minutes
-    private long duration;
+    private int duration;
 
-    public static Duration from(long duration) {
+    public static Duration from(int duration) {
         return new Duration(duration);
     }
 

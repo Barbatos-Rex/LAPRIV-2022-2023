@@ -7,6 +7,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Random;
+
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -14,6 +16,8 @@ public class StringId implements EntityId {
 
     @Column(length = 54)
     private String id;
+
+    private static final Random RANDOM = new Random();
 
 
     private StringId(String id) {
@@ -32,7 +36,7 @@ public class StringId implements EntityId {
         String chars = "0123456789abcdef";
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 10; i++) {
-            sb.append(chars.charAt(((int) (Math.random() * chars.length()))));
+            sb.append(chars.charAt(RANDOM.nextInt(0, chars.length())));
         }
         return sb.toString();
     }

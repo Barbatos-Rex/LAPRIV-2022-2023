@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<script version="12.3.0.766">
+    <description></description>
+    <source><![CDATA[/** Script that lists all Java class files for which no source could be found */
+
+IJavaVisitor v = javaAccess.createVisitor()
+
+v.onJavaClassFile
+{
+    IJavaClassFileAccess classFile ->
+    IJavaSourceFileAccess source = classFile.getParent(IJavaSourceFileAccess.class);
+    if (source.getPath() == null)
+    {
+        println "Missing source for " + classFile.getPath();
+        result.addElement(classFile);
+        result.addInfoIssue(classFile, "Missing source file for class", "No source file found for class file.");
+    }
+}
+
+//Traverse the model
+coreAccess.visitModel(v)]]></source>
+    <parameterDefinitions>
+        <parameterDefinition name="timeout" type="Integer"
+                             description="When scripts are scheduled for automated execution they time out after the specified number of seconds. The timeout must be greater than '0'."
+                             defaultValue="10" candidates=""></parameterDefinition>
+        <parameterDefinition name="output" type="String"
+                             description="When a path is specified the output of the script is written into this file. The use of an absolute path (i.e. starting with '/' or 'C:/') is not recommended. It might not be cross-platform compatible."
+                             defaultValue="" candidates=""></parameterDefinition>
+    </parameterDefinitions>
+    <languages>
+        <language>Java</language>
+    </languages>
+</script>

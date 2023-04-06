@@ -10,5 +10,6 @@ public class UserDTO {
     public String email;
     public String shortName;
     public String fullName;
-    public String role;
+    public Role role;
+    public Status status;
 }

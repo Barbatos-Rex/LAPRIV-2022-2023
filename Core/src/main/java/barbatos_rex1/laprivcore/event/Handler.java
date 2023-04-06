@@ -1,17 +1,19 @@
 package barbatos_rex1.laprivcore.event;
 
-import barbatos_rex1.laprivcore.event.handlers.NullHandler;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public abstract class Handler{
+@AllArgsConstructor
+public abstract class Handler {
 
-    private Handler next=new NullHandler();
+    private Handler next = null;
 
-    void append(Handler next){
-        if(this.next instanceof NullHandler){
-            this.next=next;
+
+    void append(Handler next) {
+        if (this.next == null) {
+            this.next = next;
+            return;
         }
         this.next.append(next);
     }
@@ -20,9 +22,9 @@ public abstract class Handler{
 
     protected abstract void handle(Event event);
 
-    public void cascade(Event event){
-        if(accepts(event)){
-           handle(event);
+    public void cascade(Event event) {
+        if (accepts(event)) {
+            handle(event);
         }
         cascade(event);
     }

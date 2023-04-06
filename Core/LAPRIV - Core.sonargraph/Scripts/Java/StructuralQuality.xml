@@ -1,0 +1,52 @@
+<?xml version="1.0" ?>
+<script version="12.3.0.766">
+    <description>Computes 'structural quality' with a value between 0% (big ball of mud) and 100% (no cyclic
+        dependencies)
+    </description>
+    <source><![CDATA[def v = javaAccess.createVisitor()
+def metric = javaAccess.getOrCreateMetricId("StructuralQuality", "Structural Quality", "Structural quality between 0% (big ball of mud) and 100% (no cyclic dependencies)", true, 90, 100, 100, 0)
+
+// These values can be calibrated if your projects 'Structural Debt Index' values are higher then the values below
+double MAX_SDI_COMPONENTS = 10000
+double MAX_SDI_PACKAGES = 20000
+
+double totalSize = javaAccess.getSourceElementCountMetric()
+
+v.onModule()
+{
+    JavaModuleAccess module ->
+    
+    double sizeFraction = module.getSourceElementCountMetric() / totalSize;
+    double maxSdiComponentsProject = MAX_SDI_COMPONENTS * sizeFraction
+    double maxSdiPackagesProject = MAX_SDI_PACKAGES * sizeFraction
+    def packagePart = 70.0 * (Math.max(0.0, maxSdiPackagesProject - module.getPackageStructuralDebtIndexMetric()) / maxSdiPackagesProject)
+    def componentPart = 30.0 * (Math.max(0.0, maxSdiComponentsProject - module.getComponentStructuralDebtIndexMetric()) / maxSdiComponentsProject)
+    
+    result.addMetricValue(metric, module, componentPart + packagePart)
+}
+
+javaAccess.visitParserModel(v)
+
+double modules = javaAccess.getNumberOfModulesMetric()
+double cyclicModules = javaAccess.getNumberOfCyclicModulesMetric();
+
+def packagePart = 70.0 * (Math.max(0.0, MAX_SDI_PACKAGES - javaAccess.getPackageStructuralDebtIndexMetric()) / MAX_SDI_PACKAGES)
+def componentPart = 30.0 * (Math.max(0.0, MAX_SDI_COMPONENTS - javaAccess.getComponentStructuralDebtIndexMetric()) / MAX_SDI_COMPONENTS)
+
+// The module part is deducted as a stiff penalty if there are module cycles.
+def modulePart = -50.0 * cyclicModules / modules
+
+result.addMetricValue(metric, javaAccess, Math.max(0.0, componentPart + packagePart + modulePart))
+]]></source>
+    <parameterDefinitions>
+        <parameterDefinition name="timeout" type="Integer"
+                             description="When scripts are scheduled for automated execution they time out after the specified number of seconds. The timeout must be greater than '0'."
+                             defaultValue="10" candidates=""></parameterDefinition>
+        <parameterDefinition name="output" type="String"
+                             description="When a path is specified the output of the script is written into this file. The use of an absolute path (i.e. starting with '/' or 'C:/') is not recommended. It might not be cross-platform compatible."
+                             defaultValue="" candidates=""></parameterDefinition>
+    </parameterDefinitions>
+    <languages>
+        <language>Java</language>
+    </languages>
+</script>

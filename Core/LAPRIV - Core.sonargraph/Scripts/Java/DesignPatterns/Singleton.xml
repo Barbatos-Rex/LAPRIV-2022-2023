@@ -1,0 +1,156 @@
+<?xml version="1.0" ?>
+<script version="12.3.0.766">
+    <description>Identifies singleton classes.</description>
+    <source><![CDATA[//Script identifies the following as singletons:
+//1. Enum with a single field
+//2. Types with a single public static instance field of the same type
+//3. Types with a static instance field of the same type and a static method that references this field and has the same return type
+
+//It creates warnings for 
+//1. Singleton instance fields that are not final
+//2. Singletons that have non-private constructor
+
+NodeAccess singletons = null;
+IJavaVisitor v = javaAccess.createVisitor()
+
+v.onType
+{
+    TypeAccess type ->
+    if(type.external || type.excluded || type.interface || type.abstract)
+    {
+        return
+    }
+    
+    if (type.enum && type.fields.size() == 1)
+    {
+        singletons = addAsSingleton(type, singletons, true)
+        return
+    }
+    
+    def hasOnlyPrivateConstructors = hasOnlyPrivateConstructors(type)
+    def staticMembers = getStaticMemberVariablesOfOwnType(type)
+    if (staticMembers.empty)
+    {
+        return
+    }
+    
+    if (staticMembers.size() == 1)
+    {
+        def onlyMember = staticMembers[0]
+        if (onlyMember.static && onlyMember.public)
+        {
+            singletons = addAsSingleton(type, singletons, hasOnlyPrivateConstructors)
+            addWarningIfInstanceFieldNotFinal(onlyMember)
+            
+            //Continue visiting...
+            v.visitChildren(type)
+            return
+        }
+    }
+    
+    //Check if used in static methods and their return type matches.
+    //This is not exact but a good enough heuristic.
+    def areStaticMembersReferencedInMethods = false
+    staticMembers.each
+    {
+        if (memberIsUsedInStaticMethod(type, it))
+        {
+            areStaticMembersReferencedInMethods = true
+        }
+    }
+    if (areStaticMembersReferencedInMethods)
+    {
+        singletons = addAsSingleton(type, singletons, hasOnlyPrivateConstructors);
+    }
+    
+    //Continue visiting...
+    v.visitChildren(type)
+}
+coreAccess.visitModel(v)
+
+//helper method to add info to result
+def addAsSingleton(TypeAccess type, Object singletons, boolean hasOnlyPrivateConstructors)
+{
+    //Add the info to the result
+    result.addElement(type)
+    if (singletons == null)
+    {
+        singletons = result.addNode("Singletons");
+    }
+    result.addNode(singletons, type)
+    if (!hasOnlyPrivateConstructors)
+    {
+        result.addWarningIssue(type, "Degenerate Singleton", "Class has been identified as singleton, but constructor is not private!");
+    }
+    return singletons
+}
+
+def getStaticMemberVariablesOfOwnType(TypeAccess type)
+{
+    def staticMembers = type.fields.findAll
+    {
+        JavaFieldAccess field ->
+        if (!field.static)
+        {
+            return false;
+        }
+        
+        def outgoing = field.getOutgoingDependencies(Aggregator.TYPE, false)
+        if (outgoing.size > 1)
+        {
+            //more references indicate usage in Collections
+            return false;
+        }
+        
+        List ownTypeDependency = outgoing.findAll
+        {
+            AggregatedDependencyAccess dependency ->
+            return dependency.to == type
+        }
+        return ownTypeDependency.size() == 1
+    }
+    return staticMembers
+}
+
+//We cannot check on return usage, but simply check for read-access in static methods as a heuristic.
+def memberIsUsedInStaticMethod(TypeAccess type, FieldAccess field)
+{
+    def referencingMethods = field.getReferencingElements(Aggregator.METHOD,
+        true,
+        JavaDependencyKind.READ_FIELD);
+    def staticMethods = referencingMethods.findAll
+    {
+        return it.static && it.parent == type
+    }
+    return !staticMethods.empty
+}
+
+def hasOnlyPrivateConstructors(TypeAccess type)
+{
+    def nonPrivateConstructors = type.methods.findAll
+    {
+        it.constructor && !it.private
+    }
+    return nonPrivateConstructors.empty
+}
+
+def addWarningIfInstanceFieldNotFinal(FieldAccess field)
+{
+    if (!field.final)
+    {
+        result.addWarningIssue(field, "Singleton instance field should be final", "Field must be final")
+    }
+}
+]]></source>
+    <parameterDefinitions>
+        <parameterDefinition name="timeout" type="Integer"
+                             description="When scripts are scheduled for automated execution they time out after the specified number of seconds. The timeout must be greater than '0'."
+                             defaultValue="10" candidates=""></parameterDefinition>
+        <parameterDefinition name="output" type="String"
+                             description="When a path is specified the output of the script is written into this file. The use of an absolute path (i.e. starting with '/' or 'C:/') is not recommended. It might not be cross-platform compatible."
+                             defaultValue="" candidates=""></parameterDefinition>
+    </parameterDefinitions>
+    <languages>
+        <language>Java</language>
+    </languages>
+</script>

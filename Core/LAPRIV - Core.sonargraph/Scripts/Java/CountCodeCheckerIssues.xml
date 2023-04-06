@@ -1,0 +1,87 @@
+<?xml version="1.0" ?>
+<script version="12.3.0.766">
+    <description></description>
+    <source><![CDATA[
+ICoreVisitor v = coreAccess.createVisitor()
+
+int totalErrors = 0
+int totalWarnings = 0
+int moduleWarnings = 0
+int moduleErrors = 0
+int errorFilesCount = 0
+int warningFilesCount = 0
+int totalErrorFilesCount = 0
+int totalWarningFilesCount = 0
+
+MetricIdAccess warningId = coreAccess.getOrCreateMetricId("CodeCheckerWarnings","Code Checker Warnings", "Number of warning from code checker plugins", false);
+MetricIdAccess errorId = coreAccess.getOrCreateMetricId("CodeCheckerErrors","Code Checker Errors", "Number of errors from code checker plugins", false);
+MetricIdAccess warningCount = coreAccess.getOrCreateMetricId("CodeCheckerFilesWithWarnings","Source files with code checker warnings", "Number of source files that have warnings from code checker plugins", false);
+MetricIdAccess errorCount = coreAccess.getOrCreateMetricId("CodeCheckerFilesWithErrors","Source files with code checker errors", "Number of source files that have errors from code checker plugins", false);
+
+v.onSourceFile
+{
+    ISourceFileAccess source ->
+    
+    int warnings = source.getIssueCount(Collections.emptyList(), Collections.emptyList(), Arrays.asList("com.hello2morrow.sonargraph.plugin.pmd", "com.hello2morrow.sonargraph.plugin.spotbugs"), Arrays.asList("Warning"), true)
+    int errors = source.getIssueCount(Collections.emptyList(), Collections.emptyList(), Arrays.asList("com.hello2morrow.sonargraph.plugin.pmd", "com.hello2morrow.sonargraph.plugin.spotbugs"), Arrays.asList("Error"), true)
+    
+    result.addMetricValue(warningId, source, warnings)
+    result.addMetricValue(errorId, source, errors)
+    
+    if (warnings > 0)
+    {
+        warningFilesCount++
+        totalWarningFilesCount++
+    }
+    if (errors > 0)
+    {
+        errorFilesCount++
+        totalErrorFilesCount++
+    }
+    
+    moduleWarnings += warnings
+    moduleErrors += errors
+    
+    totalWarnings += warnings
+    totalErrors += errors
+}
+
+v.onModule
+{
+    IModuleAccess module ->
+    
+    v.visitChildren(module)
+    
+    result.addMetricValue(warningId, module, moduleWarnings)
+    result.addMetricValue(errorId, module, moduleErrors)
+    
+    result.addMetricValue(warningCount, module, warningFilesCount)
+    result.addMetricValue(errorCount, module, errorFilesCount)
+    
+    moduleWarnings = 0
+    moduleErrors = 0
+    warningFilesCount = 0
+    errorFilesCount = 0
+}
+
+//Traverse the model
+coreAccess.visitParserModel(v)
+
+result.addMetricValue(warningId, coreAccess, totalWarnings)
+result.addMetricValue(errorId, coreAccess, totalErrors)
+
+result.addMetricValue(warningCount, coreAccess, totalWarningFilesCount)
+result.addMetricValue(errorCount, coreAccess, totalErrorFilesCount)
+]]></source>
+    <parameterDefinitions>
+        <parameterDefinition name="timeout" type="Integer"
+                             description="When scripts are scheduled for automated execution they time out after the specified number of seconds. The timeout must be greater than '0'."
+                             defaultValue="10" candidates=""></parameterDefinition>
+        <parameterDefinition name="output" type="String"
+                             description="When a path is specified the output of the script is written into this file. The use of an absolute path (i.e. starting with '/' or 'C:/') is not recommended. It might not be cross-platform compatible."
+                             defaultValue="" candidates=""></parameterDefinition>
+    </parameterDefinitions>
+    <languages>
+        <language>Java</language>
+    </languages>
+</script>

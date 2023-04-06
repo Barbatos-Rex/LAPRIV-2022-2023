@@ -40,9 +40,9 @@ public class User {
     private Profile profile;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<Course> accessibleCourses=new ArrayList<>();
+    private List<Course> accessibleCourses = new ArrayList<>();
 
-    boolean enableUser() {
+    public boolean enableUser() {
         if (status == Status.DISABLE) {
             status = Status.ENABLE;
             return true;
@@ -50,7 +50,7 @@ public class User {
         return false;
     }
 
-    boolean disableUser() {
+    public boolean disableUser() {
         if (status == Status.ENABLE) {
             status = Status.DISABLE;
             return true;

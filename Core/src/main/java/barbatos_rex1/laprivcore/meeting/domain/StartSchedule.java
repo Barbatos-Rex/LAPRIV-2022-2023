@@ -1,19 +1,24 @@
 package barbatos_rex1.laprivcore.meeting.domain;
 
-import jakarta.persistence.Embeddable;
+import barbatos_rex1.laprivcore.personal_info.domain.Day;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.*;
 
-import java.util.Date;
-
-@Embeddable
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@ToString
+@Entity
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@ToString
 public class StartSchedule {
-    private Date start;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    private Long id;
+    private Day day;
+    private Time time;
 
-    public static StartSchedule from(Date start) {
-        return new StartSchedule(start);
-    }
+
 }

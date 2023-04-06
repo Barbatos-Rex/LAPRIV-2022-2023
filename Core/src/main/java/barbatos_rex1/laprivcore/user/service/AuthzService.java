@@ -3,20 +3,22 @@ package barbatos_rex1.laprivcore.user.service;
 import barbatos_rex1.laprivcore.shared.domain.StringId;
 import barbatos_rex1.laprivcore.shared.utils.Validations;
 import barbatos_rex1.laprivcore.user.domain.*;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AuthzService implements barbatos_rex1.laprivcore.user.domain.AuthzService {
+@RequiredArgsConstructor
+public class AuthzService implements barbatos_rex1.laprivcore.user.domain.AuthzService, UserService {
     private UserRepository repo;
 
     private Optional<User> currentSession = Optional.empty();
 
     private UserMapper mapper;
-
 
     @SneakyThrows
     @Override
@@ -46,7 +48,7 @@ public class AuthzService implements barbatos_rex1.laprivcore.user.domain.AuthzS
         user.id = null;
         var u = mapper.toDomain(user);
         Validations.isFalse(repo.findByEmail(Email.from(user.email)).isPresent());
-        var us = repo.save(mapper.toDomain(user));
+        var us = repo.save(u);
         return Optional.of(mapper.toDTO(us));
     }
 
@@ -69,4 +71,42 @@ public class AuthzService implements barbatos_rex1.laprivcore.user.domain.AuthzS
         return Arrays.stream(roles).anyMatch(r -> r == currentSession.get().getRole());
     }
 
+    @Override
+    public List<UserDTO> all() {
+        return repo.findAll().stream().map(u -> mapper.toDTO(u)).toList();
+    }
+
+    @Override
+    public List<UserDTO> allEnabled() {
+        return repo.findAllEnabled().stream().map(mapper::toDTO).toList();
+    }
+
+    @Override
+    public List<UserDTO> allDisabled() {
+        return repo.findAllDisabled().stream().map(mapper::toDTO).toList();
+    }
+
+    @Override
+    public boolean enableUser(String userId) {
+        var u = repo.findById(StringId.from(userId));
+        if (u.isPresent()) {
+            var user = u.get();
+            boolean b = user.enableUser();
+            repo.save(user);
+            return b;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean disableUser(String disableUser) {
+        var u = repo.findById(StringId.from(disableUser));
+        if (u.isPresent()) {
+            var user = u.get();
+            boolean b = user.disableUser();
+            repo.save(user);
+            return b;
+        }
+        return false;
+    }
 }

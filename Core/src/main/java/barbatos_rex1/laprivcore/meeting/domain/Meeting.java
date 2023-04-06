@@ -9,8 +9,8 @@ import java.util.List;
 
 @Entity
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @ToString
 public class Meeting {
@@ -18,6 +18,7 @@ public class Meeting {
     @EmbeddedId
     private StringId id;
 
+    @OneToOne
     private StartSchedule startTime;
 
     private Duration duration;

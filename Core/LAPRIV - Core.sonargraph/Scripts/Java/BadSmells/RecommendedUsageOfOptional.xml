@@ -1,0 +1,90 @@
+<?xml version="1.0" ?>
+<script version="12.3.0.766">
+    <description>Checks that Optional is only used as a return value and not used as member or argument.</description>
+    <source><![CDATA[//
+//This script checks for usage of java.util.Optional as a parameter or member variable, which 
+//is not intended:
+//
+// "The JSR-335 EG felt fairly strongly that Optional should not be on any more than needed 
+// to support the optional-return idiom only.  
+// (Someone suggested maybe even renaming it to OptionalReturn 
+// to beat users over the head with this design orientation; perhaps we should have taken that suggestion.)"
+//
+//See http://mail.openjdk.java.net/pipermail/jdk8-dev/2013-September/003274.html
+
+
+String ISSUE_ID = "Not recommended java.util.Optional usage";
+
+IJavaVisitor v = javaAccess.createVisitor()
+
+v.onExternal
+{
+	return; //Not interested in any externals.
+}
+
+v.onType
+{
+    TypeAccess type ->
+    if(type.isExcluded())
+    {
+        return
+    }
+    
+    //Continue visiting...
+    v.visitChildren(type);
+}
+
+v.onMethod
+{ 
+    JavaMethodAccess method ->
+
+    //This just demonstrates how correct / recommended usage can be identified
+//    List<AggregatedDependencyAccess> depsReturn = method.getOutgoingDependencies(Aggregator.TYPE, true, JavaDependencyKind.RETURNS);
+//    if (hasDependencyToOptional(depsReturn))
+//    {
+//		result.addInfoIssue(depsReturn.get(0).getFrom(), "Recommended Optional usage", "Use optional as a return type");   
+//    }
+    
+    List<AggregatedDependencyAccess> depsParameters = method.getOutgoingDependencies(Aggregator.TYPE, true, JavaDependencyKind.PARAMETER);
+    if (hasDependencyToOptional(depsParameters))
+    {
+    	//Adding an issue per parameter seems to much. A single issue per method is enough.
+        result.addWarningIssue(depsParameters.get(0), ISSUE_ID, "Don't use optional as parameter type");   
+    }
+    v.visitChildren(method);
+}
+
+v.onField {
+    JavaFieldAccess field ->
+    
+    List<AggregatedDependencyAccess> deps = field.getOutgoingDependencies(Aggregator.TYPE, true, JavaDependencyKind.FIELD);
+    if (hasDependencyToOptional(deps))
+    {
+		result.addWarningIssue(deps.get(0), ISSUE_ID, "Don't use optional as member type");   
+    }
+}
+    
+//Traverse the model
+javaAccess.visitModel(v);
+
+def hasDependencyToOptional(List<AggregatedDependencyAccess> deps)
+{
+    deps.any
+    {
+    	dep -> return dep.getTo().getName().equals("java.util.Optional");
+    }
+}
+
+]]></source>
+    <parameterDefinitions>
+        <parameterDefinition name="timeout" type="Integer"
+                             description="When scripts are scheduled for automated execution they time out after the specified number of seconds. The timeout must be greater than '0'."
+                             defaultValue="10" candidates=""></parameterDefinition>
+        <parameterDefinition name="output" type="String"
+                             description="When a path is specified the output of the script is written into this file. The use of an absolute path (i.e. starting with '/' or 'C:/') is not recommended. It might not be cross-platform compatible."
+                             defaultValue="" candidates=""></parameterDefinition>
+    </parameterDefinitions>
+    <languages>
+        <language>Java</language>
+    </languages>
+</script>
