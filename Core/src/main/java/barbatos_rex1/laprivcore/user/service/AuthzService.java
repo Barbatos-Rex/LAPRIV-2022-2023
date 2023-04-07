@@ -1,9 +1,10 @@
 package barbatos_rex1.laprivcore.user.service;
 
+import barbatos_rex1.laprivcore.personal_info.domain.ProfileRepository;
 import barbatos_rex1.laprivcore.shared.domain.StringId;
+import barbatos_rex1.laprivcore.shared.domain.exception.BuisnessRuleViolationException;
 import barbatos_rex1.laprivcore.shared.utils.Validations;
 import barbatos_rex1.laprivcore.user.domain.*;
-import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +13,19 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class AuthzService implements barbatos_rex1.laprivcore.user.domain.AuthzService, UserService {
     private UserRepository repo;
+    private ProfileRepository profileRepository;
 
     private Optional<User> currentSession = Optional.empty();
 
     private UserMapper mapper;
+
+    public AuthzService(UserRepository repo, ProfileRepository profileRepository, UserMapper mapper) {
+        this.repo = repo;
+        this.profileRepository = profileRepository;
+        this.mapper = mapper;
+    }
 
     @SneakyThrows
     @Override
@@ -36,6 +43,7 @@ public class AuthzService implements barbatos_rex1.laprivcore.user.domain.AuthzS
         Password p = Password.secure(user.get().getId().getId(), password);
 
         if (p.getEncryptedPassword().equals(user.get().getPassword().getEncryptedPassword())) {
+            currentSession = user;
             return user.map(mapper::toDTO);
         }
         return Optional.empty();
@@ -47,7 +55,12 @@ public class AuthzService implements barbatos_rex1.laprivcore.user.domain.AuthzS
     public Optional<UserDTO> register(CreateUserDTO user) {
         user.id = null;
         var u = mapper.toDomain(user);
-        Validations.isFalse(repo.findByEmail(Email.from(user.email)).isPresent());
+        try {
+            Validations.isFalse(repo.findByEmail(Email.from(user.email)).isPresent());
+        } catch (BuisnessRuleViolationException e) {
+            throw new BuisnessRuleViolationException("Email in question already in use!", e);
+        }
+        profileRepository.save(u.getProfile());
         var us = repo.save(u);
         return Optional.of(mapper.toDTO(us));
     }
@@ -55,11 +68,19 @@ public class AuthzService implements barbatos_rex1.laprivcore.user.domain.AuthzS
 
     @Override
     public Optional<UserDTO> logout() {
+        if (currentSession.isPresent()) {
+            var dto = mapper.toDTO(currentSession.get());
+            currentSession = Optional.empty();
+            return Optional.of(dto);
+        }
         return Optional.empty();
     }
 
     @Override
     public Optional<UserDTO> currentSession() {
+        if (currentSession.isPresent()) {
+            return currentSession.map(mapper::toDTO);
+        }
         return Optional.empty();
     }
 

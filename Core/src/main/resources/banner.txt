@@ -1,3 +1,4 @@
+${AnsiColor.BRIGHT_CYAN}
   _               _____  _____  _______      __            _____
  | |        /\   |  __ \|  __ \|_   _\ \    / /           / ____|
  | |       /  \  | |__) | |__) | | |  \ \  / /   ______  | |     ___  _ __ ___
@@ -8,3 +9,4 @@
 
 ${application.title} ${application.version}
 Powered by Spring Boot ${spring-boot.version}
+${AnsiStyle.NORMAL}

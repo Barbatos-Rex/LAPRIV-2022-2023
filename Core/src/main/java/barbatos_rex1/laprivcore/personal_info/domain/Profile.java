@@ -20,7 +20,7 @@ public abstract class Profile {
 
     private TaxNumber taxNumber;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Calendar calendar;
 
 }

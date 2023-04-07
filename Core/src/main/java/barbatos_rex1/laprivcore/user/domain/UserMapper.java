@@ -20,9 +20,10 @@ public class UserMapper {
     @SneakyThrows
     public User toDomain(CreateUserDTO dto) {
         User.UserBuilder builder = User.builder();
-        builder.id(StringId.from(dto.id)).shortName(Name.from(dto.shortName)).
+        var userId = StringId.newId();
+        builder.id(userId).shortName(Name.from(dto.shortName)).
                 fullName(FullName.from(dto.fullName)).email(Email.from(dto.email))
-                .role(dto.role).password(Password.secure(dto.id, dto.password))
+                .role(dto.role).password(Password.secure(userId.getId(), dto.password))
                 .status(Status.ENABLE);
         dto.profile.id = dto.id;
         builder.profile(profileMapper.toDomain(dto.profile));

@@ -20,7 +20,7 @@ public class ProfileFactory {
         return new StudentProfile(StringId.from(profileDTO.id), BirthDate.from(profileDTO.birthDate),
                 TaxNumber.from(profileDTO.taxNumber),
                 MechanographicNumber.from(((StudentProfileDTO) profileDTO).mechanographicNumber),
-                Calendar.builder().id(StringId.from(profileDTO.id)).mapOfMeetings(new HashMap<>()).build());
+                Calendar.builder().mapOfMeetings(new HashMap<>()).build());
     }
 
     @SuppressWarnings("all")
@@ -32,7 +32,7 @@ public class ProfileFactory {
         }
         return new TeacherProfile(StringId.from(profileDTO.id), BirthDate.from(profileDTO.birthDate),
                 TaxNumber.from(profileDTO.taxNumber), Acronym.from(((TeacherProfileDTO) profileDTO).acronym),
-                Calendar.builder().id(StringId.from(profileDTO.id)).mapOfMeetings(new HashMap<>()).build());
+                Calendar.builder().mapOfMeetings(new HashMap<>()).build());
     }
 
     @SuppressWarnings("all")
@@ -44,7 +44,7 @@ public class ProfileFactory {
         }
         return new ManagerProfile(StringId.from(profileDTO.id), BirthDate.from(profileDTO.birthDate),
                 TaxNumber.from(profileDTO.taxNumber),
-                Calendar.builder().id(StringId.from(profileDTO.id)).mapOfMeetings(new HashMap<>()).build());
+                Calendar.builder().mapOfMeetings(new HashMap<>()).build());
     }
 
 }

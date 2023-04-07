@@ -12,4 +12,17 @@ public class UserDTO {
     public String fullName;
     public Role role;
     public Status status;
+
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id='" + id + '\'' +
+                ", email='" + email + '\'' +
+                ", shortName='" + shortName + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", role=" + role +
+                ", status=" + status +
+                '}';
+    }
 }
