@@ -1,4 +1,4 @@
-package barbatos_rex1.adminapp.components;
+package barbatos_rex1.laprivteacherapp.components;
 
 import barbatos_rex1.laprivcore.user.domain.AuthzService;
 import lombok.AllArgsConstructor;

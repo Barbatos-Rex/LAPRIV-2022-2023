@@ -1,4 +1,4 @@
-package barbatos_rex1.adminapp.commands;
+package barbatos_rex1.laprivstudentapp.commands;
 
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;

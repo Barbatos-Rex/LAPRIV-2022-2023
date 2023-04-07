@@ -1,4 +1,4 @@
-package barbatos_rex1.adminapp.commands;
+package barbatos_rex1.laprivteacherapp.commands;
 
 import barbatos_rex1.laprivcore.user.domain.AuthzService;
 import barbatos_rex1.laprivcore.user.domain.Role;
@@ -29,7 +29,7 @@ public class AuthenticationCommand {
         if (user.isEmpty()) {
             return new AttributedString("Invalid email or password!", AttributedStyle.DEFAULT.foreground(AttributedStyle.RED));
         }
-        if (service.isAuthorized(Role.MANAGER)) {
+        if (service.isAuthorized(Role.STUDENT)) {
 
 
             return new AttributedString(String.format("Welcome %s!", user.get().fullName), AttributedStyle.DEFAULT.foreground(AttributedStyle.CYAN));
