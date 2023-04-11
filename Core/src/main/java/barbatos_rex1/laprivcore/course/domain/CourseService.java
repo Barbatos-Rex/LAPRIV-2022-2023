@@ -22,5 +22,7 @@ public interface CourseService {
 
     List<CourseDTO> courses();
 
+    Optional<CourseDTO> course(String courseId);
+
     Optional<CourseDTO> bulkEnrollment(String filePath);
 }

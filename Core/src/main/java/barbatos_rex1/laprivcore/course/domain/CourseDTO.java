@@ -10,5 +10,16 @@ public class CourseDTO {
     public int maxCapacity;
     public int minCapacity;
     public String title;
-    public String state;
+    public CourseState state;
+
+    @Override
+    public String toString() {
+        return "CourseDTO{" +
+                "code='" + code + '\'' +
+                ", maxCapacity=" + maxCapacity +
+                ", minCapacity=" + minCapacity +
+                ", title='" + title + '\'' +
+                ", state=" + state +
+                '}';
+    }
 }

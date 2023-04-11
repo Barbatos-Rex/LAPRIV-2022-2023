@@ -27,7 +27,6 @@ public class UserMapper {
                 .status(Status.ENABLE);
         dto.profile.id = dto.id;
         builder.profile(profileMapper.toDomain(dto.profile));
-        builder.accessibleCourses(new ArrayList<>());
         return builder.build();
     }
 

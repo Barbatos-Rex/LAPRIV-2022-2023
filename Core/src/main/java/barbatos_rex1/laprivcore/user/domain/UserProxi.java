@@ -92,13 +92,6 @@ public class UserProxi {
     }
 
 
-    @SneakyThrows
-    public List<Course> getAccessibleCourses() {
-        accessProxi();
-        return cache.getAccessibleCourses();
-    }
-
-
     public boolean enableUser() {
         return false;
     }

@@ -39,9 +39,6 @@ public class User {
     @OneToOne(fetch = FetchType.LAZY)
     private Profile profile;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Course> accessibleCourses = new ArrayList<>();
-
     public boolean enableUser() {
         if (status == Status.DISABLE) {
             status = Status.ENABLE;

@@ -5,13 +5,13 @@ import barbatos_rex1.laprivcore.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
+import java.util.ArrayList;
 
 
 @Entity
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Builder
 @ToString
 public class Course {
@@ -28,11 +28,11 @@ public class Course {
     @ManyToOne
     private User responsibleTeacher;
 
-    @ManyToMany
-    private List<User> auxilaryTeachers;
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private Teachers auxilaryTeachers;
 
-    @ManyToMany
-    private List<User> enrolledStudents;
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private Enrollments enrolledStudents;
 
     @Enumerated(value = EnumType.STRING)
     private CourseState state;
@@ -44,6 +44,9 @@ public class Course {
     }
 
     public void closeEnrollments() {
+        if (enrolledStudents.number() < minCapacity.getCapacity()) {
+            this.state = CourseState.CANCELED;
+        }
         if (state == CourseState.OPEN) {
             this.state = CourseState.WAITING;
         }
@@ -58,6 +61,15 @@ public class Course {
     public void closeCourse() {
         if (state == CourseState.OCCURING) {
             this.state = CourseState.DONE;
+        }
+    }
+
+    public void initialize() {
+        if (enrolledStudents == null) {
+            enrolledStudents = Enrollments.builder().students(new ArrayList<>()).build();
+        }
+        if (auxilaryTeachers == null) {
+            auxilaryTeachers = Teachers.builder().auxilaryTeachers(new ArrayList<>()).build();
         }
     }
 }

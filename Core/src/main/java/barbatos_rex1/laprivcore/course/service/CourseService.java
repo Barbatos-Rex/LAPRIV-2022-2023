@@ -2,6 +2,7 @@ package barbatos_rex1.laprivcore.course.service;
 
 import barbatos_rex1.laprivcore.course.domain.*;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,11 +17,17 @@ public class CourseService implements barbatos_rex1.laprivcore.course.domain.Cou
     private CourseMapper mapper;
 
 
+    @SneakyThrows
     @Override
     public Optional<CourseDTO> createCourse(CourseDTO course) {
+        course.state = CourseState.CREATED;
         var c = mapper.toDomain(course);
-        repo.save(c);
-        return Optional.empty();
+        c.initialize();
+        var result = repo.save(c);
+        if (result == null) {
+            return Optional.empty();
+        }
+        return Optional.of(mapper.toDTO(result));
     }
 
 
@@ -68,6 +75,16 @@ public class CourseService implements barbatos_rex1.laprivcore.course.domain.Cou
     public List<CourseDTO> courses() {
         return repo.findAll().stream().map(c -> mapper.toDTO(c)).toList(); // Functional Programing for the win
     }
+
+    @Override
+    public Optional<CourseDTO> course(String courseId) {
+        Optional<Course> result = repo.findById(Code.from(courseId));
+        if (result.isEmpty()) {
+            return Optional.empty();
+        }
+        return result.map(mapper::toDTO);
+    }
+
 
     @Override
     public Optional<CourseDTO> bulkEnrollment(String filePath) {
