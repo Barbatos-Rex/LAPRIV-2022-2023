@@ -20,6 +20,8 @@ public interface CourseService {
 
 //    Optional<CourseDTO> addTeacher(TeacherId teacher);
 
+    Optional<CourseDTO> requestEnrollment(String courseCode, String userId);
+
     List<CourseDTO> courses();
 
     Optional<CourseDTO> course(String courseId);

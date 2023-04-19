@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 
 @Entity
@@ -33,6 +34,9 @@ public class Course {
 
     @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Enrollments enrolledStudents;
+
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private Enrollments requestedEnrollments;
 
     @Enumerated(value = EnumType.STRING)
     private CourseState state;
@@ -66,10 +70,11 @@ public class Course {
 
     public void initialize() {
         if (enrolledStudents == null) {
-            enrolledStudents = Enrollments.builder().students(new ArrayList<>()).build();
+            enrolledStudents = Enrollments.builder().students(new HashSet<>()).build();
         }
         if (auxilaryTeachers == null) {
             auxilaryTeachers = Teachers.builder().auxilaryTeachers(new ArrayList<>()).build();
         }
     }
+
 }
