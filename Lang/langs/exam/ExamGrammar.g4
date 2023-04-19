@@ -34,7 +34,7 @@ multiple_choice: CODE COLLUMN 'multiple-choice' COMA OPTIONS COLLUMN '[' multipl
 
 multiple_choice_options: opt1=multiple_choice_options_body COMA opt2=multiple_choice_options_body COMA opt3=multiple_choice_options_body COMA opt4=multiple_choice_options_body;
 
-multiple_choice_options_body: '{' PROMPT COLLUMN STRING COMA VALID COLLUMN true_false_option;
+multiple_choice_options_body: '{' PROMPT COLLUMN STRING COMA VALID COLLUMN true_false_option '}';
 
 matching: CODE COLLUMN 'matching' COMA QUESTIONS COLLUMN '[' matching_questions ']' COMA AWNSERS COLLUMN '[' matching_awnsers']';
 

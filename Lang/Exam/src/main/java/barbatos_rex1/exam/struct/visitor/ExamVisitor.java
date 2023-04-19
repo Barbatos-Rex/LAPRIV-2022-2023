@@ -2,10 +2,12 @@ package barbatos_rex1.exam.struct.visitor;
 
 import barbatos_rex1.exam.antlr4.lang.ExamGrammarBaseVisitor;
 import barbatos_rex1.exam.antlr4.lang.ExamGrammarParser;
+import barbatos_rex1.exam.exception.CompilerException;
 import barbatos_rex1.exam.primitive.ExamPrototype;
 import barbatos_rex1.exam.primitive.Header;
 import barbatos_rex1.exam.primitive.PrototypeSection;
 import lombok.Getter;
+import lombok.SneakyThrows;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +51,7 @@ public class ExamVisitor extends ExamGrammarBaseVisitor<Object> {
         return l;
     }
 
+    @SneakyThrows
     @Override
     public Object visitSection_object(ExamGrammarParser.Section_objectContext ctx) {
         int dif = 0;
@@ -56,22 +59,19 @@ public class ExamVisitor extends ExamGrammarBaseVisitor<Object> {
         try {
             dif = Integer.parseInt(ctx.dif.getText());
         } catch (NumberFormatException e) {
-            //TODO EXCEPTION
-            throw new RuntimeException(e);
+            throw new CompilerException("Not a valid integer",ctx.dif.getLine(),ctx.dif.getStartIndex());
         }
         try {
             lim = Integer.parseInt(ctx.limit.getText());
         } catch (NumberFormatException e) {
-            //TODO EXCEPTION
-            throw new RuntimeException(e);
+            throw new CompilerException("Not a valid integer",ctx.limit.getLine(),ctx.limit.getStartIndex());
         }
         try {
             if (!poolVisitor.getPools().containsKey(ctx.pol_name.getText().replace("\"",""))) {
-                throw new RuntimeException();
+                throw new CompilerException("Not a pool name that is registered",ctx.pol_name.getLine(),ctx.pol_name.getStartIndex());
             }
         } catch (RuntimeException e) {
-            //TODO EXCEPTION
-            throw new RuntimeException(e);
+            throw new CompilerException("Strange error, realy",ctx.pol_name.getLine(),ctx.pol_name.getStartIndex());
         }
         return new PrototypeSection(ctx.sec_id.getText().replace("\"",""), ctx.sec_des.getText().replace("\"",""), dif, lim, poolVisitor.getPools().get(ctx.pol_name.getText().replace("\"","")));
     }
@@ -81,23 +81,23 @@ public class ExamVisitor extends ExamGrammarBaseVisitor<Object> {
         return visitHeader_body(ctx.header_body());
     }
 
+    @SneakyThrows
     @Override
     public Object visitHeader_body(ExamGrammarParser.Header_bodyContext ctx) {
         Header.HeaderType grading = switch (ctx.grad.getText().toLowerCase()) {
             case "none" -> Header.HeaderType.NONE;
             case "on-submission" -> Header.HeaderType.ON_SUBMISSION;
             case "after-closing" -> Header.HeaderType.AFTER_CLOSING;
-            default -> throw new RuntimeException();
+            default -> throw new CompilerException("Not a valid grading option, should either be none, on-submission or after-closing",ctx.grad.getLine(),ctx.grad.getStartIndex());
         };
         Header.HeaderType feedback = switch (ctx.feed.getText().toLowerCase()) {
             case "none" -> Header.HeaderType.NONE;
             case "on-submission" -> Header.HeaderType.ON_SUBMISSION;
             case "after-closing" -> Header.HeaderType.AFTER_CLOSING;
-            default -> throw new RuntimeException();
+            default -> throw new CompilerException("Not a valid grading option, should either be none, on-submission or after-closing",ctx.feed.getLine(),ctx.feed.getStartIndex());
         };
         return new Header(ctx.des.getText().replace("\"",""), grading, feedback);
     }
-
     public ExamPrototype exam() {
         return exam;
     }
