@@ -21,7 +21,10 @@ public class ExamFactory {
             Section section = protoSection.generateSection();
             sections.add(section);
         }
-        return new Exam(examPrototype.getTitle(),examPrototype.getHeader(),sections);
+
+        Exam exam = new Exam(examPrototype.getTitle(),examPrototype.getHeader(),sections);
+        exam.validate();
+        return exam;
     }
 
 

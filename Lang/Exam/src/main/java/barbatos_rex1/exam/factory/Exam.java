@@ -28,4 +28,7 @@ public class Exam {
     }
 
 
+    public void validate() {
+        sections.forEach(Section::validate);
+    }
 }

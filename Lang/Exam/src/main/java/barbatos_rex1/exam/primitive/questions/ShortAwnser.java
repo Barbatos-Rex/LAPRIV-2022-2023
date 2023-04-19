@@ -16,4 +16,9 @@ public class ShortAwnser extends Question {
         super(QuestionType.SHORT_AWNSER);
         this.awnser = awnser;
     }
+
+    @Override
+    public void validate() {
+        //No need. Done at parser level
+    }
 }

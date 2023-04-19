@@ -1,11 +1,9 @@
 package barbatos_rex1.exam.primitive.questions;
 
+import barbatos_rex1.exam.exception.RuleViolationException;
 import barbatos_rex1.exam.primitive.Question;
 import barbatos_rex1.exam.primitive.QuestionType;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
@@ -13,6 +11,15 @@ import java.util.List;
 @Getter
 @EqualsAndHashCode
 public class MultipleChoice extends Question {
+
+    @SneakyThrows
+    @Override
+    public void validate() {
+        List<MultipleUnit> l = options.stream().filter(MultipleUnit::isValid).toList();
+        if (l.size()!=1){
+            throw new RuleViolationException("There must be 1 and only 1 correct option!");
+        }
+    }
 
     @AllArgsConstructor
     @ToString

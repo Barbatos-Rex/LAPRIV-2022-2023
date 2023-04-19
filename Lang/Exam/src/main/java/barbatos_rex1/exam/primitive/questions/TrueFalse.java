@@ -16,4 +16,9 @@ public class TrueFalse extends Question {
         super(QuestionType.TRUE_FALSE);
         this.awnser = awnser;
     }
+
+    @Override
+    public void validate() {
+        //No need. Done at parser level
+    }
 }

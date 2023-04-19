@@ -16,4 +16,9 @@ public class Numerical extends Question {
         super(QuestionType.NUMERICAL);
         this.awnser = awnser;
     }
+
+    @Override
+    public void validate() {
+        //No validation needed. Done at parser level
+    }
 }

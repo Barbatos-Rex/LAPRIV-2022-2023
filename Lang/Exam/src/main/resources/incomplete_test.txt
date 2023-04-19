@@ -1,0 +1,96 @@
+pools: [
+    {
+        name: "Algorithm",
+        questions: [{
+         prompt: "What is the result printed to the standard output of the following code:\n
+          public static int mystery(int n){\n
+          \tif(n==0){\n
+          \t\treturn 1;\n
+          \t}\n
+          \treturn mystery(n-1);\n
+          }\n
+          \n
+          public static void main(String[] args){\n
+          \tSystem.out.println(mystery(5));\n
+          }",
+          body: {
+            code: numerical,
+            awnser: 120
+          },
+          difficulty: 3
+        },
+        {
+        prompt: "Complete the following code in such way that the output to the standard output is correct:",
+        body:{
+            code: missing-words,
+            text: "public static @1@ countRepeatedElements(int[] arr, int elem){\n
+            \t@2@;\n
+            \tfor(@3@;i<@4@;i++){\n
+                \t\tif(@5@){\n
+                \t\t\t@6@;\n
+            \t\t}\n
+            @7@;
+            }\n
+            public static void main(String[] args){\n
+            \tSystem.out.println(countRepeatedElements(new int[]{1,5,2,2,4,3,5,5,6,7,8,1},@8@));
+            }\n\n
+            Standard Output:\n3",
+            keys: {
+                1: "int",
+                2: "int sum=0",
+                4: "arr.length()",
+                3: "int i=0",
+                8: "5",
+                5: "arr[i]==elem",
+                7: "return sum",
+                6: "sum++"
+            }
+        },
+        difficulty: 11
+        },
+        {
+            prompt: "Replace ??? with the correct awnser (use spaces between tokens):\n\n
+            public static void main(String[] args){\n
+            \tList<Integer> l = new ArrayList<>();
+            \tint n = 1;\n
+            \tfor(int i = ???){\n
+            \t\tn*=i;\n
+
+            \t}
+            \tSystem.out.println(n);\n
+            }\n
+            Standard Output: [1,2,6,24,120,720]\n",
+            body: {
+                code: short-awnser,
+                awnser: "1 ; i < 7 ; i++"
+            },
+            difficulty: 1
+        }
+    ]
+    }
+]
+
+exam{
+    id: "Intro-Java-Sem01",
+    title: "Intro to Java - Exam",
+    header: {
+        description: "This exam will test your habilities to understand basic Java language features as well as your abilities about general programming.",
+        grading: on-submission,
+        feedback: none
+    },
+    sections: [{
+        id: "syntax",
+        description: "Java Syntax",
+        difficulty: 35,
+        limitQuestion: 15,
+        pool: "Syntax"
+        },
+        {
+        id:               "algorithm",
+        description: "Imperative Programming in Java",
+        difficulty: 50,
+        limitQuestion: 50,
+        pool: "Algorithm"
+        }
+    ]
+}

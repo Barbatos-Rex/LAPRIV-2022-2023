@@ -1,5 +1,7 @@
 package barbatos_rex1;
 
+import barbatos_rex1.exam.ExamCompiler;
+import barbatos_rex1.exam.ExamVisitorCompiler;
 import barbatos_rex1.exam.antlr4.lang.ExamGrammarBaseVisitor;
 import barbatos_rex1.exam.antlr4.lang.ExamGrammarLexer;
 import barbatos_rex1.exam.antlr4.lang.ExamGrammarParser;
@@ -37,7 +39,7 @@ public class Main {
                                          difficulty: 3
                                      },
                                      {
-                                         prompt: "What is the result of the following expression?\\\\n (1 | 0 ) & (~ 1 v 0)",
+                                         prompt: "What is the result of the following expression?\n (1 | 0 ) & (~ 1 v 0)",
                                          body:{
                                              code : numerical,
                                              awnser: 0
@@ -45,7 +47,23 @@ public class Main {
                                          difficulty: 5
                                      },
                                      {
-                                         prompt: "What is the result of the following expression?\\\\n (1 | 0 ) & (~ 1 v 0)",
+                                         prompt: "What is the result of the following expression?\n (1 | 0 ) & (~ 1 v 0)",
+                                         body:{
+                                             code : numerical,
+                                             awnser: 0
+                                         },
+                                         difficulty: 1
+                                     },
+                                     {
+                                         prompt: "What is the result of the following expression?\n (1 | 0 ) & (~ 1 v 0)",
+                                         body:{
+                                             code : numerical,
+                                             awnser: 0
+                                         },
+                                         difficulty: 2
+                                     },
+                                     {
+                                         prompt: "What is the result of the following expression?\n (1 | 0 ) & (~ 1 v 0)",
                                          body:{
                                              code : numerical,
                                              awnser: 0
@@ -53,23 +71,7 @@ public class Main {
                                          difficulty: 5
                                      },
                                      {
-                                         prompt: "What is the result of the following expression?\\\\n (1 | 0 ) & (~ 1 v 0)",
-                                         body:{
-                                             code : numerical,
-                                             awnser: 0
-                                         },
-                                         difficulty: 5
-                                     },
-                                     {
-                                         prompt: "What is the result of the following expression?\\\\n (1 | 0 ) & (~ 1 v 0)",
-                                         body:{
-                                             code : numerical,
-                                             awnser: 0
-                                         },
-                                         difficulty: 5
-                                     },
-                                     {
-                                         prompt: "What is the result of the following expression?\\\\n (1 | 0 ) & (~ 1 v 0)",
+                                         prompt: "What is the result of the following expression?\n (1 | 0 ) & (~ 1 v 0)",
                                          body:{
                                              code : numerical,
                                              awnser: 0
@@ -104,23 +106,8 @@ public class Main {
             """;
 
 
-    public static void main(String[] args) throws FileNotFoundException {
-
-        CharStream stream = CharStreams.fromString(str);
-        ExamGrammarLexer lexer = new ExamGrammarLexer(stream);
-        TokenStream ts = new CommonTokenStream(lexer);
-        ExamGrammarParser parser = new ExamGrammarParser(ts);
-
-
-        StartVisitor vis = new StartVisitor();
-        ExamPrototype exam = vis.visitStart(parser.start());
-        ExamFactory factory = new ExamFactory(exam);
-
-        File f = new File("./exams/exam.exm");
-        f.getParentFile().mkdirs();
-        PrintWriter pw = new PrintWriter(f);
-        pw.println(factory.generateNewExam().compile());
-        System.out.println(f.getAbsolutePath());
-        pw.flush();
+    public static void main(String[] args){
+        ExamCompiler compiler = new ExamVisitorCompiler(str);
+        compiler.compile("./exams","Intro-Java-Sem01");
     }
 }

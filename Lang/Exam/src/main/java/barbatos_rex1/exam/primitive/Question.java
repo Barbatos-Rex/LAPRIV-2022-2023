@@ -39,4 +39,6 @@ public abstract class Question {
     public void setPrompt(String prompt) {
         this.prompt = prompt;
     }
+
+    public abstract void validate();
 }
