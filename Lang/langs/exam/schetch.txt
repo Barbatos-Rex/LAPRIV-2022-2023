@@ -1,0 +1,98 @@
+// Comment
+
+
+pools: [
+    {
+        name: "Pool 1",
+        questions:[
+            {
+                prompt: "Match the following questions to their awnser",
+                body: {
+                      code: matching,
+                      questions:[{
+                            iid: 0,
+                            prompt: "What course of LEI ISEP introduces to Java?"
+                        },{iid: 1, "What course of LEI ISEP introduces to the Computer?"}, {iid: 2, "What course of LEI ISEP introduces to data structures?"}
+                        ],
+                      awnsers:[{iid: 2, prompt: "ESINF"}, {iid: 0, prompt: "APROG"},{iid:1, prompt. "PRCMP"}
+                    ]
+                },
+                difficulty: 6
+            },
+            {
+                prompt:"When was ISEP founded?"
+                body: {
+                    code: multiple-choice,
+                    options: [{prompt: "1856", valid: false}, {prompt: "1952", valid: false},{prompt: "1852", valid: true}, {prompt: "2001", valid: false}]
+                },
+                difficulty: 2
+            },
+            {
+                prompt: "Witch course in LEI ISEP that evaluates about creating grammars and solutions to problems using costume languages?",
+                body: {
+                    code: short-awnser,
+                    awnser: "LPROG"
+                },
+                difficulty: 3
+            },
+            {
+                prompt: "What is the result of the following expression?\n (1 | 0 ) & (~ 1 v 0)",
+                body:{
+                    code : numerical,
+                    awnser: 0
+                },
+                difficulty: 5
+            },
+            {
+                prompt: "Complete the following text:"
+                body: {
+                    code: missing-words,
+                    text: "Java is a @0@ language. That means that the source code is, firstly, translated into @1@, in Java's case, @2@.
+                    However, other languages, like Python 3, are @3@ languages, which, in contrary to Java, the source code is @4@.",
+                    keys: {
+                        0: "Compiled",
+                        3: "Interpreted",
+                        4: "Executed line by line",
+                        2: "Bytecode",
+                        1: "Machine code"
+                    }
+                },
+                difficulty: 10
+            },
+            {
+                prompt: "Objects allocated in the stack are in global memory"
+                body: {
+                    code: true-false,
+                    awser: false
+               },
+               difficulty: 1
+            }
+        ]
+    }
+]
+
+
+
+
+exam{
+    id: "cbckjhasbc",
+    title: "chbkjabckja",
+    header: {
+        description: "aacaca",
+        grading: none|on-submission|after-closing,
+        feedback: none|on-submission|after-closing
+    },
+    sections: [{
+        id: "wbekcjbwds",
+        description: "Some Knoladge",
+        difficulty: 15,
+        limitQuestion: 5,
+        pool: "Pool 1"
+    }, ...]
+}
+
+
+
+
+
+
