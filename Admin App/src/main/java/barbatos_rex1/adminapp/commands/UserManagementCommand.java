@@ -185,7 +185,7 @@ public class UserManagementCommand {
         return result;
     }
 
-    private class UserFlags {
+    private static class UserFlags {
         public boolean id, email, shortName, fullName, role = false;
     }
 

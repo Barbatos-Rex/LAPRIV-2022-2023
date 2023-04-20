@@ -1,7 +1,11 @@
 package barbatos_rex1.laprivcore.course.service;
 
 import barbatos_rex1.laprivcore.course.domain.*;
+import barbatos_rex1.laprivcore.shared.domain.StringId;
 import barbatos_rex1.laprivcore.shared.domain.exception.BuisnessRuleViolationException;
+import barbatos_rex1.laprivcore.shared.utils.Validations;
+import barbatos_rex1.laprivcore.user.domain.User;
+import barbatos_rex1.laprivcore.user.domain.UserRepository;
 import barbatos_rex1.laprivcore.user.domain.UserService;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -17,6 +21,7 @@ public class CourseService implements barbatos_rex1.laprivcore.course.domain.Cou
 
     private CourseRepository repo;
     private UserService userService;
+    private UserRepository userRepo;
     private CourseMapper mapper;
 
 
@@ -79,6 +84,56 @@ public class CourseService implements barbatos_rex1.laprivcore.course.domain.Cou
         }, courseCode);
     }
 
+    @SneakyThrows
+    @Override
+    public Optional<CourseDTO> setResponsibleTeacher(String courseCode, String teacherId, Option option) {
+        Optional<Course> course = repo.findById(Code.from(courseCode));
+        if (course.isEmpty()) {
+            throw new BuisnessRuleViolationException(String.format("No course with code %s", courseCode));
+        }
+        Optional<User> user = userRepo.findById(StringId.from(teacherId));
+        if (user.isEmpty()) {
+            throw new BuisnessRuleViolationException(String.format("No user with id %s", teacherId));
+        }
+
+        if (option == Option.ADD) {
+            course.get().assignResponsibleTeacher(user.get());
+        } else {
+            course.get().replaceResponsibleTeacher(user.get());
+        }
+        Course c = repo.save(course.get());
+        if (c == null) {
+            return Optional.empty();
+        }
+        return Optional.of(mapper.toDTO(c));
+    }
+
+    @SneakyThrows
+    @Override
+    public Optional<CourseDTO> addTeacher(String courseCode, String teacherId) {
+
+        Optional<Course> course = repo.findById(Code.from(courseCode));
+        if (course.isEmpty()) {
+            throw new BuisnessRuleViolationException(String.format("No course with code %s", courseCode));
+        }
+        Optional<User> user = userRepo.findById(StringId.from(teacherId));
+        if (user.isEmpty()) {
+            throw new BuisnessRuleViolationException(String.format("No user with id %s", teacherId));
+        }
+
+        try {
+            Validations.isFalse(course.get().getResponsibleTeacher().getId().equals(user.get().getId()));
+        } catch (Exception e) {
+            throw new BuisnessRuleViolationException("Teacher in question is already responsible for this course!",e);
+        }
+
+        Course c = repo.save(course.get());
+        if (c == null) {
+            return Optional.empty();
+        }
+        return Optional.of(mapper.toDTO(c));
+    }
+
     @Override
     @SneakyThrows
     public Optional<CourseDTO> requestEnrollment(String courseCode, String userId) {
@@ -87,7 +142,7 @@ public class CourseService implements barbatos_rex1.laprivcore.course.domain.Cou
             throw new BuisnessRuleViolationException("There is not a course with such code!");
         }
 
-        var u = userService.user(userId);
+        var u = userRepo.findById(StringId.from(userId));
         if (u.isEmpty()) {
             throw new BuisnessRuleViolationException("There is no user with such id!");
         }
@@ -96,9 +151,13 @@ public class CourseService implements barbatos_rex1.laprivcore.course.domain.Cou
             throw new BuisnessRuleViolationException("User already requested enrollment in a course!");
         }
 
-        boolean b = c.get().getRequestedEnrollments().add(u.get());
+        Course course = repo.save(c.get());
+        if (course == null) {
+            return Optional.empty();
+        }
 
-        throw new UnsupportedOperationException("Not implemented Yet!"); // TODO IMPLEMENT!
+        return Optional.of(mapper.toDTO(course));
+
     }
 
     @Override

@@ -5,6 +5,11 @@ import java.util.Optional;
 
 public interface CourseService {
 
+    enum Option{
+        ADD,
+        REPLACE
+    }
+
 
     Optional<CourseDTO> createCourse(CourseDTO course);
 
@@ -16,9 +21,9 @@ public interface CourseService {
 
     Optional<CourseDTO> closeCourse(String courseCode);
 
-//    Optional<CourseDTO> setResponsibleTeacher(TeacherId teacher);
+    Optional<CourseDTO> setResponsibleTeacher(String courseCode, String teacherId, Option option);
 
-//    Optional<CourseDTO> addTeacher(TeacherId teacher);
+    Optional<CourseDTO> addTeacher(String courseCode,String teacherId);
 
     Optional<CourseDTO> requestEnrollment(String courseCode, String userId);
 

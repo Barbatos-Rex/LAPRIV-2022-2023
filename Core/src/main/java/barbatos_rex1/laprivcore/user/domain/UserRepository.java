@@ -20,4 +20,12 @@ public interface UserRepository extends JpaRepository<User, StringId> {
     Optional<User> findByEmail(Email email);
 
 
+    @Query("SELECT u FROM User u WHERE u.role=barbatos_rex1.laprivcore.user.domain.Role.MANAGER")
+    List<User> findAllManagers();
+
+    @Query("SELECT u FROM User u WHERE u.role=barbatos_rex1.laprivcore.user.domain.Role.TEACHER")
+    List<User> findAllTeachers();
+
+    @Query("SELECT u FROM User u WHERE u.role=barbatos_rex1.laprivcore.user.domain.Role.STUDENT")
+    List<User> findAllStudents();
 }

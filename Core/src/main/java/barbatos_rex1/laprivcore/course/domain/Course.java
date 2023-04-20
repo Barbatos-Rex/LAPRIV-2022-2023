@@ -1,6 +1,8 @@
 package barbatos_rex1.laprivcore.course.domain;
 
+import barbatos_rex1.laprivcore.shared.domain.exception.BuisnessRuleViolationException;
 import barbatos_rex1.laprivcore.shared.domain.value_objects.Title;
+import barbatos_rex1.laprivcore.user.domain.Role;
 import barbatos_rex1.laprivcore.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -73,8 +75,24 @@ public class Course {
             enrolledStudents = Enrollments.builder().students(new HashSet<>()).build();
         }
         if (auxilaryTeachers == null) {
-            auxilaryTeachers = Teachers.builder().auxilaryTeachers(new ArrayList<>()).build();
+            auxilaryTeachers = Teachers.builder().auxilaryTeachers(new HashSet<>()).build();
         }
+    }
+
+    @SneakyThrows
+    public void assignResponsibleTeacher(User user){
+        if(responsibleTeacher!=null){
+            throw new BuisnessRuleViolationException("Course already has responsible teacher!");
+        }
+        replaceResponsibleTeacher(user);
+    }
+
+    @SneakyThrows
+    public void replaceResponsibleTeacher(User user){
+        if (user.getRole()!= Role.TEACHER){
+            throw new BuisnessRuleViolationException("Assigned user to course responsible is not a teacher");
+        }
+        responsibleTeacher=user;
     }
 
 }

@@ -41,7 +41,7 @@ public class ProfileService implements barbatos_rex1.laprivcore.personal_info.do
 
     @Override
     public Optional<ProfileDTO> profileOfUser(String userId) {
-        var p = repo.findById(StringId.from(userId));
+        var p = repo.findProfileByUserId(StringId.from(userId));
         if (p.isPresent()) {
             return p.map(mapper::toDTO);
         }
@@ -60,7 +60,7 @@ public class ProfileService implements barbatos_rex1.laprivcore.personal_info.do
 
     @Override
     public Optional<ProfileDTO> delete(String userId) {
-        var p = repo.findById(StringId.from(userId));
+        var p = repo.findProfileByUserId(StringId.from(userId));
         if (p.isPresent()) {
             repo.delete(p.get());
             return p.map(mapper::toDTO);
@@ -69,7 +69,7 @@ public class ProfileService implements barbatos_rex1.laprivcore.personal_info.do
     }
 
     @Override
-    public Optional<ProfileDTO> path(ProfileDTO profile) {
+    public Optional<ProfileDTO> patch(ProfileDTO profile) {
         var p = repo.findById(StringId.from(profile.id));
         if (p.isPresent()) {
             var pro = mapper.toDomain(profile);

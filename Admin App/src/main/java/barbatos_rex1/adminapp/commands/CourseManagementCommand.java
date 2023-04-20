@@ -4,14 +4,20 @@ package barbatos_rex1.adminapp.commands;
 import barbatos_rex1.laprivcore.course.domain.CourseDTO;
 import barbatos_rex1.laprivcore.course.domain.CourseService;
 import barbatos_rex1.laprivcore.course.domain.CourseState;
+import barbatos_rex1.laprivcore.personal_info.domain.ProfileDTO;
+import barbatos_rex1.laprivcore.personal_info.domain.ProfileService;
+import barbatos_rex1.laprivcore.personal_info.domain.TeacherProfileDTO;
 import barbatos_rex1.laprivcore.user.domain.AuthzService;
 import barbatos_rex1.laprivcore.user.domain.Role;
+import barbatos_rex1.laprivcore.user.domain.UserDTO;
+import barbatos_rex1.laprivcore.user.domain.UserService;
 import lombok.AllArgsConstructor;
 import org.jline.utils.AttributedString;
 import org.jline.utils.AttributedStyle;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -22,6 +28,8 @@ public class CourseManagementCommand {
 
     private CourseService courseService;
     private AuthzService authzService;
+    private UserService userService;
+    private ProfileService profileService;
 
 
     private Availability isAviable() {
@@ -65,50 +73,6 @@ public class CourseManagementCommand {
 
     }
 
-//    @ShellMethod(key = "alterCourseEnrollment", value = "Alter the enrollment status of a course")
-//    @ShellMethodAvailability("isAviable")
-//    public AttributedString alterCourseEnrollment(@ShellOption("-i") String courseId, @ShellOption(value = "-o", arity = 0) boolean open, @ShellOption(value = "-c", arity = 0) boolean close) {
-//        if (open) {
-//            Optional<CourseDTO> dto = courseService.openEnrollments(courseId);
-//            if (dto.isPresent() && dto.get().state.equals("OPEN")) {
-//                return new AttributedString("Course enrollments are currently open!", AttributedStyle.DEFAULT.foreground(AttributedStyle.GREEN));
-//            } else {
-//                return new AttributedString("Course is either closed, done, canceled or ongoing!", AttributedStyle.DEFAULT.foreground(AttributedStyle.RED));
-//            }
-//        }
-//        if (close) {
-//            Optional<CourseDTO> dto = courseService.closeEnrollments(courseId);
-//            if (dto.isPresent() && dto.get().state.equals("CLOSED")) {
-//                return new AttributedString("Course enrollments are currently closed!", AttributedStyle.DEFAULT.foreground(AttributedStyle.GREEN));
-//            } else {
-//                return new AttributedString("Course is either just created, done, canceled or ongoing!", AttributedStyle.DEFAULT.foreground(AttributedStyle.RED));
-//            }
-//        }
-//        return new AttributedString("No action performed! Consult command instructions for help!");
-//    }
-//
-//    @ShellMethod(key = "alterCourseState", value = "Alter the course state (to open or done)")
-//    @ShellMethodAvailability("isAviable")
-//    public AttributedString alterCourse(@ShellOption("-i") String courseId, @ShellOption(value = "-o", arity = 0) boolean open, @ShellOption(value = "-c", arity = 0) boolean close) {
-//        if (open) {
-//            Optional<CourseDTO> dto = courseService.openCourse(courseId);
-//            if (dto.isPresent() && dto.get().state.equals("OPEN")) {
-//                return new AttributedString("Course is now currently open!", AttributedStyle.DEFAULT.foreground(AttributedStyle.GREEN));
-//            } else {
-//                return new AttributedString("Course is either just created, canceled, done or ongoing!", AttributedStyle.DEFAULT.foreground(AttributedStyle.RED));
-//            }
-//        }
-//        if (close) {
-//            Optional<CourseDTO> dto = courseService.closeEnrollments(courseId);
-//            if (dto.isPresent() && dto.get().state.equals("CLOSED")) {
-//                return new AttributedString("Course is now currently done!", AttributedStyle.DEFAULT.foreground(AttributedStyle.GREEN));
-//            } else {
-//                return new AttributedString("Course is either just created, waiting enrollments, canceled or wating to comence!", AttributedStyle.DEFAULT.foreground(AttributedStyle.RED));
-//            }
-//        }
-//        return new AttributedString("No action performed! Consult command instructions for help!");
-//    }
-
     @ShellMethod(key = "progressCourse", value = "Alter the course state accordint to its natural flux.")
     @ShellMethodAvailability("isAviable")
     public AttributedString progressCourse(@ShellOption("-i") String courseId) {
@@ -130,6 +94,35 @@ public class CourseManagementCommand {
         return opt.map(courseDTO -> new AttributedString(String.format("Course is currently %s!", courseDTO.state.name()),
                 AttributedStyle.DEFAULT.foreground(AttributedStyle.GREEN))).orElseGet(() -> new AttributedString("Course is invalid!",
                 AttributedStyle.DEFAULT.foreground(AttributedStyle.RED)));
+    }
+
+    @ShellMethod(key = "isetResponsibleTeacher")
+    public AttributedString assignTeacher(@ShellOption(value = "-m", arity = 0) boolean modify) {
+        System.out.println("Courses: ");
+        List<CourseDTO> cs = courseService.courses();
+        cs.stream().map(c -> new AttributedString(c.code, AttributedStyle.DEFAULT.foreground(AttributedStyle.CYAN))).forEach(System.out::println);
+        System.out.println();
+        System.out.println("Choose a course to assign user (code):");
+        Scanner sc = new Scanner(System.in);
+        String courseCode = sc.nextLine();
+        List<UserDTO> users = userService.teachers();
+        users.stream().map(u -> buildTeacherAttributedString(u)).forEach(System.out::println);
+        System.out.println();
+        System.out.println("Choose a teacher (id): ");
+        String userId = sc.nextLine();
+        Optional<CourseDTO> courseDTO = courseService.setResponsibleTeacher(courseCode, userId, CourseService.Option.REPLACE);
+        return new AttributedString(courseDTO.get().toString(), AttributedStyle.DEFAULT.foreground(AttributedStyle.CYAN));
+    }
+
+    private AttributedString buildTeacherAttributedString(UserDTO u) {
+        StringBuilder sb = new StringBuilder();
+        Optional<ProfileDTO> rawProfile = profileService.profileOfUser(u.id);
+        if (rawProfile.isEmpty()) {
+            throw new RuntimeException();
+        }
+        TeacherProfileDTO profile = ((TeacherProfileDTO) rawProfile.get());
+        sb.append(u.id).append(" - ").append(profile.acronym).append(" - ").append(u.fullName).append(" - ").append(u.status);
+        return new AttributedString(sb.toString(), AttributedStyle.DEFAULT.foreground(AttributedStyle.CYAN));
     }
 
 

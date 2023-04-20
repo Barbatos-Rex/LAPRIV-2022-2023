@@ -98,6 +98,21 @@ public class AuthzService implements barbatos_rex1.laprivcore.user.domain.AuthzS
     }
 
     @Override
+    public List<UserDTO> managers() {
+        return repo.findAllManagers().stream().map(mapper::toDTO).toList();
+    }
+
+    @Override
+    public List<UserDTO> teachers() {
+        return repo.findAllTeachers().stream().map(mapper::toDTO).toList();
+    }
+
+    @Override
+    public List<UserDTO> students() {
+        return repo.findAllStudents().stream().map(mapper::toDTO).toList();
+    }
+
+    @Override
     public List<UserDTO> allEnabled() {
         return repo.findAllEnabled().stream().map(mapper::toDTO).toList();
     }
@@ -129,5 +144,15 @@ public class AuthzService implements barbatos_rex1.laprivcore.user.domain.AuthzS
             return b;
         }
         return false;
+    }
+
+    @SneakyThrows
+    @Override
+    public Optional<UserDTO> user(String userId) {
+        Optional<User> user = repo.findById(StringId.from(userId));
+        if (user.isEmpty()) {
+            throw new BuisnessRuleViolationException("No user with such id!");
+        }
+        return user.map(mapper::toDTO);
     }
 }

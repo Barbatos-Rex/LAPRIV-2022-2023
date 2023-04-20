@@ -19,6 +19,6 @@ public interface ProfileService {
 
     Optional<ProfileDTO> delete(String userId);
 
-    Optional<ProfileDTO> path(ProfileDTO profile);
+    Optional<ProfileDTO> patch(ProfileDTO profile);
 
 }
