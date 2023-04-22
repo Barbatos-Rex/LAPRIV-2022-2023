@@ -1,10 +1,7 @@
 package barbatos_rex1.laprivcore.board.domain;
 
 import barbatos_rex1.laprivcore.shared.domain.StringId;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -22,8 +19,9 @@ public class BoardStateMemento {
     private static int maxAllowedStates;
 
 
-    @EmbeddedId
-    private StringId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @OneToOne
     private BoardStateMemento previousState;
@@ -31,10 +29,10 @@ public class BoardStateMemento {
     @OneToOne
     private BoardStateMemento nextState;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private BoardLog stateLog;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Post> postsStates;
 
     private static BoardStateMemento recursiveAppend(BoardStateMemento state, BoardStateMemento newState, int level) {

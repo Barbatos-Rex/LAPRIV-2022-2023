@@ -1,10 +1,7 @@
 package barbatos_rex1.laprivcore.board.domain;
 
 import barbatos_rex1.laprivcore.shared.domain.StringId;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.MapKeyColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Map;
@@ -17,8 +14,9 @@ import java.util.Map;
 @ToString
 public class BoardLog {
 
-    @EmbeddedId
-    private StringId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @OneToMany
     @MapKeyColumn(name = "board_alteration_entry")

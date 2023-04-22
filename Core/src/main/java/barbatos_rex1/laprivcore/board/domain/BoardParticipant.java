@@ -12,8 +12,9 @@ import lombok.*;
 @Builder
 @ToString
 public class BoardParticipant {
-    @EmbeddedId
-    private StringId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @ManyToOne
     private User user;

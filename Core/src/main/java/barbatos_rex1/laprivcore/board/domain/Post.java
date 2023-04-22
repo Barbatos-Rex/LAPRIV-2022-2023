@@ -1,9 +1,7 @@
 package barbatos_rex1.laprivcore.board.domain;
 
 import barbatos_rex1.laprivcore.shared.domain.StringId;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -13,13 +11,14 @@ import lombok.*;
 @Builder
 @ToString
 public class Post {
-    @EmbeddedId
-    private StringId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private BoardRow boardRow;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private BoardColumn boardBoardColumn;
 
     private PostContent postContent;

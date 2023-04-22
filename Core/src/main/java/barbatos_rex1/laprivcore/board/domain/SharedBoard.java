@@ -25,10 +25,10 @@ public class SharedBoard {
     @ManyToOne
     private BoardParticipant owner;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<BoardParticipant> boardParticipants = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private BoardStateMemento memento;
 
     @OneToMany

@@ -1,5 +1,6 @@
 package barbatos_rex1.laprivcore.board.domain;
 
+import barbatos_rex1.laprivcore.shared.domain.ValueObject;
 import jakarta.persistence.Embeddable;
 import lombok.*;
 
@@ -10,7 +11,7 @@ import java.util.Date;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @Getter
-public class TimeStamp {
+public class TimeStamp implements ValueObject {
 
     private Date stamp;
 
