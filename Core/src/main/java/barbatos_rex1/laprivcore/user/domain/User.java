@@ -1,13 +1,9 @@
 package barbatos_rex1.laprivcore.user.domain;
 
-import barbatos_rex1.laprivcore.course.domain.Course;
 import barbatos_rex1.laprivcore.personal_info.domain.Profile;
 import barbatos_rex1.laprivcore.shared.domain.StringId;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -40,16 +36,16 @@ public class User {
     private Profile profile;
 
     public boolean enableUser() {
-        if (status == Status.DISABLE) {
-            status = Status.ENABLE;
+        if (status == Status.DISABLED) {
+            status = Status.ENABLED;
             return true;
         }
         return false;
     }
 
     public boolean disableUser() {
-        if (status == Status.ENABLE) {
-            status = Status.DISABLE;
+        if (status == Status.ENABLED) {
+            status = Status.DISABLED;
             return true;
         }
         return false;

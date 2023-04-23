@@ -10,10 +10,10 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, StringId> {
 
 
-    @Query("SELECT u from User u WHERE u.status=barbatos_rex1.laprivcore.user.domain.Status.DISABLE")
+    @Query("SELECT u from User u WHERE u.status=barbatos_rex1.laprivcore.user.domain.Status.DISABLED")
     List<User> findAllDisabled();
 
-    @Query("SELECT u from User u WHERE u.status=barbatos_rex1.laprivcore.user.domain.Status.ENABLE")
+    @Query("SELECT u from User u WHERE u.status=barbatos_rex1.laprivcore.user.domain.Status.ENABLED")
     List<User> findAllEnabled();
 
     @Query("SELECT u FROM User u WHERE u.email=?1")

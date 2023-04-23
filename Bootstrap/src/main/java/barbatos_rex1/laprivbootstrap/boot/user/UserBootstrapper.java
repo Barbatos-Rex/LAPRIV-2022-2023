@@ -1,19 +1,20 @@
-package barbatos_rex1.laprivbootstrap.boot;
+package barbatos_rex1.laprivbootstrap.boot.user;
 
-import barbatos_rex1.laprivcore.personal_info.domain.ProfileDTO;
+import barbatos_rex1.laprivbootstrap.boot.Bootstrapper;
 import barbatos_rex1.laprivcore.user.domain.*;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.List;
 
 @Component
 @AllArgsConstructor
-public class UserBootstrapper implements CommandLineRunner, Bootstrapper {
+@Order(1)
+public class UserBootstrapper implements Bootstrapper {
 
     private AuthzService service;
     private UserPayload payload;
@@ -28,7 +29,7 @@ public class UserBootstrapper implements CommandLineRunner, Bootstrapper {
                 service.register(u);
                 logger.debug("User registered: "+u);
             }catch (Exception e){
-                logger.warn("User already registered: "+u);
+                logger.warn("Could not save user: "+u, e);
             }
         }
     }

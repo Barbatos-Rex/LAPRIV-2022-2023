@@ -1,5 +1,8 @@
 package barbatos_rex1.laprivcore.course.domain;
 
+import barbatos_rex1.laprivcore.shared.domain.exception.BuisnessRuleViolationException;
+
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,5 +34,7 @@ public interface CourseService {
 
     Optional<CourseDTO> course(String courseId);
 
-    Optional<CourseDTO> bulkEnrollment(String filePath);
+    List<BuisnessRuleViolationException> bulkEnrollment(InputStream stream);
+
+//    List<>
 }

@@ -84,7 +84,6 @@ public class UserManagementCommand {
     @ShellMethod(key = "setUserStatus", value = "Allows for enabling and disabling of users")
     @ShellMethodAvailability("isAviable")
     public AttributedString setUserStatus(@ShellOption(value = "-i") String userId, @ShellOption(arity = 0, value = "-d") boolean disable) {
-
         boolean bol;
         String message;
         if (disable) {

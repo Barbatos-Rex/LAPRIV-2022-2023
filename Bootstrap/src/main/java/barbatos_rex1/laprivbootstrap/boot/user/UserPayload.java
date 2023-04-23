@@ -1,4 +1,4 @@
-package barbatos_rex1.laprivbootstrap.boot;
+package barbatos_rex1.laprivbootstrap.boot.user;
 
 import barbatos_rex1.laprivcore.personal_info.domain.ProfileDTO;
 import barbatos_rex1.laprivcore.personal_info.domain.StudentProfileDTO;
@@ -6,11 +6,11 @@ import barbatos_rex1.laprivcore.personal_info.domain.TeacherProfileDTO;
 import barbatos_rex1.laprivcore.user.domain.CreateUserDTO;
 import barbatos_rex1.laprivcore.user.domain.Role;
 import barbatos_rex1.laprivcore.user.domain.Status;
-import barbatos_rex1.laprivcore.user.domain.User;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
@@ -20,6 +20,7 @@ import java.util.List;
 
 @Component
 @Getter
+@Order(1)
 public class UserPayload {
 
     private List<CreateUserDTO> payload;
@@ -92,7 +93,7 @@ public class UserPayload {
     }
 
     private List<Status> buildStatus() {
-        return List.of(Status.ENABLE,Status.ENABLE,Status.ENABLE,Status.DISABLE,Status.ENABLE);
+        return List.of(Status.ENABLED,Status.ENABLED,Status.ENABLED,Status.DISABLED,Status.ENABLED);
     }
 
     private List<String> buildSNames() {

@@ -9,5 +9,5 @@ public interface Bootstrapper extends CommandLineRunner {
     @Override
     default void run(String... args) throws Exception{
         boot();
-    };
+    }
 }

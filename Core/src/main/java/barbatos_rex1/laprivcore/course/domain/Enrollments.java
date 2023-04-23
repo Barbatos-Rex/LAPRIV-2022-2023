@@ -6,8 +6,9 @@ import barbatos_rex1.laprivcore.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -21,7 +22,7 @@ public class Enrollments {
     private Long id;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="enrolled_students")
+    @JoinTable(name = "enrolled_students")
     private Set<User> students;
 
     public int number() {
@@ -29,10 +30,14 @@ public class Enrollments {
     }
 
     @SneakyThrows
-    public boolean add(User student){
-        if(student.getRole()!= Role.STUDENT){
+    public boolean add(User student) {
+        if (student.getRole() != Role.STUDENT) {
             throw new BuisnessRuleViolationException("Cannot request enrollment unless you are a student!");
         }
         return students.add(student);
+    }
+
+    public void remove(User user) {
+        students=students.stream().filter(u -> !u.getId().equals(user.getId())).collect(Collectors.toSet());
     }
 }

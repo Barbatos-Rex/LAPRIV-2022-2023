@@ -11,8 +11,11 @@ import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
 import java.util.function.Function;
 
 @Service
@@ -96,6 +99,10 @@ public class CourseService implements barbatos_rex1.laprivcore.course.domain.Cou
             throw new BuisnessRuleViolationException(String.format("No user with id %s", teacherId));
         }
 
+        if (course.get().getAuxilaryTeachers().getAuxilaryTeachers().contains(user.get())) {
+            throw new BuisnessRuleViolationException("Teacher in question is an auxilary teacher!");
+        }
+
         if (option == Option.ADD) {
             course.get().assignResponsibleTeacher(user.get());
         } else {
@@ -120,13 +127,17 @@ public class CourseService implements barbatos_rex1.laprivcore.course.domain.Cou
         if (user.isEmpty()) {
             throw new BuisnessRuleViolationException(String.format("No user with id %s", teacherId));
         }
-
-        try {
-            Validations.isFalse(course.get().getResponsibleTeacher().getId().equals(user.get().getId()));
-        } catch (Exception e) {
-            throw new BuisnessRuleViolationException("Teacher in question is already responsible for this course!",e);
+        if (course.get().getAuxilaryTeachers() == null) {
+            throw new BuisnessRuleViolationException("Error");
         }
-
+        try {
+            if (course.get().getResponsibleTeacher() != null) {
+                Validations.isFalse(course.get().getResponsibleTeacher().getId().equals(user.get().getId()));
+            }
+        } catch (Exception e) {
+            throw new BuisnessRuleViolationException("Teacher in question is already responsible for this course!", e);
+        }
+        course.get().getAuxilaryTeachers().add(user.get());
         Course c = repo.save(course.get());
         if (c == null) {
             return Optional.empty();
@@ -176,7 +187,42 @@ public class CourseService implements barbatos_rex1.laprivcore.course.domain.Cou
 
 
     @Override
-    public Optional<CourseDTO> bulkEnrollment(String filePath) {
-        throw new UnsupportedOperationException("Not implemented yet");
+    public List<BuisnessRuleViolationException> bulkEnrollment(InputStream stream) {
+        Scanner sc = new Scanner(stream);
+        //Skip header
+        sc.nextLine();
+        int lineCounter = 1;
+        List<BuisnessRuleViolationException> errors = new ArrayList<>();
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            String[] components = line.split(",");
+            String userId = components[0];
+            Optional<User> user;
+            try {
+                user = userRepo.findById(StringId.from(userId));
+                if (user.isEmpty()) {
+                    throw new BuisnessRuleViolationException(String.format("There is no user with such id (%s)!", userId));
+                }
+            } catch (Exception e) {
+                errors.add(new BuisnessRuleViolationException(String.format("Error while parsing user id on line %d, ignoring line", lineCounter), e));
+                continue;
+            }
+            for (int i = 1; i < components.length; i++) {
+                String courseCode = components[i];
+                try {
+                    Optional<Course> course = repo.findById(Code.from(courseCode));
+                    if (course.isEmpty()) {
+                        throw new BuisnessRuleViolationException(String.format("There is no Course with code %s!", courseCode));
+                    }
+                    course.get().getRequestedEnrollments().remove(user.get());
+                    course.get().getEnrolledStudents().add(user.get());
+                    repo.save(course.get());
+                } catch (Exception e) {
+                    errors.add(new BuisnessRuleViolationException(String.format("Could not find Course with code %s, ignoring entry %d on line %d", i, lineCounter), e));
+                }
+            }
+            lineCounter++;
+        }
+        return errors;
     }
 }

@@ -19,7 +19,7 @@ public class Name {
     public static Name from(String name) throws BuisnessRuleViolationException{
         try {
             Validations.areNonBlack(name);
-            Validations.matches(name,"^(\\p{L}{2,}|\\d{9})$");
+            Validations.matches(name,"^(\\p{L}{2,}|\\d{5,})$");
         } catch (ValidationException e) {
             throw new BuisnessRuleViolationException("Name's rules violated!",e);
         }

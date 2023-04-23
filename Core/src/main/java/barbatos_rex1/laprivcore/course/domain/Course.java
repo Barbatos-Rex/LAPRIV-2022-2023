@@ -7,7 +7,6 @@ import barbatos_rex1.laprivcore.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 
@@ -31,13 +30,13 @@ public class Course {
     @ManyToOne
     private User responsibleTeacher;
 
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Teachers auxilaryTeachers;
 
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Enrollments enrolledStudents;
 
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Enrollments requestedEnrollments;
 
     @Enumerated(value = EnumType.STRING)
@@ -77,22 +76,25 @@ public class Course {
         if (auxilaryTeachers == null) {
             auxilaryTeachers = Teachers.builder().auxilaryTeachers(new HashSet<>()).build();
         }
+        if (requestedEnrollments == null) {
+            requestedEnrollments = Enrollments.builder().students(new HashSet<>()).build();
+        }
     }
 
     @SneakyThrows
-    public void assignResponsibleTeacher(User user){
-        if(responsibleTeacher!=null){
+    public void assignResponsibleTeacher(User user) {
+        if (responsibleTeacher != null) {
             throw new BuisnessRuleViolationException("Course already has responsible teacher!");
         }
         replaceResponsibleTeacher(user);
     }
 
     @SneakyThrows
-    public void replaceResponsibleTeacher(User user){
-        if (user.getRole()!= Role.TEACHER){
+    public void replaceResponsibleTeacher(User user) {
+        if (user.getRole() != Role.TEACHER) {
             throw new BuisnessRuleViolationException("Assigned user to course responsible is not a teacher");
         }
-        responsibleTeacher=user;
+        responsibleTeacher = user;
     }
 
 }

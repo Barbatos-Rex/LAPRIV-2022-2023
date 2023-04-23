@@ -3,6 +3,7 @@ package barbatos_rex1.laprivcore.user.service;
 import barbatos_rex1.laprivcore.personal_info.domain.ProfileRepository;
 import barbatos_rex1.laprivcore.shared.domain.StringId;
 import barbatos_rex1.laprivcore.shared.domain.exception.BuisnessRuleViolationException;
+import barbatos_rex1.laprivcore.shared.domain.exception.ValidationException;
 import barbatos_rex1.laprivcore.shared.utils.Validations;
 import barbatos_rex1.laprivcore.user.domain.*;
 import lombok.SneakyThrows;
@@ -36,7 +37,7 @@ public class AuthzService implements barbatos_rex1.laprivcore.user.domain.AuthzS
 
         var user = repo.findByEmail(Email.from(email));
 
-        if (user.isEmpty() || user.get().getStatus() == Status.DISABLE) {
+        if (user.isEmpty() || user.get().getStatus() == Status.DISABLED) {
             return Optional.empty();
         }
 
@@ -57,8 +58,10 @@ public class AuthzService implements barbatos_rex1.laprivcore.user.domain.AuthzS
         var u = mapper.toDomain(user);
         try {
             Validations.isFalse(repo.findByEmail(Email.from(user.email)).isPresent());
-        } catch (BuisnessRuleViolationException e) {
+        } catch (ValidationException e) {
             throw new BuisnessRuleViolationException("Email in question already in use!", e);
+        }catch (BuisnessRuleViolationException ex){
+            throw new BuisnessRuleViolationException(String.format("%s is not a valid email!", user.email),ex);
         }
         profileRepository.save(u.getProfile());
         var us = repo.save(u);

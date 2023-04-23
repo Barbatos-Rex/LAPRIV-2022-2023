@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-
 @Component
 @AllArgsConstructor
 public class UserMapper {
@@ -24,7 +22,7 @@ public class UserMapper {
         builder.id(userId).shortName(Name.from(dto.shortName)).
                 fullName(FullName.from(dto.fullName)).email(Email.from(dto.email))
                 .role(dto.role).password(Password.secure(userId.getId(), dto.password))
-                .status(Status.ENABLE);
+                .status(Status.ENABLED);
         dto.profile.id = dto.id;
         builder.profile(profileMapper.toDomain(dto.profile));
         return builder.build();
