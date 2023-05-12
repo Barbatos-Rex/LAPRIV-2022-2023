@@ -4,8 +4,8 @@ import java.net.Socket;
 
 public interface LAPRIVCommunicationProtocol {
 
-    boolean send(Packet packet);
-    Packet recieve();
+    boolean send(Object object, ProtocolOption code);
+    PacketPair recieve();
 
     Socket connection();
 

@@ -9,7 +9,8 @@ public enum ProtocolOption {
     DISCONN(Byte.parseByte("1")),
     ACK(Byte.parseByte("2")),
     ERR(Byte.parseByte("3")),
-    AUTH(Byte.parseByte("4"));
+    AUTH(Byte.parseByte("4")),
+    SEGMENT(Byte.parseByte("-127"));
 
     private byte option;
 
