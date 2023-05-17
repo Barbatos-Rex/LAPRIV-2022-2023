@@ -10,7 +10,7 @@ pools_body: pool COMA pools_body | pool;
 
 pool: '{'NAME COLLUMN STRING COMA QUESTIONS COLLUMN questions '}';
 
-questions: '[' questions_body ']';
+questions: '[' (questions_body|) ']';
 questions_body: question_body COMA questions_body | question_body;
 
 question_body: '{' PROMPT COLLUMN prompt_string=STRING COMA BODY COLLUMN '{' body '}' COMA DIFFICULTY COLLUMN INT '}';

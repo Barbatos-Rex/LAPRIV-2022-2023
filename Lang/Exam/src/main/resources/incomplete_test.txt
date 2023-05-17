@@ -17,7 +17,7 @@ pools: [
             code: numerical,
             awnser: 120
           },
-          difficulty: 3
+          difficulty: 6
         },
         {
         prompt: "Complete the following code in such way that the output to the standard output is correct:",
@@ -46,7 +46,7 @@ pools: [
                 6: "sum++"
             }
         },
-        difficulty: 11
+        difficulty: 16
         },
         {
             prompt: "Replace ??? with the correct awnser (use spaces between tokens):\n\n
@@ -64,9 +64,126 @@ pools: [
                 code: short-awnser,
                 awnser: "1 ; i < 7 ; i++"
             },
+            difficulty: 2
+        },{
+            prompt: "Match the following questions to their respective awnser",
+            body: {
+                code: matching,
+                questions: [{iid: 0,prompt: "What is the difference between fori and foreach in Java?"},{iid:1,prompt:"What is polymorphism?"},{iid:2,prompt:"What is the defference between static and no static members?"},{iid:3,prompt:"What is the diffference between generic algorithms and non generic algorithms?"}],
+                awnsers: [{iid:0,prompt: "The first uses a counter to progess the looping logic while the other iterates over a collection of elements."},
+                {iid:1, prompt: "The property of replacing the implementation of a give protion of code with multiple implementation, given they have the same signature."},{iid:2,prompt:"While the first is not implementation specific, the secound is implementation specific."},{iid:3,
+                prompt:"While the first focus on behaviour that is communt to any data type, the secound restricts to a public interface of a given data type."}]
+            },
+            difficulty: 8
+        },
+        {
+            prompt: "Is there any defferences between For loops and While loops?",
+            body: {
+                code: multiple-choice,
+                options: [{prompt: "For loops are goal driven while While loops can make use of the Iterable interface",valid: false},
+                {prompt: "While loops are goal driven while For loops can make use of the Iterable interface",valid: true},
+                {prompt: "There is no difference. Both are goal driven",valid: false},
+                {prompt: "There is no difference. Both can make use of the Iterable interface",valid: false}]
+            },
+            difficulty: 4
+        },
+        {
+            prompt: "The complexity of binary search is O(log(n)) being the faster searching algorithm in any array.",
+            body: {
+                code: true-false,
+                awnser: false
+            },
+            difficulty: 6
+        },
+        {
+            prompt: "Generally speaking, O(n) algorithms are always faster than O(n^2)",
+            body: {
+                code: true-false,
+                awnser: false
+            },
+            difficulty: 4
+        },
+        {
+            prompt: "The Map interface is a Collection",
+            body:{
+                code: true-false,
+                awnser: false
+            },
+            difficulty: 3
+        },
+        {
+            prompt: "The List interface is a Collecation",
+            body:{
+                code: true-false,
+                awnser: true
+            },
             difficulty: 1
+        },
+        {
+            prompt: "Scanner is one way of reading from a Input Stream",
+            body:{
+                code: true-false,
+                awnser: true
+            },
+            difficulty: 2
+        },
+        {
+            prompt: "Generally, O(n) algorithms will out-perform O(n^2) when the ammount of inputs are very large",
+             body:{
+                 code: true-false,
+                 awnser: true
+             },
+             difficulty: 2
+        },
+        {
+            prompt: "Choose the correct option:",
+            body: {
+                code: multiple-choice,
+                options: [{prompt: "Both List and Set interfaces are Collections.",valid: true},{prompt: "List is a Collection while Set is not",valid: false},
+                {prompt: "Neither Set nor List are Collections", valid: false},{prompt: "Set is a Collection while List is not",valid: false}]
+            },
+            difficulty: 4
         }
     ]
+    },
+    {
+        name: "Syntax",
+        questions: [{
+            prompt: "Which is a valid main declaration in Java?",
+            body: {
+                code:multiple-choice,
+                options: [{prompt: "public static main(String[] args)",valid: false},{prompt: "public void main(String[] args)",valid: false},
+                {prompt: "public static void main()",valid: false},{prompt: "public staic void main(String maria[])",valid: true}]
+            },
+            difficulty: 3
+        },
+        {
+            prompt: "Complete the following text:",
+            body:{
+                code:missing-words,
+                text: "Like many languages Java is a @0@ language, which means that Java @1@ is @2@ into @3@, in Java's case, @4@.
+                However, other languages can be @5@ languages, which means that said languages, like Python, @6@.
+                 Having said that, Java is @7@ typed, allowing for @8@ between data types at @12@. In adition to that, Java alows the @9@ of
+                 methods and functions, alowing multiple of them have the same @10@, as long as their @11@ is diferent.",
+                 keys: {
+                    0: "Compiled",
+                    1: "Source Code",
+                    2: "Converted",
+                    3: "Machine Code",
+                    4: "Byte Code",
+                    5: "Interpreted",
+                    6: "Execute code line by line",
+                    7: "Strongly",
+                    8: "Distinguish",
+                    12: "Compile Time",
+                    9: "Overloading",
+                    10: "Name",
+                    11: "Signature"
+                 }
+            },
+            difficulty: 11
+        }
+        ]
     }
 ]
 
@@ -81,15 +198,15 @@ exam{
     sections: [{
         id: "syntax",
         description: "Java Syntax",
-        difficulty: 35,
+        difficulty: 50,
         limitQuestion: 15,
         pool: "Syntax"
         },
         {
         id:               "algorithm",
         description: "Imperative Programming in Java",
-        difficulty: 50,
-        limitQuestion: 50,
+        difficulty: 35,
+        limitQuestion: 10,
         pool: "Algorithm"
         }
     ]
