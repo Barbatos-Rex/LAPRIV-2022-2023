@@ -19,6 +19,9 @@ public class Pool {
     private List<Question> questions;
 
     public List<Question> genQuestionsUsing(int difficulty, int limitQuestions) {
+
+        limitQuestions = limitQuestions >0 ? limitQuestions : questions.size();
+
         Random random=new Random();
         if (random.nextBoolean()) {
             //Big to Small

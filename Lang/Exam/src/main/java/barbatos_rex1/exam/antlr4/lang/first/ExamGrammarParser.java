@@ -1,13 +1,10 @@
 // Generated from D:/Repos/LAPRIV-2022-23/Lang/langs/exam\ExamGrammar.g4 by ANTLR 4.12.0
-package barbatos_rex1.exam.antlr4.lang;
+package barbatos_rex1.exam.antlr4.lang.first;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
 import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast", "CheckReturnValue"})
 public class ExamGrammarParser extends Parser {

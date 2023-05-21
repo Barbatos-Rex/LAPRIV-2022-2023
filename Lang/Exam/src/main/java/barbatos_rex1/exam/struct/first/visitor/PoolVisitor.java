@@ -1,14 +1,13 @@
-package barbatos_rex1.exam.struct.visitor;
+package barbatos_rex1.exam.struct.first.visitor;
 
-import barbatos_rex1.exam.antlr4.lang.ExamGrammarBaseVisitor;
-import barbatos_rex1.exam.antlr4.lang.ExamGrammarParser;
+import barbatos_rex1.exam.antlr4.lang.first.ExamGrammarBaseVisitor;
+import barbatos_rex1.exam.antlr4.lang.first.ExamGrammarParser;
 import barbatos_rex1.exam.primitive.Pool;
 import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 @Getter
 public class PoolVisitor extends ExamGrammarBaseVisitor<Object> {

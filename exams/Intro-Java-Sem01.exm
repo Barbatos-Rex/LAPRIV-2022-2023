@@ -1,0 +1,35 @@
+{
+  "header": {
+    "feedback": "AFTER_CLOSING",
+    "grading": "AFTER_CLOSING",
+    "description": "aacaca"
+  },
+  "title": "chbkjabckja",
+  "sections": [{
+    "questions": [
+      {
+        "difficulty": 5,
+        "code": "NUMERICAL",
+        "idCode": "5ea08b9ed3abbae6",
+        "prompt": "What is the result of the following expression?\n (1 | 0 ) & (~ 1 v 0)",
+        "awnser": 0
+      },
+      {
+        "difficulty": 5,
+        "code": "NUMERICAL",
+        "idCode": "244990a0ca4211e0",
+        "prompt": "What is the result of the following expression?\n (1 | 0 ) & (~ 1 v 0)",
+        "awnser": 0
+      },
+      {
+        "difficulty": 5,
+        "code": "NUMERICAL",
+        "idCode": "ccc3d60106d8a938",
+        "prompt": "What is the result of the following expression?\n (1 | 0 ) & (~ 1 v 0)",
+        "awnser": 0
+      }
+    ],
+    "description": "Some Knoladge",
+    "dificulty": 15
+  }]
+}

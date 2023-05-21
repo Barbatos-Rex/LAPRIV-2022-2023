@@ -2,22 +2,6 @@ package barbatos_rex1;
 
 import barbatos_rex1.exam.ExamCompiler;
 import barbatos_rex1.exam.ExamVisitorCompiler;
-import barbatos_rex1.exam.antlr4.lang.ExamGrammarBaseVisitor;
-import barbatos_rex1.exam.antlr4.lang.ExamGrammarLexer;
-import barbatos_rex1.exam.antlr4.lang.ExamGrammarParser;
-import barbatos_rex1.exam.factory.Exam;
-import barbatos_rex1.exam.factory.ExamFactory;
-import barbatos_rex1.exam.primitive.ExamPrototype;
-import barbatos_rex1.exam.primitive.Header;
-import barbatos_rex1.exam.struct.visitor.StartVisitor;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.TokenStream;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 
 public class Main {
 

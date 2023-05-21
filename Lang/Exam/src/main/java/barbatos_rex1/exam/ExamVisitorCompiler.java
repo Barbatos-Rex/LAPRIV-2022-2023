@@ -1,11 +1,11 @@
 package barbatos_rex1.exam;
 
-import barbatos_rex1.exam.antlr4.lang.ExamGrammarLexer;
-import barbatos_rex1.exam.antlr4.lang.ExamGrammarParser;
+import barbatos_rex1.exam.antlr4.lang.first.ExamGrammarLexer;
+import barbatos_rex1.exam.antlr4.lang.first.ExamGrammarParser;
 import barbatos_rex1.exam.factory.Exam;
 import barbatos_rex1.exam.factory.ExamFactory;
 import barbatos_rex1.exam.primitive.ExamPrototype;
-import barbatos_rex1.exam.struct.visitor.StartVisitor;
+import barbatos_rex1.exam.struct.first.visitor.StartVisitor;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.SneakyThrows;

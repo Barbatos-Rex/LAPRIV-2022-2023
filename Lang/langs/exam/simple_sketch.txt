@@ -1,0 +1,65 @@
+
+
+define question pool "pool1":
+
+matching question
+PROMPT
+questions:
+INT <-> STRING
+INT <-> STRING
+INT <-> STRING
+Int <-> STRING
+answers:
+INT <-> STRING
+INT <-> STRING
+INT <-> STRING
+Int <-> STRING
+difficulty: INT
+
+multiple-choice question
+PROMPT
+STRING <-> BOOLEAN
+STRING <-> BOOLEAN
+STRING <-> BOOLEAN
+STRING <-> BOOLEAN
+difficulty: INT
+
+short-answer question
+PROMPT
+STRING
+
+numerical question
+PROMPT
+NUMBER
+difficulty: INT
+
+missing-words question
+PROMPT
+TEXT
+keys:
+INT <-> STRING
+INT <-> STRING
+INT <-> STRING
+INT <-> STRING
+INT <-> STRING
+INT <-> STRING
+INT <-> STRING
+difficulty: INT
+
+true or false question
+PROMPT
+BOOLEAN
+difficulty: INT
+
+
+
+define some section with id STRING, description STRING, maximum difficulty of INT, maximum number of question of INT (OPTIONAL)
+using pool STRING.
+
+export exam with title STRING, description STRING, grading HEADER_OPTION, feedback HEADER_OPTION and sections [STRING,STRING,STRING,STRING,...]
+as STRING
+
+
+
+
+

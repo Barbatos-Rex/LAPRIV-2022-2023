@@ -1,0 +1,124 @@
+define question pool "pool1":
+
+matching question
+"Match the following questions to their respective awnser"
+questions :
+0<->"What is the difference between fori and foreach in Java?"
+1<->"What is polymorphism?"
+2<->"What is the defference between static and no static members?"
+3<->"What is the diffference between generic algorithms and non generic algorithms?"
+answers:
+1<->"The property of replacing the implementation of a give protion of code with multiple implementation, given they have the same signature."
+0<->"The first uses a counter to progess the looping logic while the other iterates over a collection of elements."
+3<->"While the first focus on behaviour that is commun to any data type, the secound restricts to a public interface of a given data type."
+2<->"While the first is not implementation specific, the secound is implementation specific."
+difficulty : 8
+
+numerical question
+"What is the result printed to the standard output of the following code:\n
+           public static int mystery(int n){\n
+           \tif(n==0){\n
+           \t\treturn 1;\n
+           \t}\n
+           \treturn mystery(n-1);\n
+           }\n
+           \n
+           public static void main(String[] args){\n
+           \tSystem.out.println(mystery(5));\n
+           }"
+120.0
+difficulty: 6
+
+missing words question
+"Complete the following code in such way that the output to the standard output is correct:"
+"public static @1@ countRepeatedElements(int[] arr, int elem){\n
+            \t@2@;\n
+            \tfor(@3@;i<@4@;i++){\n
+                \t\tif(@5@){\n
+                \t\t\t@6@;\n
+            \t\t}\n
+            @7@;
+            }\n
+            public static void main(String[] args){\n
+            \tSystem.out.println(countRepeatedElements(new int[]{1,5,2,2,4,3,5,5,6,7,8,1},@8@));
+            }\n\n
+            Standard Output:\n3"
+keys:
+1 <-> "int"
+2 <-> "int sum=0"
+4<-> "arr.length()"
+3<-> "int i=0"
+                8<-> "5"
+                5<-> "arr[i]==elem"
+                7<-> "return sum"
+                6<-> "sum++"
+
+difficulty: 16
+
+short answer question
+"Replace ??? with the correct awnser (use spaces between tokens):\n\n
+            public static void main(String[] args){\n
+            \tList<Integer> l = new ArrayList<>();
+            \tint n = 1;\n
+            \tfor(int i = 1 ; ???){\n
+            \t\tn*=i;\n
+
+            \t}
+            \tSystem.out.println(n);\n
+            }\n
+            Standard Output: [1,2,6,24,120,720]\n"
+"i < 7 ; i++"
+difficulty: 2
+
+multiple choice question
+"Is there any defferences between For loops and While loops?"
+"For loops are goal driven while While loops can make use of the Iterable interface" <-> false
+"While loops are goal driven while For loops can make use of the Iterable interface" <-> true
+"There is no difference. Both are goal driven" <-> false
+"There is no difference. Both can make use of the Iterable interface" <-> false
+difficulty: 4
+
+true or false question
+"The complexity of binary search is O(log(n)) being the fastest searching algorithm in any array."
+false
+difficulty: 6
+
+true or false question
+"Generally speaking, O(n) algorithms are always faster than O(n^2)"
+false
+difficulty: 4
+
+true or false question
+"The Map interface is a Collection"
+false
+difficulty: 3
+
+true or false question
+"The List interface is a Collecation"
+true
+difficulty: 1
+
+true or false question
+"Scanner is one way of reading from a Input Stream"
+true
+difficulty: 2
+
+true or false question
+"Generally, O(n) algorithms will out-perform O(n^2) when the ammount of inputs are very large"
+true
+difficulty: 2
+
+multiple choice question
+"Choose the correct option:"
+"Both List and Set interfaces are Collections." <-> true
+"List is a Collection while Set is not" <-> false
+"Neither Set nor List are Collections" <-> false
+"Set is a Collection while List is not" <-> false
+difficulty: 4
+
+define some section with id "Algorithm", description "Imperative Programming in Java", maximum
+difficulty of 35, using pool "pool1"
+
+export exam with title "Introduction of Java - First Quarter Exam",
+description "The first of two exams of introduction for the Java language",
+grading on submission, feedback none and sections ["Algorithm"] as "Intro-Java-Sem01-01"

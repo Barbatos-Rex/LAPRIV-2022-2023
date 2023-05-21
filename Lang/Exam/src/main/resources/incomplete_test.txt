@@ -53,7 +53,7 @@ pools: [
             public static void main(String[] args){\n
             \tList<Integer> l = new ArrayList<>();
             \tint n = 1;\n
-            \tfor(int i = ???){\n
+            \tfor(int i = 1 ; ???){\n
             \t\tn*=i;\n
 
             \t}
@@ -62,7 +62,7 @@ pools: [
             Standard Output: [1,2,6,24,120,720]\n",
             body: {
                 code: short-awnser,
-                awnser: "1 ; i < 7 ; i++"
+                awnser: "i < 7 ; i++"
             },
             difficulty: 2
         },{

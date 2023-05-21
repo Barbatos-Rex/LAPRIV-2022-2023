@@ -1,5 +1,5 @@
 // Generated from D:/Repos/LAPRIV-2022-23/Lang/langs/exam\ExamGrammar.g4 by ANTLR 4.12.0
-package barbatos_rex1.exam.antlr4.lang;
+package barbatos_rex1.exam.antlr4.lang.first;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
