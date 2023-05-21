@@ -71,43 +71,43 @@ sections_arr: STRING COMA sections_arr | STRING;
 
 
 //TOKENS
-MATCHING: 'matching';
-RELATOR: '<->';
-DEFINE: 'define';
-SOME: 'some';
-SECTION: 'section';
-ID: 'id';
-MAXIMUM: 'maximum';
-DIFFICULTY: 'difficulty';
-OF: 'of';
-USING: 'using';
-POOL: 'pool';
-EXPORT: 'export';
-EXAM : 'exam';
-WITH : 'with';
-TITLE : 'title';
-COMA : ',';
-DESCRIPTION : 'description';
-GRADING : 'grading';
-FEEDBACK : 'feedback';
 AND : 'and';
-SECTIONS : 'sections';
-LARR : '[';
-RARR : ']';
-NUMBER: 'number';
-QUESTIONS: 'questions';
-QUESTION: 'question';
 ANSWERS: 'answers';
-KEYS : 'keys';
-COL : ':';
 AS : 'as';
+COL : ':';
+COMA : ',';
+DEFINE: 'define';
+DESCRIPTION : 'description';
+DIFFICULTY: 'difficulty';
+EXAM : 'exam';
+EXPORT: 'export';
+FEEDBACK : 'feedback';
+GRADING : 'grading';
+ID: 'id';
+KEYS : 'keys';
+LARR : '[';
+MATCHING: 'matching';
+MAXIMUM: 'maximum';
+NUMBER: 'number';
+OF: 'of';
+POOL: 'pool';
+QUESTION: 'question';
+QUESTIONS: 'questions';
+RARR : ']';
+RELATOR: '<->';
+SECTION: 'section';
+SECTIONS : 'sections';
+SOME: 'some';
+TITLE : 'title';
+USING: 'using';
+WITH : 'with';
 
 //PRIMITIVES
 STRING : '"' ~'"'+ '"';
 HEADER_OPTION : 'none'|'on submission'|'after closing';
 INT: [1-9][0-9]* | '0';
 BOOLEAN: 'true'|'false';
-REAL : ([1-9][0-9]*|'0')?'.'([0-9]*[1-9]|'0');
+REAL : '-'?([1-9][0-9]*|'0')?'.'([0-9]*[1-9]|'0');
 
 //SKIP
 WS: [ \t\r\n]->skip;
