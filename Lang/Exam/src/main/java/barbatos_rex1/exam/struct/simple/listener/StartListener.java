@@ -63,7 +63,11 @@ public class StartListener extends SimpleExamGrammarBaseListener {
 
     @Override
     public void enterSection_maximum_number_of_questions(SimpleExamGrammarParser.Section_maximum_number_of_questionsContext ctx) {
-        this.maxNumberQuestions = Integer.getInteger(ctx.INT().getText());
+        try {
+            this.maxNumberQuestions = Integer.getInteger(ctx.INT().getText());
+        } catch (Exception e) {
+            this.maxNumberQuestions=-1;
+        }
     }
 
     @SneakyThrows
@@ -96,6 +100,6 @@ public class StartListener extends SimpleExamGrammarBaseListener {
 
     @Override
     public void enterSections_arr(SimpleExamGrammarParser.Sections_arrContext ctx) {
-        enteringSections.add(ctx.STRING().getText());
+        enteringSections.add(ctx.STRING().getText().replace("\"",""));
     }
 }

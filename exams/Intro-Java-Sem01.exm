@@ -10,21 +10,21 @@
       {
         "difficulty": 5,
         "code": "NUMERICAL",
-        "idCode": "5ea08b9ed3abbae6",
+        "idCode": "57d1e6c751cca15a",
         "prompt": "What is the result of the following expression?\n (1 | 0 ) & (~ 1 v 0)",
         "awnser": 0
       },
       {
         "difficulty": 5,
         "code": "NUMERICAL",
-        "idCode": "244990a0ca4211e0",
+        "idCode": "d2833aa52cc3d020",
         "prompt": "What is the result of the following expression?\n (1 | 0 ) & (~ 1 v 0)",
         "awnser": 0
       },
       {
         "difficulty": 5,
         "code": "NUMERICAL",
-        "idCode": "ccc3d60106d8a938",
+        "idCode": "4c50d97b73e367cb",
         "prompt": "What is the result of the following expression?\n (1 | 0 ) & (~ 1 v 0)",
         "awnser": 0
       }

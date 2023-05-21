@@ -1,4 +1,4 @@
-// Generated from C:/Users/Andre/Desktop/ARQSOFT/LAPRIV-2022-2023/Lang/langs/exam\SimpleExamGrammar.g4 by ANTLR 4.12.0
+// Generated from D:/Repos/LAPRIV-2022-23/Lang/langs/exam\SimpleExamGrammar.g4 by ANTLR 4.12.0
 package barbatos_rex1.exam.antlr4.lang.simple;
 
 import org.antlr.v4.runtime.ParserRuleContext;

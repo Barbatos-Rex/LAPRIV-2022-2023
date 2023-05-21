@@ -1,4 +1,4 @@
-// Generated from C:/Users/Andre/Desktop/ARQSOFT/LAPRIV-2022-2023/Lang/langs/exam\SimpleExamGrammar.g4 by ANTLR 4.12.0
+// Generated from D:/Repos/LAPRIV-2022-23/Lang/langs/exam\SimpleExamGrammar.g4 by ANTLR 4.12.0
 package barbatos_rex1.exam.antlr4.lang.simple;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -141,6 +141,11 @@ public class SimpleExamGrammarParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SimpleExamGrammarListener ) ((SimpleExamGrammarListener)listener).exitStart(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpleExamGrammarVisitor ) return ((SimpleExamGrammarVisitor<? extends T>)visitor).visitStart(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final StartContext start() throws RecognitionException {
@@ -222,6 +227,11 @@ public class SimpleExamGrammarParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SimpleExamGrammarListener ) ((SimpleExamGrammarListener)listener).exitPool(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpleExamGrammarVisitor ) return ((SimpleExamGrammarVisitor<? extends T>)visitor).visitPool(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final PoolContext pool() throws RecognitionException {
@@ -274,6 +284,11 @@ public class SimpleExamGrammarParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SimpleExamGrammarListener ) ((SimpleExamGrammarListener)listener).exitPool_body(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpleExamGrammarVisitor ) return ((SimpleExamGrammarVisitor<? extends T>)visitor).visitPool_body(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -345,6 +360,11 @@ public class SimpleExamGrammarParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SimpleExamGrammarListener ) ((SimpleExamGrammarListener)listener).exitPool_body_atomic(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpleExamGrammarVisitor ) return ((SimpleExamGrammarVisitor<? extends T>)visitor).visitPool_body_atomic(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Pool_body_atomicContext pool_body_atomic() throws RecognitionException {
@@ -413,6 +433,8 @@ public class SimpleExamGrammarParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class MatchingContext extends ParserRuleContext {
+		public Matching_mapContext ques;
+		public Matching_mapContext asnw;
 		public TerminalNode MATCHING() { return getToken(SimpleExamGrammarParser.MATCHING, 0); }
 		public TerminalNode QUESTION() { return getToken(SimpleExamGrammarParser.QUESTION, 0); }
 		public TerminalNode STRING() { return getToken(SimpleExamGrammarParser.STRING, 0); }
@@ -421,15 +443,15 @@ public class SimpleExamGrammarParser extends Parser {
 		public TerminalNode COL(int i) {
 			return getToken(SimpleExamGrammarParser.COL, i);
 		}
+		public TerminalNode ANSWERS() { return getToken(SimpleExamGrammarParser.ANSWERS, 0); }
+		public TerminalNode DIFFICULTY() { return getToken(SimpleExamGrammarParser.DIFFICULTY, 0); }
+		public TerminalNode INT() { return getToken(SimpleExamGrammarParser.INT, 0); }
 		public List<Matching_mapContext> matching_map() {
 			return getRuleContexts(Matching_mapContext.class);
 		}
 		public Matching_mapContext matching_map(int i) {
 			return getRuleContext(Matching_mapContext.class,i);
 		}
-		public TerminalNode ANSWERS() { return getToken(SimpleExamGrammarParser.ANSWERS, 0); }
-		public TerminalNode DIFFICULTY() { return getToken(SimpleExamGrammarParser.DIFFICULTY, 0); }
-		public TerminalNode INT() { return getToken(SimpleExamGrammarParser.INT, 0); }
 		public MatchingContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -441,6 +463,11 @@ public class SimpleExamGrammarParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SimpleExamGrammarListener ) ((SimpleExamGrammarListener)listener).exitMatching(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpleExamGrammarVisitor ) return ((SimpleExamGrammarVisitor<? extends T>)visitor).visitMatching(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -461,13 +488,13 @@ public class SimpleExamGrammarParser extends Parser {
 			setState(77);
 			match(COL);
 			setState(78);
-			matching_map();
+			((MatchingContext)_localctx).ques = matching_map();
 			setState(79);
 			match(ANSWERS);
 			setState(80);
 			match(COL);
 			setState(81);
-			matching_map();
+			((MatchingContext)_localctx).asnw = matching_map();
 			setState(82);
 			match(DIFFICULTY);
 			setState(83);
@@ -506,6 +533,11 @@ public class SimpleExamGrammarParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SimpleExamGrammarListener ) ((SimpleExamGrammarListener)listener).exitMatching_map(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpleExamGrammarVisitor ) return ((SimpleExamGrammarVisitor<? extends T>)visitor).visitMatching_map(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -562,6 +594,11 @@ public class SimpleExamGrammarParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SimpleExamGrammarListener ) ((SimpleExamGrammarListener)listener).exitMatching_map_atomic(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpleExamGrammarVisitor ) return ((SimpleExamGrammarVisitor<? extends T>)visitor).visitMatching_map_atomic(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Matching_map_atomicContext matching_map_atomic() throws RecognitionException {
@@ -610,6 +647,11 @@ public class SimpleExamGrammarParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SimpleExamGrammarListener ) ((SimpleExamGrammarListener)listener).exitMultiple(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpleExamGrammarVisitor ) return ((SimpleExamGrammarVisitor<? extends T>)visitor).visitMultiple(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -666,6 +708,11 @@ public class SimpleExamGrammarParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SimpleExamGrammarListener ) ((SimpleExamGrammarListener)listener).exitMultiple_map(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpleExamGrammarVisitor ) return ((SimpleExamGrammarVisitor<? extends T>)visitor).visitMultiple_map(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Multiple_mapContext multiple_map() throws RecognitionException {
@@ -721,6 +768,11 @@ public class SimpleExamGrammarParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SimpleExamGrammarListener ) ((SimpleExamGrammarListener)listener).exitMultiple_map_atomic(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpleExamGrammarVisitor ) return ((SimpleExamGrammarVisitor<? extends T>)visitor).visitMultiple_map_atomic(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Multiple_map_atomicContext multiple_map_atomic() throws RecognitionException {
@@ -771,6 +823,11 @@ public class SimpleExamGrammarParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SimpleExamGrammarListener ) ((SimpleExamGrammarListener)listener).exitShort(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpleExamGrammarVisitor ) return ((SimpleExamGrammarVisitor<? extends T>)visitor).visitShort(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -838,6 +895,11 @@ public class SimpleExamGrammarParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SimpleExamGrammarListener ) ((SimpleExamGrammarListener)listener).exitMissing(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpleExamGrammarVisitor ) return ((SimpleExamGrammarVisitor<? extends T>)visitor).visitMissing(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final MissingContext missing() throws RecognitionException {
@@ -899,6 +961,11 @@ public class SimpleExamGrammarParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SimpleExamGrammarListener ) ((SimpleExamGrammarListener)listener).exitKey_map(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpleExamGrammarVisitor ) return ((SimpleExamGrammarVisitor<? extends T>)visitor).visitKey_map(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Key_mapContext key_map() throws RecognitionException {
@@ -954,6 +1021,11 @@ public class SimpleExamGrammarParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SimpleExamGrammarListener ) ((SimpleExamGrammarListener)listener).exitKey_map_atomic(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpleExamGrammarVisitor ) return ((SimpleExamGrammarVisitor<? extends T>)visitor).visitKey_map_atomic(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Key_map_atomicContext key_map_atomic() throws RecognitionException {
@@ -1000,6 +1072,11 @@ public class SimpleExamGrammarParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SimpleExamGrammarListener ) ((SimpleExamGrammarListener)listener).exitNum(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpleExamGrammarVisitor ) return ((SimpleExamGrammarVisitor<? extends T>)visitor).visitNum(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1055,6 +1132,11 @@ public class SimpleExamGrammarParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SimpleExamGrammarListener ) ((SimpleExamGrammarListener)listener).exitTrue_false(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpleExamGrammarVisitor ) return ((SimpleExamGrammarVisitor<? extends T>)visitor).visitTrue_false(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1131,6 +1213,11 @@ public class SimpleExamGrammarParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SimpleExamGrammarListener ) ((SimpleExamGrammarListener)listener).exitSection(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpleExamGrammarVisitor ) return ((SimpleExamGrammarVisitor<? extends T>)visitor).visitSection(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1223,6 +1310,11 @@ public class SimpleExamGrammarParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SimpleExamGrammarListener ) ((SimpleExamGrammarListener)listener).exitSection_maximum_number_of_questions(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpleExamGrammarVisitor ) return ((SimpleExamGrammarVisitor<? extends T>)visitor).visitSection_maximum_number_of_questions(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Section_maximum_number_of_questionsContext section_maximum_number_of_questions() throws RecognitionException {
@@ -1303,6 +1395,11 @@ public class SimpleExamGrammarParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SimpleExamGrammarListener ) ((SimpleExamGrammarListener)listener).exitExam(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpleExamGrammarVisitor ) return ((SimpleExamGrammarVisitor<? extends T>)visitor).visitExam(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1385,6 +1482,11 @@ public class SimpleExamGrammarParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SimpleExamGrammarListener ) ((SimpleExamGrammarListener)listener).exitSections_arr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpleExamGrammarVisitor ) return ((SimpleExamGrammarVisitor<? extends T>)visitor).visitSections_arr(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 

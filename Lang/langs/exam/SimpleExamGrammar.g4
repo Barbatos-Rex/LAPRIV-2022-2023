@@ -19,7 +19,7 @@ pool_body_atomic: matching|multiple|short|missing|num|true_false;
 
 
 
-matching: MATCHING QUESTION STRING QUESTIONS COL matching_map ANSWERS COL matching_map DIFFICULTY COL INT;
+matching: MATCHING QUESTION STRING QUESTIONS COL ques=matching_map ANSWERS COL asnw=matching_map DIFFICULTY COL INT;
 
 matching_map: matching_map_atomic matching_map
             | matching_map_atomic

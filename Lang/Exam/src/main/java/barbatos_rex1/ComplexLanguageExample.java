@@ -3,7 +3,7 @@ package barbatos_rex1;
 import barbatos_rex1.exam.ExamCompiler;
 import barbatos_rex1.exam.ExamVisitorCompiler;
 
-public class Main {
+public class ComplexLanguageExample {
 
 
     static String str = """

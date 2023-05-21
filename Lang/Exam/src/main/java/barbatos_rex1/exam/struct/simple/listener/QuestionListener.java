@@ -4,7 +4,7 @@ import barbatos_rex1.exam.antlr4.lang.simple.SimpleExamGrammarBaseListener;
 import barbatos_rex1.exam.antlr4.lang.simple.SimpleExamGrammarParser;
 import barbatos_rex1.exam.primitive.Pool;
 import barbatos_rex1.exam.primitive.Question;
-import barbatos_rex1.exam.primitive.questions.Matching;
+import barbatos_rex1.exam.primitive.questions.*;
 import lombok.Getter;
 
 import java.util.*;
@@ -19,11 +19,42 @@ public class QuestionListener extends SimpleExamGrammarBaseListener {
     private Set<Matching.MatchingUnit> matchingQuestions = new HashSet<>();
     private Set<Matching.MatchingUnit> matchingAnswers = new HashSet<>();
 
+    private Set<MultipleChoice.MultipleUnit> multipleQuestions = new HashSet<>();
+    private boolean flag=false;
+
+    private Map<Integer,String> keys=new HashMap<>();
+
     @Override
     public void enterPool(SimpleExamGrammarParser.PoolContext ctx) {
+        questions=new ArrayList<>();
         String poolName = ctx.STRING().getText();
         enterPool_body(ctx.pool_body());
         pool = new Pool(poolName, questions);
+    }
+
+    @Override
+    public void enterPool_body(SimpleExamGrammarParser.Pool_bodyContext ctx) {
+       if(ctx.pool_body()!=null) {
+           enterPool_body(ctx.pool_body());
+       }
+        enterPool_body_atomic(ctx.pool_body_atomic());
+    }
+
+    @Override
+    public void enterPool_body_atomic(SimpleExamGrammarParser.Pool_body_atomicContext ctx) {
+        if(ctx.matching()!=null){
+            enterMatching(ctx.matching());
+        }
+    }
+
+    @Override
+    public void enterMatching(SimpleExamGrammarParser.MatchingContext ctx) {
+        flag=false;
+        matchingQuestions=new HashSet<>();
+        this.enterMatching_map(ctx.ques);
+        flag=true;
+        matchingAnswers=new HashSet<>();
+        this.enterMatching_map(ctx.asnw);
     }
 
     @Override
@@ -36,112 +67,71 @@ public class QuestionListener extends SimpleExamGrammarBaseListener {
     }
 
     @Override
-    public void enterMatching_map(SimpleExamGrammarParser.Matching_mapContext ctx) {
-        super.enterMatching_map(ctx);
-    }
-
-    @Override
-    public void exitMatching_map(SimpleExamGrammarParser.Matching_mapContext ctx) {
-        super.exitMatching_map(ctx);
-    }
-
-    @Override
     public void enterMatching_map_atomic(SimpleExamGrammarParser.Matching_map_atomicContext ctx) {
-        super.enterMatching_map_atomic(ctx);
-    }
-
-    @Override
-    public void exitMatching_map_atomic(SimpleExamGrammarParser.Matching_map_atomicContext ctx) {
-        super.exitMatching_map_atomic(ctx);
+        if(flag){
+            matchingAnswers.add(new Matching.MatchingUnit(Integer.parseInt(ctx.INT().getText()),ctx.STRING().getText()));
+        }else{
+            matchingQuestions.add(new Matching.MatchingUnit(Integer.parseInt(ctx.INT().getText()),ctx.STRING().getText()));
+        }
     }
 
     @Override
     public void enterMultiple(SimpleExamGrammarParser.MultipleContext ctx) {
-        super.enterMultiple(ctx);
+        multipleQuestions=new HashSet<>();
+        this.enterMultiple_map(ctx.multiple_map());
+        enterMultiple_map(ctx.multiple_map());
     }
 
     @Override
     public void exitMultiple(SimpleExamGrammarParser.MultipleContext ctx) {
-        super.exitMultiple(ctx);
+        MultipleChoice m = new MultipleChoice(multipleQuestions.stream().toList());
+        m.setDifficulty(Integer.parseInt(ctx.DIFFICULTY().getText()));
+        m.setPrompt(ctx.STRING().getText());
+        questions.add(m);
     }
-
-    @Override
-    public void enterMultiple_map(SimpleExamGrammarParser.Multiple_mapContext ctx) {
-        super.enterMultiple_map(ctx);
-    }
-
-    @Override
-    public void exitMultiple_map(SimpleExamGrammarParser.Multiple_mapContext ctx) {
-        super.exitMultiple_map(ctx);
-    }
-
     @Override
     public void enterMultiple_map_atomic(SimpleExamGrammarParser.Multiple_map_atomicContext ctx) {
-        super.enterMultiple_map_atomic(ctx);
-    }
-
-    @Override
-    public void exitMultiple_map_atomic(SimpleExamGrammarParser.Multiple_map_atomicContext ctx) {
-        super.exitMultiple_map_atomic(ctx);
+        multipleQuestions.add(new MultipleChoice.MultipleUnit(ctx.STRING().getText(),Boolean.parseBoolean(ctx.BOOLEAN().getText())));
     }
 
     @Override
     public void enterShort(SimpleExamGrammarParser.ShortContext ctx) {
-        super.enterShort(ctx);
+        ShortAwnser s = new ShortAwnser(ctx.answer.getText());
+        s.setDifficulty(Integer.parseInt(ctx.DIFFICULTY().getText()));
+        s.setPrompt(ctx.prompt.getText());
+        questions.add(s);
     }
-
-    @Override
-    public void exitShort(SimpleExamGrammarParser.ShortContext ctx) {
-        super.exitShort(ctx);
-    }
-
     @Override
     public void enterMissing(SimpleExamGrammarParser.MissingContext ctx) {
-        super.enterMissing(ctx);
+        keys=new HashMap<>();
+        enterKey_map(ctx.key_map());
     }
 
     @Override
     public void exitMissing(SimpleExamGrammarParser.MissingContext ctx) {
-        super.exitMissing(ctx);
+        MissingWords mw = new MissingWords(keys,ctx.text.getText());
+        mw.setDifficulty(Integer.parseInt(ctx.DIFFICULTY().getText()));
+        mw.setPrompt(ctx.prompt.getText());
+        questions.add(mw);
     }
-
-    @Override
-    public void enterKey_map(SimpleExamGrammarParser.Key_mapContext ctx) {
-        super.enterKey_map(ctx);
-    }
-
-    @Override
-    public void exitKey_map(SimpleExamGrammarParser.Key_mapContext ctx) {
-        super.exitKey_map(ctx);
-    }
-
     @Override
     public void enterKey_map_atomic(SimpleExamGrammarParser.Key_map_atomicContext ctx) {
-        super.enterKey_map_atomic(ctx);
+        keys.put(Integer.parseInt(ctx.INT().getText()),ctx.STRING().getText());
     }
-
-    @Override
-    public void exitKey_map_atomic(SimpleExamGrammarParser.Key_map_atomicContext ctx) {
-        super.exitKey_map_atomic(ctx);
-    }
-
     @Override
     public void enterNum(SimpleExamGrammarParser.NumContext ctx) {
-        super.enterNum(ctx);
+        Numerical n = new Numerical(Double.parseDouble(ctx.REAL().getText()));
+        n.setDifficulty(Integer.parseInt(ctx.DIFFICULTY().getText()));
+        n.setPrompt(ctx.STRING().getText());
+        questions.add(n);
     }
-
-    @Override
-    public void exitNum(SimpleExamGrammarParser.NumContext ctx) {
-        super.exitNum(ctx);
-    }
-
     @Override
     public void enterTrue_false(SimpleExamGrammarParser.True_falseContext ctx) {
-        super.enterTrue_false(ctx);
+        TrueFalse tf = new TrueFalse(Boolean.parseBoolean(ctx.BOOLEAN().getText()));
+        tf.setDifficulty(Integer.parseInt(ctx.DIFFICULTY().getText()));
+        tf.setPrompt(ctx.STRING().getText());
+        questions.add(tf);
     }
 
-    @Override
-    public void exitTrue_false(SimpleExamGrammarParser.True_falseContext ctx) {
-        super.exitTrue_false(ctx);
-    }
+
 }

@@ -116,9 +116,92 @@ multiple choice question
 "Set is a Collection while List is not" <-> false
 difficulty: 4
 
+
+
+
+define question pool "pool2":
+multiple choice question
+"Which is a valid main declaration in Java?"
+"public static main(String[] args)" <-> false
+"public void main(String[] args)" <-> false
+"public static void main()" <-> false
+"public staic void main(String maria[])" <-> true
+difficulty: 4
+
+
+missing words question
+"Complete the following text:"
+"Like many languages Java is a @0@ language, which means that Java @1@ is @2@ into @3@, in Java's case, @4@.
+                However, other languages can be @5@ languages, which means that said languages, like Python, @6@.
+                 Having said that, Java is @7@ typed, allowing for @8@ between data types at @12@. In adition to that, Java alows the @9@ of
+                 methods and functions, alowing multiple of them have the same @10@, as long as their @11@ is diferent."
+keys:
+0 <-> "Compiled"
+1<-> "Source Code"
+                    2<-> "Converted"
+                    3<-> "Machine Code"
+                    4<-> "Byte Code"
+                    5<-> "Interpreted"
+                    6<-> "Execute code line by line"
+                    7<-> "Strongly"
+                    8<-> "Distinguish"
+                    12<-> "Compile Time"
+                    9<-> "Overloading"
+                    10<-> "Name"
+                    11<-> "Signature"
+difficulty: 11
+
+multiple choice question
+"Which of the following contain one (or more) words that are not Java keywords?"
+"abstract, public, byte, volatile" <-> false
+"do, final, native, strictftp" <-> false
+"val, class, new, assert" <-> true
+"catch, enum, continue, transcient" <-> false
+
+difficulty: 5
+multiple choice question
+"Which of the following are not primitive java values?"
+"integer numbers" <-> false
+"text" <-> true
+"objects" <-> true
+"chars" <-> false
+
+difficulty: 2
+
+true or false question
+"The command 'arr[2] = 3' will replace the value in the second position of the array for the value '3'"
+false
+difficulty: 1
+
+true or false question
+"Any array, independent of their dimension, can be used as as a bi-dimensional array"
+true
+difficulty: 3
+
+true or false question
+"PrintWriter and Scanner are both examples of ways to alter the contents of a Stream"
+false
+difficulty: 2
+
+true or false question
+"When reading the following String: 'Hello\n My name is Java!' using a scanner, if scanner.next() is used twice, the last result will be 'My'"
+false
+difficulty: 10
+
+
+true or false question
+"Binary files can be used to presist data from a program"
+true
+difficulty: 1
+
+
+
 define some section with id "Algorithm", description "Imperative Programming in Java", maximum
 difficulty of 35, using pool "pool1"
 
+define some section with id "Syntax", description "Java like syntax", maximum difficulty of 20, maximum
+number of questions of 5, using pool "pool2"
+
 export exam with title "Introduction of Java - First Quarter Exam",
 description "The first of two exams of introduction for the Java language",
-grading on submission, feedback none and sections ["Algorithm"] as "Intro-Java-Sem01-01"
+grading on submission, feedback none and sections ["Algorithm","Syntax"] as "Intro-Java-Sem01-02"
