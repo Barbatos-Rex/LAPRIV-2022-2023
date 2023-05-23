@@ -1,0 +1,29 @@
+import exam ID.
+
+
+define grading for matching question ID. if all are correct then award INT, if INT
+are correct award INT, if INT are correct, award INT, if all are wrong award INT.
+
+define grading for multiple choice question ID. if all are correct then award INT,
+if INT are correct then award INT, if all are wrong award INT.
+
+define grading for short answer question ID. may accept:
+- STRING
+- STRING
+- STRING
+- STRING
+- STRING
+as correct. override awnsers with regex STRING.w if correct then award INT, if wrong then award INT.
+
+define grading for numerical question ID. may accept:
+- REAL
+- REAL
+- REAL
+as correct. if correct then award INT, if wrong award INT.
+
+define grading for missing words question ID.if all are correct award INT, if INT are correct then award INT,
+if INT are correct award INT, if all are wrong award INT.
+
+define grading for true or false question. award INT.
+
+present grading in decimal|percentage|fraction.

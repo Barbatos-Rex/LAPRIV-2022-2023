@@ -14,14 +14,14 @@ public class MeetingMapper {
 
 
     private ParticipantDTO toDTO(Participant domain) {
-        return new ParticipantDTO(domain.getId().getId(), userMapper.toDTO(domain.getUser()),
+        return new ParticipantDTO(domain.getId(), userMapper.toDTO(domain.getUser()),
                 domain.getPermission());
     }
 
     private Participant toDomain(ParticipantDTO dto) {
         var builder = Participant.builder();
         var user = userMapper.toDomain(dto.user).getProxi();
-        return builder.id(StringId.from(dto.id))
+        return builder.id(dto.id)
                 .user(user).permission(dto.permission)
                 .build();
     }
@@ -41,7 +41,7 @@ public class MeetingMapper {
 
 
     public MeetingDTO toDTO(Meeting domain) {
-        return new MeetingDTO(domain.getId().getId(),
+        return new MeetingDTO(domain.getId().getId(), domain.getDescription().getDescription(),
                 toDTO(domain.getStartTime()), domain.getDuration().getDuration(),
                 domain.getParticipants().stream().map(this::toDTO).toList(),
                 userMapper.toDTO(domain.getResponsible()), domain.getDefaultPermission());
@@ -50,7 +50,7 @@ public class MeetingMapper {
     public Meeting toDomain(MeetingDTO dto) {
         var builder = Meeting.builder();
         var user = userMapper.toDomain(dto.responsible);
-        return builder.id(StringId.from(dto.id)).
+        return builder.id(StringId.from(dto.id)).description(Description.of(dto.description)).
                 startTime(toDomain(dto.startTime)).
                 duration(Duration.from(dto.duration))
                 .participants(dto.participants.stream().map(this::toDomain).toList())

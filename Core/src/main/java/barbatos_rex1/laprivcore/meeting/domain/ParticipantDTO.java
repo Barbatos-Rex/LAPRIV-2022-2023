@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ParticipantDTO {
-    public String id;
+    public Long id;
     public UserDTO user;
     public Permission permission;
 }

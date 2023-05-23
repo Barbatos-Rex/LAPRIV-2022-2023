@@ -18,6 +18,8 @@ public class Meeting {
     @EmbeddedId
     private StringId id;
 
+    private Description description;
+
     @OneToOne
     private StartSchedule startTime;
 

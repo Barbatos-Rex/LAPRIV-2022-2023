@@ -2,9 +2,7 @@ package barbatos_rex1.laprivcore.meeting.domain;
 
 import barbatos_rex1.laprivcore.shared.domain.StringId;
 import barbatos_rex1.laprivcore.user.domain.User;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -15,8 +13,9 @@ import lombok.*;
 @ToString
 public class Participant {
 
-    @EmbeddedId
-    private StringId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     @ManyToOne
     private User user;
 

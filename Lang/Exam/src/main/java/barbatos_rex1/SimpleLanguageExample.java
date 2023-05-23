@@ -1,5 +1,7 @@
-package barbatos_rex1.exam;
+package barbatos_rex1;
 
+import barbatos_rex1.exam.ExamCompiler;
+import barbatos_rex1.exam.ExamListenerCompiler;
 import lombok.SneakyThrows;
 
 import java.io.File;

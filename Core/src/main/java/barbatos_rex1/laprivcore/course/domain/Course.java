@@ -97,4 +97,7 @@ public class Course {
         responsibleTeacher = user;
     }
 
+    public boolean isTeacher(User user) {
+        return user.getId().equals(responsibleTeacher.getId()) || auxilaryTeachers.getAuxilaryTeachers().stream().anyMatch(t -> t.getId().equals(user.getId()));
+    }
 }

@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 public class MeetingDTO {
     public String id;
+    public String description;
 
     public StartScheduleDTO startTime;
 
