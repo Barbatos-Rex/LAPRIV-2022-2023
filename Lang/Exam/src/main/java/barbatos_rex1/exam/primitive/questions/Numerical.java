@@ -6,14 +6,16 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @ToString
 @Getter
 @EqualsAndHashCode
-public class Numerical extends Question {
+public class Numerical extends Question implements Serializable {
     private double awnser;
 
-    public Numerical(double awnser) {
-        super(QuestionType.NUMERICAL);
+    public Numerical(String id,double awnser) {
+        super( id,QuestionType.NUMERICAL);
         this.awnser = awnser;
     }
 

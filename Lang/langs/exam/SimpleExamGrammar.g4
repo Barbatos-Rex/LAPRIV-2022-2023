@@ -19,7 +19,7 @@ pool_body_atomic: matching|multiple|short|missing|num|true_false;
 
 
 
-matching: MATCHING QUESTION STRING QUESTIONS COL ques=matching_map ANSWERS COL asnw=matching_map DIFFICULTY COL INT;
+matching: MATCHING QUESTION WITH ID id=STRING COMA prompt=STRING QUESTIONS COL ques=matching_map ANSWERS COL asnw=matching_map DIFFICULTY COL INT;
 
 matching_map: matching_map_atomic matching_map
             | matching_map_atomic
@@ -28,27 +28,27 @@ matching_map: matching_map_atomic matching_map
 matching_map_atomic: INT RELATOR STRING;
 
 
-multiple: 'multiple choice' QUESTION STRING multiple_map DIFFICULTY COL INT;
+multiple: 'multiple choice' QUESTION WITH ID id=STRING COMA prompt=STRING multiple_map DIFFICULTY COL INT;
 
 multiple_map: multiple_map_atomic multiple_map | multiple_map_atomic;
 
 multiple_map_atomic: STRING RELATOR BOOLEAN;
 
 
-short: 'short answer' QUESTION prompt=STRING answer=STRING DIFFICULTY COL INT ;
+short: 'short answer' QUESTION WITH ID id=STRING COMA prompt=STRING answer=STRING DIFFICULTY COL INT ;
 
 
-missing: 'missing words' QUESTION prompt=STRING text=STRING KEYS COL key_map DIFFICULTY COL INT;
+missing: 'missing words' QUESTION WITH ID id=STRING COMA prompt=STRING text=STRING KEYS COL key_map DIFFICULTY COL INT;
 
 key_map: key_map_atomic key_map | key_map_atomic;
 
 key_map_atomic: INT RELATOR STRING;
 
 
-num: 'numerical' QUESTION STRING REAL DIFFICULTY COL INT;
+num: 'numerical' QUESTION WITH ID id=STRING COMA prompt=STRING REAL DIFFICULTY COL INT;
 
 
-true_false: 'true or false' QUESTION STRING BOOLEAN DIFFICULTY COL INT;
+true_false: 'true or false' QUESTION WITH ID id=STRING COMA prompt=STRING BOOLEAN DIFFICULTY COL INT;
 
 
 
@@ -60,10 +60,12 @@ MAXIMUM DIFFICULTY OF mDif=INT COMA section_maximum_number_of_questions? USING P
 
 section_maximum_number_of_questions: MAXIMUM NUMBER OF QUESTIONS OF INT COMA;
 
-exam: EXPORT EXAM WITH titl=TITLE STRING COMA desc=DESCRIPTION STRING COMA GRADING g=HEADER_OPTION
+exam: EXPORT EXAM WITH TITLE titl=STRING COMA desc=DESCRIPTION STRING COMA GRADING g=HEADER_OPTION
 COMA FEEDBACK f=HEADER_OPTION AND SECTIONS LARR sections_arr RARR AS fname=STRING;
 
-sections_arr: STRING COMA sections_arr | STRING;
+sections_arr: STRING COMA sections_arr #section_arr
+            | STRING                   #section_atomic
+            ;
 
 
 

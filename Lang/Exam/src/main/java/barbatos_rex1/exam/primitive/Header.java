@@ -5,13 +5,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Optional;
 
 @AllArgsConstructor
 @ToString
 @Getter
 @EqualsAndHashCode
-public class Header {
+public class Header implements Serializable {
     public enum HeaderType {
         NONE,
         ON_SUBMISSION,

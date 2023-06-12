@@ -125,9 +125,17 @@ public interface SimpleExamGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExam(SimpleExamGrammarParser.ExamContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SimpleExamGrammarParser#sections_arr}.
+	 * Visit a parse tree produced by the {@code section_arr}
+	 * labeled alternative in {@link SimpleExamGrammarParser#sections_arr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitSections_arr(SimpleExamGrammarParser.Sections_arrContext ctx);
+	T visitSection_arr(SimpleExamGrammarParser.Section_arrContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code section_atomic}
+	 * labeled alternative in {@link SimpleExamGrammarParser#sections_arr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSection_atomic(SimpleExamGrammarParser.Section_atomicContext ctx);
 }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StartVisitor extends ExamGrammarBaseVisitor<ExamPrototype> {
 
-    private QuestionParser questionParser = new QuestionParser();
+//    private QuestionParser questionParser = new QuestionParser();
     private PoolVisitor poolVisitor = new PoolVisitor();
 
     private ExamVisitor examVisitor = new ExamVisitor(poolVisitor);

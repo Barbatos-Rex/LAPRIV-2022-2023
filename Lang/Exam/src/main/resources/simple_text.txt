@@ -1,6 +1,6 @@
 define question pool "pool1":
 
-matching question
+matching question with id "1",
 "Match the following questions to their respective awnser"
 questions :
 0<->"What is the difference between fori and foreach in Java?"
@@ -14,7 +14,7 @@ answers:
 2<->"While the first is not implementation specific, the secound is implementation specific."
 difficulty : 8
 
-numerical question
+numerical question with id "2",
 "What is the result printed to the standard output of the following code:\n
            public static int mystery(int n){\n
            \tif(n==0){\n
@@ -29,7 +29,7 @@ numerical question
 120.0
 difficulty: 6
 
-missing words question
+missing words question with id "3",
 "Complete the following code in such way that the output to the standard output is correct:"
 "public static @1@ countRepeatedElements(int[] arr, int elem){\n
             \t@2@;\n
@@ -55,7 +55,7 @@ keys:
 
 difficulty: 16
 
-short answer question
+short answer question with id "4",
 "Replace ??? with the correct awnser (use spaces between tokens):\n\n
             public static void main(String[] args){\n
             \tList<Integer> l = new ArrayList<>();
@@ -70,7 +70,7 @@ short answer question
 "i < 7 ; i++"
 difficulty: 2
 
-multiple choice question
+multiple choice question with id "5",
 "Is there any defferences between For loops and While loops?"
 "For loops are goal driven while While loops can make use of the Iterable interface" <-> false
 "While loops are goal driven while For loops can make use of the Iterable interface" <-> true
@@ -78,37 +78,37 @@ multiple choice question
 "There is no difference. Both can make use of the Iterable interface" <-> false
 difficulty: 4
 
-true or false question
+true or false question with id "6",
 "The complexity of binary search is O(log(n)) being the fastest searching algorithm in any array."
 false
 difficulty: 6
 
-true or false question
+true or false question with id "23",
 "Generally speaking, O(n) algorithms are always faster than O(n^2)"
 false
 difficulty: 4
 
-true or false question
+true or false question with id "7",
 "The Map interface is a Collection"
 false
 difficulty: 3
 
-true or false question
+true or false question with id "8",
 "The List interface is a Collecation"
 true
 difficulty: 1
 
-true or false question
+true or false question with id "9",
 "Scanner is one way of reading from a Input Stream"
 true
 difficulty: 2
 
-true or false question
+true or false question with id "10",
 "Generally, O(n) algorithms will out-perform O(n^2) when the ammount of inputs are very large"
 true
 difficulty: 2
 
-multiple choice question
+multiple choice question with id "11",
 "Choose the correct option:"
 "Both List and Set interfaces are Collections." <-> true
 "List is a Collection while Set is not" <-> false
@@ -120,7 +120,8 @@ difficulty: 4
 
 
 define question pool "pool2":
-multiple choice question
+
+multiple choice question with id "13",
 "Which is a valid main declaration in Java?"
 "public static main(String[] args)" <-> false
 "public void main(String[] args)" <-> false
@@ -129,7 +130,7 @@ multiple choice question
 difficulty: 4
 
 
-missing words question
+missing words question with id "14",
 "Complete the following text:"
 "Like many languages Java is a @0@ language, which means that Java @1@ is @2@ into @3@, in Java's case, @4@.
                 However, other languages can be @5@ languages, which means that said languages, like Python, @6@.
@@ -151,7 +152,7 @@ keys:
                     11<-> "Signature"
 difficulty: 11
 
-multiple choice question
+multiple choice question with id "15",
 "Which of the following contain one (or more) words that are not Java keywords?"
 "abstract, public, byte, volatile" <-> false
 "do, final, native, strictftp" <-> false
@@ -159,37 +160,37 @@ multiple choice question
 "catch, enum, continue, transcient" <-> false
 
 difficulty: 5
-multiple choice question
+multiple choice question with id "16",
 "Which of the following are not primitive java values?"
 "integer numbers" <-> false
-"text" <-> true
+"long numbers" <-> true
 "objects" <-> true
 "chars" <-> false
 
 difficulty: 2
 
-true or false question
+true or false question with id "17",
 "The command 'arr[2] = 3' will replace the value in the second position of the array for the value '3'"
 false
 difficulty: 1
 
-true or false question
+true or false question with id "18",
 "Any array, independent of their dimension, can be used as as a bi-dimensional array"
 true
 difficulty: 3
 
-true or false question
+true or false question with id "19",
 "PrintWriter and Scanner are both examples of ways to alter the contents of a Stream"
 false
 difficulty: 2
 
-true or false question
+true or false question with id "20",
 "When reading the following String: 'Hello\n My name is Java!' using a scanner, if scanner.next() is used twice, the last result will be 'My'"
 false
 difficulty: 10
 
 
-true or false question
+true or false question with id "21",
 "Binary files can be used to presist data from a program"
 true
 difficulty: 1

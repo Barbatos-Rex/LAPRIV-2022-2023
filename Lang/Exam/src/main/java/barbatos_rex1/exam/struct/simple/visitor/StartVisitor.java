@@ -89,7 +89,14 @@ public class StartVisitor extends SimpleExamGrammarBaseVisitor<String> {
     }
 
     @Override
-    public String visitSections_arr(SimpleExamGrammarParser.Sections_arrContext ctx) {
+    public String visitSection_arr(SimpleExamGrammarParser.Section_arrContext ctx) {
+        usedSectionIds.add(ctx.STRING().getText().replace("\"", ""));
+        visit(ctx.sections_arr());
+        return "";
+    }
+
+    @Override
+    public String visitSection_atomic(SimpleExamGrammarParser.Section_atomicContext ctx) {
         usedSectionIds.add(ctx.STRING().getText().replace("\"", ""));
         return "";
     }

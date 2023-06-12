@@ -198,13 +198,27 @@ public interface SimpleExamGrammarListener extends ParseTreeListener {
 	 */
 	void exitExam(SimpleExamGrammarParser.ExamContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SimpleExamGrammarParser#sections_arr}.
+	 * Enter a parse tree produced by the {@code section_arr}
+	 * labeled alternative in {@link SimpleExamGrammarParser#sections_arr}.
 	 * @param ctx the parse tree
 	 */
-	void enterSections_arr(SimpleExamGrammarParser.Sections_arrContext ctx);
+	void enterSection_arr(SimpleExamGrammarParser.Section_arrContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SimpleExamGrammarParser#sections_arr}.
+	 * Exit a parse tree produced by the {@code section_arr}
+	 * labeled alternative in {@link SimpleExamGrammarParser#sections_arr}.
 	 * @param ctx the parse tree
 	 */
-	void exitSections_arr(SimpleExamGrammarParser.Sections_arrContext ctx);
+	void exitSection_arr(SimpleExamGrammarParser.Section_arrContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code section_atomic}
+	 * labeled alternative in {@link SimpleExamGrammarParser#sections_arr}.
+	 * @param ctx the parse tree
+	 */
+	void enterSection_atomic(SimpleExamGrammarParser.Section_atomicContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code section_atomic}
+	 * labeled alternative in {@link SimpleExamGrammarParser#sections_arr}.
+	 * @param ctx the parse tree
+	 */
+	void exitSection_atomic(SimpleExamGrammarParser.Section_atomicContext ctx);
 }

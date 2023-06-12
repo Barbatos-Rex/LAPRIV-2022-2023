@@ -5,12 +5,13 @@ import barbatos_rex1.exam.primitive.Question;
 import barbatos_rex1.exam.primitive.QuestionType;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @ToString
 @Getter
 @EqualsAndHashCode
-public class MultipleChoice extends Question {
+public class MultipleChoice extends Question implements Serializable {
 
     @SneakyThrows
     @Override
@@ -25,15 +26,15 @@ public class MultipleChoice extends Question {
     @ToString
     @Getter
     @EqualsAndHashCode
-    public final static class MultipleUnit{
+    public final static class MultipleUnit implements Serializable{
         private String prompt;
         private boolean valid;
     }
 
     private List<MultipleUnit> options;
 
-    public MultipleChoice(List<MultipleUnit> options) {
-        super(QuestionType.MULTIPLE_CHOICE);
+    public MultipleChoice(String id,List<MultipleUnit> options) {
+        super(id,QuestionType.MULTIPLE_CHOICE);
         this.options = options;
     }
 }

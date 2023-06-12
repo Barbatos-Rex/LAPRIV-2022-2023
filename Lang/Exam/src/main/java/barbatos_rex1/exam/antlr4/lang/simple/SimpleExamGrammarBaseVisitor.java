@@ -151,5 +151,12 @@ public class SimpleExamGrammarBaseVisitor<T> extends AbstractParseTreeVisitor<T>
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitSections_arr(SimpleExamGrammarParser.Sections_arrContext ctx) { return visitChildren(ctx); }
+	@Override public T visitSection_arr(SimpleExamGrammarParser.Section_arrContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitSection_atomic(SimpleExamGrammarParser.Section_atomicContext ctx) { return visitChildren(ctx); }
 }

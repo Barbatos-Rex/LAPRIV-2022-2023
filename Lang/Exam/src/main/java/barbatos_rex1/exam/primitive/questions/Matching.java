@@ -5,6 +5,7 @@ import barbatos_rex1.exam.primitive.Question;
 import barbatos_rex1.exam.primitive.QuestionType;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +14,7 @@ import java.util.Set;
 @ToString
 @Getter
 @EqualsAndHashCode
-public class Matching extends Question {
+public class Matching extends Question implements Serializable {
 
     @Override
     public void validate() {
@@ -47,7 +48,7 @@ public class Matching extends Question {
     @ToString
     @Getter
     @EqualsAndHashCode
-    public final static class MatchingUnit {
+    public final static class MatchingUnit implements Serializable {
         private int iid;
         private String prompt;
     }
@@ -55,8 +56,8 @@ public class Matching extends Question {
     private List<MatchingUnit> questions;
     private List<MatchingUnit> awnsers;
 
-    public Matching(List<MatchingUnit> questions, List<MatchingUnit> awnsers) {
-        super(QuestionType.MATCHING);
+    public Matching(String id,List<MatchingUnit> questions, List<MatchingUnit> awnsers) {
+        super(id,QuestionType.MATCHING);
         this.questions = questions;
         this.awnsers = awnsers;
     }

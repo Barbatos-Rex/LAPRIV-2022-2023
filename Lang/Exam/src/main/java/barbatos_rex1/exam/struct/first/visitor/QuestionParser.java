@@ -39,14 +39,14 @@ public class QuestionParser extends ExamGrammarBaseVisitor<Question> {
             //TODO Costume Exceptions
             throw new RuntimeException(e);
         }
-        return new TrueFalse(b);
+        return new TrueFalse("",b);
     }
 
     @Override
     public Question visitMissing_words(ExamGrammarParser.Missing_wordsContext ctx) {
         Map<Integer, String> keys = new KeyVisitor().visitKey_map(ctx.key_map());
         String text = ctx.text_string.getText().replace("\"","");
-        return new MissingWords(keys, text);
+        return new MissingWords("",keys, text);
     }
 
     @Override
@@ -63,24 +63,24 @@ public class QuestionParser extends ExamGrammarBaseVisitor<Question> {
                 throw new RuntimeException(ex);
             }
         }
-        return new Numerical(d);
+        return new Numerical("",d);
     }
 
     @Override
     public Question visitShort_awnser(ExamGrammarParser.Short_awnserContext ctx) {
-        return new ShortAwnser(ctx.STRING().getText().replace("\"",""));
+        return new ShortAwnser("",ctx.STRING().getText().replace("\"",""));
     }
 
     @Override
     public Question visitMultiple_choice(ExamGrammarParser.Multiple_choiceContext ctx) {
-        return new MultipleChoice(new MultipleUnitVisitor().visit(ctx.multiple_choice_options()));
+        return new MultipleChoice("",new MultipleUnitVisitor().visit(ctx.multiple_choice_options()));
     }
 
     @Override
     public Question visitMatching(ExamGrammarParser.MatchingContext ctx) {
         List<Matching.MatchingUnit> questions = new MatchingVisitor().visit(ctx.matching_questions());
         List<Matching.MatchingUnit> awnsers = new MatchingVisitor().visit(ctx.matching_awnsers());
-        return new Matching(questions, awnsers);
+        return new Matching("",questions, awnsers);
     }
 
     @Override

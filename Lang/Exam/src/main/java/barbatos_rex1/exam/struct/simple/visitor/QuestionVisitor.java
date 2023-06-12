@@ -33,15 +33,16 @@ public class QuestionVisitor extends SimpleExamGrammarBaseVisitor<String> {
 
     @Override
     public String visitMatching(SimpleExamGrammarParser.MatchingContext ctx) {
+        String id = ctx.id.getText().replace("\"","");
         flag = false;
         matchingQuestions = new HashSet<>();
         visit(ctx.ques);
         flag = true;
         matchingAnswers = new HashSet<>();
         visit(ctx.asnw);
-        Matching m = new Matching(matchingQuestions.stream().toList(), matchingAnswers.stream().toList());
+        Matching m = new Matching(id,matchingQuestions.stream().toList(), matchingAnswers.stream().toList());
         m.setDifficulty(Integer.parseInt(ctx.INT().getText().replace("\"", "")));
-        m.setPrompt(ctx.STRING().getText());
+        m.setPrompt(ctx.prompt.getText());
         questions.add(m);
         return "";
     }
@@ -58,11 +59,12 @@ public class QuestionVisitor extends SimpleExamGrammarBaseVisitor<String> {
 
     @Override
     public String visitMultiple(SimpleExamGrammarParser.MultipleContext ctx) {
+        String id = ctx.id.getText().replace("\"","");
         multipleQuestions=new HashSet<>();
         visit(ctx.multiple_map());
-        MultipleChoice m = new MultipleChoice(multipleQuestions.stream().toList());
+        MultipleChoice m = new MultipleChoice(id,multipleQuestions.stream().toList());
         m.setDifficulty(Integer.parseInt(ctx.INT().getText()));
-        m.setPrompt(ctx.STRING().getText().replace("\"",""));
+        m.setPrompt(ctx.prompt.getText().replace("\"",""));
         questions.add(m);
         return "";
     }
@@ -74,7 +76,8 @@ public class QuestionVisitor extends SimpleExamGrammarBaseVisitor<String> {
 
     @Override
     public String visitShort(SimpleExamGrammarParser.ShortContext ctx) {
-        ShortAwnser s = new ShortAwnser(ctx.answer.getText().replace("\"",""));
+        String id = ctx.id.getText().replace("\"","");
+        ShortAwnser s = new ShortAwnser(id,ctx.answer.getText().replace("\"",""));
         s.setDifficulty(Integer.parseInt(ctx.INT().getText()));
         s.setPrompt(ctx.prompt.getText().replace("\"",""));
         questions.add(s);
@@ -83,9 +86,10 @@ public class QuestionVisitor extends SimpleExamGrammarBaseVisitor<String> {
 
     @Override
     public String visitMissing(SimpleExamGrammarParser.MissingContext ctx) {
+        String id = ctx.id.getText().replace("\"","");
         keys=new HashMap<>();
         visit(ctx.key_map());
-        MissingWords mw = new MissingWords(keys,ctx.text.getText().replace("\"",""));
+        MissingWords mw = new MissingWords(id,keys,ctx.text.getText().replace("\"",""));
         mw.setDifficulty(Integer.parseInt(ctx.INT().getText()));
         mw.setPrompt(ctx.prompt.getText().replace("\"",""));
         questions.add(mw);
@@ -100,18 +104,20 @@ public class QuestionVisitor extends SimpleExamGrammarBaseVisitor<String> {
 
     @Override
     public String visitNum(SimpleExamGrammarParser.NumContext ctx) {
-        Numerical n = new Numerical(Double.parseDouble(ctx.REAL().getText()));
+        String id = ctx.id.getText().replace("\"","");
+        Numerical n = new Numerical(id,Double.parseDouble(ctx.REAL().getText()));
         n.setDifficulty(Integer.parseInt(ctx.INT().getText()));
-        n.setPrompt(ctx.STRING().getText().replace("\"",""));
+        n.setPrompt(ctx.prompt.getText().replace("\"",""));
         questions.add(n);
         return "";
     }
 
     @Override
     public String visitTrue_false(SimpleExamGrammarParser.True_falseContext ctx) {
-        TrueFalse tf = new TrueFalse(Boolean.parseBoolean(ctx.BOOLEAN().getText()));
+        String id = ctx.id.getText().replace("\"","");
+        TrueFalse tf = new TrueFalse(id,Boolean.parseBoolean(ctx.BOOLEAN().getText()));
         tf.setDifficulty(Integer.parseInt(ctx.INT().getText()));
-        tf.setPrompt(ctx.STRING().getText().replace("\"",""));
+        tf.setPrompt(ctx.prompt.getText().replace("\"",""));
         questions.add(tf);
         return "";
     }

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,16 +18,15 @@ import java.util.regex.Pattern;
 @ToString
 @Getter
 @EqualsAndHashCode
-public class MissingWords extends Question {
+public class MissingWords extends Question implements Serializable {
     private Map<Integer,String> keys;
     private String text;
 
-    public MissingWords(Map<Integer, String> keys, String text) {
-        super(QuestionType.MISSING_WORDS);
+    public MissingWords(String id,Map<Integer, String> keys, String text) {
+        super(id,QuestionType.MISSING_WORDS);
         this.keys = keys;
         this.text = text;
     }
-
     @SneakyThrows
     @Override
     public void validate() {

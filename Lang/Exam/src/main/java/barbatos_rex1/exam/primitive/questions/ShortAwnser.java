@@ -12,8 +12,8 @@ import lombok.ToString;
 public class ShortAwnser extends Question {
     private String awnser;
 
-    public ShortAwnser(String awnser) {
-        super(QuestionType.SHORT_AWNSER);
+    public ShortAwnser(String id,String awnser) {
+        super(id,QuestionType.SHORT_AWNSER);
         this.awnser = awnser;
     }
 

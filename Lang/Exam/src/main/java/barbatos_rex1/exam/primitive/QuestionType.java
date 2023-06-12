@@ -1,6 +1,8 @@
 package barbatos_rex1.exam.primitive;
 
-public enum QuestionType {
+import java.io.Serializable;
+
+public enum QuestionType implements Serializable {
     MATCHING,
     MULTIPLE_CHOICE,
     SHORT_AWNSER,

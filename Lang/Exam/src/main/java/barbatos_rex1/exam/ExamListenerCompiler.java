@@ -5,7 +5,7 @@ import barbatos_rex1.exam.antlr4.lang.simple.SimpleExamGrammarParser;
 import barbatos_rex1.exam.factory.Exam;
 import barbatos_rex1.exam.factory.ExamFactory;
 import barbatos_rex1.exam.primitive.ExamPrototype;
-import barbatos_rex1.exam.struct.simple.listener.StartListener;
+//import barbatos_rex1.exam.struct.simple.listener.StartListener;
 import barbatos_rex1.exam.struct.simple.visitor.StartVisitor;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -16,6 +16,8 @@ import org.antlr.v4.runtime.TokenStream;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 
 @AllArgsConstructor
@@ -46,6 +48,8 @@ public class ExamListenerCompiler implements ExamCompiler{
         PrintWriter pw = new PrintWriter(f);
         pw.println(exam.compile());
         pw.flush();
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./exams/Into-Java-Sem02.bin"));
+        oos.writeObject(exam);
         System.out.println(f.getAbsolutePath());
     }
 }

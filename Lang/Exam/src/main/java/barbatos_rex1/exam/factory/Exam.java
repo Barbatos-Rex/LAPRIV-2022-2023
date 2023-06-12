@@ -7,13 +7,14 @@ import lombok.Getter;
 import lombok.ToString;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.List;
 
 @AllArgsConstructor
 @ToString
 @Getter
 @EqualsAndHashCode
-public class Exam {
+public class Exam implements Serializable {
 
     private String title;
     private Header header;

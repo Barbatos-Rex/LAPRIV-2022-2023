@@ -23,7 +23,6 @@ public class PrototypeSection {
     public Section generateSection() {
         List<Question> questions = pool.genQuestionsUsing(difficulty,limitQuestions);
         Collections.shuffle(questions);
-        questions.forEach(Question::stampId);
         return new Section(description,questions,questions.stream().mapToInt(Question::getDifficulty).sum());
     }
 }

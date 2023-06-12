@@ -5,6 +5,8 @@ import barbatos_rex1.exam.ExamListenerCompiler;
 import lombok.SneakyThrows;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
 public class SimpleLanguageExample {
@@ -18,5 +20,6 @@ public class SimpleLanguageExample {
         }
         ExamCompiler compiler = new ExamListenerCompiler(sb.toString());
         compiler.compile("./exams","Into-Java-Sem02");
+
     }
 }

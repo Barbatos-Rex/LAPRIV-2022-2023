@@ -12,13 +12,14 @@ import lombok.ToString;
 public class TrueFalse extends Question {
     private boolean awnser;
 
-    public TrueFalse( boolean awnser) {
-        super(QuestionType.TRUE_FALSE);
+    public TrueFalse(String id, boolean awnser) {
+        super(id,QuestionType.TRUE_FALSE);
         this.awnser = awnser;
     }
 
+
     @Override
     public void validate() {
-        //No need. Done at parser level
+        //No need. Done at lexer level
     }
 }

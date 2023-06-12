@@ -16,6 +16,8 @@ import org.antlr.v4.runtime.TokenStream;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 
 @AllArgsConstructor
@@ -44,6 +46,8 @@ public class ExamVisitorCompiler implements ExamCompiler {
         PrintWriter pw = new PrintWriter(f);
         pw.println(exam.compile());
         pw.flush();
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./exams/Into-Java-Sem02.bin"));
+        oos.writeObject(exam);
         System.out.println(f.getAbsolutePath());
     }
 }

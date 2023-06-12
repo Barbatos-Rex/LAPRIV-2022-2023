@@ -245,13 +245,25 @@ public class SimpleExamGrammarBaseListener implements SimpleExamGrammarListener 
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSections_arr(SimpleExamGrammarParser.Sections_arrContext ctx) { }
+	@Override public void enterSection_arr(SimpleExamGrammarParser.Section_arrContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSections_arr(SimpleExamGrammarParser.Sections_arrContext ctx) { }
+	@Override public void exitSection_arr(SimpleExamGrammarParser.Section_arrContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSection_atomic(SimpleExamGrammarParser.Section_atomicContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSection_atomic(SimpleExamGrammarParser.Section_atomicContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
