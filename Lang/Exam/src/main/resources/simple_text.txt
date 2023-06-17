@@ -163,7 +163,7 @@ difficulty: 5
 multiple choice question with id "16",
 "Which of the following are not primitive java values?"
 "integer numbers" <-> false
-"long numbers" <-> true
+"long numbers" <-> false
 "objects" <-> true
 "chars" <-> false
 

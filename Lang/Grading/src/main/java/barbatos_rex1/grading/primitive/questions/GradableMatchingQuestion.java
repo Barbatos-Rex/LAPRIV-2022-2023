@@ -14,7 +14,7 @@ public class GradableMatchingQuestion extends GradableQuestion {
     @AllArgsConstructor
     @Getter
     @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-    public class MatchingUnit {
+    public static class MatchingUnit {
         @EqualsAndHashCode.Include
         private int iid;
         private String code;

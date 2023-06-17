@@ -22,6 +22,10 @@ public class MultipleChoice extends Question implements Serializable {
         }
     }
 
+    public MultipleUnit getCorrectAnswer() {
+        return options.stream().filter(o -> o.isValid()).toList().get(0);
+    }
+
     @AllArgsConstructor
     @ToString
     @Getter
