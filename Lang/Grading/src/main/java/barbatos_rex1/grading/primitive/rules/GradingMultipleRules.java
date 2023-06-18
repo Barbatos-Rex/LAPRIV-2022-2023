@@ -21,6 +21,37 @@ public class GradingMultipleRules implements GradingRules<GradableMultipleChoice
 
     @Override
     public long grade(GradableMultipleChoiceQuestion question) {
-        return question.getChoice().isValid() ? allCorrect : defaultAward;
+        System.out.println();
+        System.out.println();
+        System.out.println("Question: "+question.getIdCode());
+        System.out.println("Prompt: "+question.getPrompt());
+
+        System.out.println();
+        System.out.println("Options: ");
+        question.getOptions().forEach(o ->{
+            System.out.print(o.getPrompt()+"  ");
+            if(o.getPrompt().equals(question.getChoice().getPrompt())){
+                if(question.getChoice().isValid()){
+                    System.out.println("✔️");
+                }else{
+                    System.out.println("❌");
+                }
+            }else{
+                System.out.println();
+            }
+        });
+        System.out.println();
+        if(question.getChoice().isValid()){
+            System.out.printf("Awared maximum points: %d%n",allCorrect);
+            return allCorrect;
+        }else{
+            System.out.printf("Awared minimum points: %d%n",defaultAward);
+            return defaultAward;
+        }
+    }
+
+    @Override
+    public long maxGrade() {
+        return allCorrect;
     }
 }

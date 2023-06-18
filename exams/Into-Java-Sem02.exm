@@ -1,0 +1,180 @@
+{
+  "header": {
+    "feedback": "NONE",
+    "grading": "ON_SUBMISSION",
+    "description": "description"
+  },
+  "title": "Introduction of Java - First Quarter Exam",
+  "sections": [
+    {
+      "questions": [
+        {
+          "difficulty": 4,
+          "code": "MULTIPLE_CHOICE",
+          "idCode": "13",
+          "options": [
+            {
+              "valid": false,
+              "prompt": "public static main(String[] args)"
+            },
+            {
+              "valid": false,
+              "prompt": "public void main(String[] args)"
+            },
+            {
+              "valid": true,
+              "prompt": "public staic void main(String maria[])"
+            },
+            {
+              "valid": false,
+              "prompt": "public static void main()"
+            }
+          ],
+          "correctAnswer": {
+            "valid": true,
+            "prompt": "public staic void main(String maria[])"
+          },
+          "prompt": "Which is a valid main declaration in Java?"
+        },
+        {
+          "difficulty": 11,
+          "code": "MISSING_WORDS",
+          "keys": {
+            "11": "\"Signature\"",
+            "12": "\"Compile Time\"",
+            "0": "\"Compiled\"",
+            "1": "\"Source Code\"",
+            "2": "\"Converted\"",
+            "3": "\"Machine Code\"",
+            "4": "\"Byte Code\"",
+            "5": "\"Interpreted\"",
+            "6": "\"Execute code line by line\"",
+            "7": "\"Strongly\"",
+            "8": "\"Distinguish\"",
+            "9": "\"Overloading\"",
+            "10": "\"Name\""
+          },
+          "idCode": "14",
+          "text": "Like many languages Java is a @0@ language, which means that Java @1@ is @2@ into @3@, in Java's case, @4@.\n                However, other languages can be @5@ languages, which means that said languages, like Python, @6@.\n                 Having said that, Java is @7@ typed, allowing for @8@ between data types at @12@. In adition to that, Java alows the @9@ of\n                 methods and functions, alowing multiple of them have the same @10@, as long as their @11@ is diferent.",
+          "prompt": "Complete the following text:"
+        },
+        {
+          "difficulty": 5,
+          "code": "MULTIPLE_CHOICE",
+          "idCode": "15",
+          "options": [
+            {
+              "valid": false,
+              "prompt": "catch, enum, continue, transcient"
+            },
+            {
+              "valid": false,
+              "prompt": "do, final, native, strictftp"
+            },
+            {
+              "valid": true,
+              "prompt": "val, class, new, assert"
+            },
+            {
+              "valid": false,
+              "prompt": "abstract, public, byte, volatile"
+            }
+          ],
+          "correctAnswer": {
+            "valid": true,
+            "prompt": "val, class, new, assert"
+          },
+          "prompt": "Which of the following contain one (or more) words that are not Java keywords?"
+        }
+      ],
+      "description": "Java like syntax",
+      "dificulty": 20
+    },
+    {
+      "questions": [
+        {
+          "difficulty": 3,
+          "code": "TRUE_FALSE",
+          "idCode": "7",
+          "prompt": "The Map interface is a Collection",
+          "awnser": false
+        },
+        {
+          "difficulty": 6,
+          "code": "NUMERICAL",
+          "idCode": "2",
+          "prompt": "What is the result printed to the standard output of the following code:\\n\n           public static int mystery(int n){\\n\n           \\tif(n==0){\\n\n           \\t\\treturn 1;\\n\n           \\t}\\n\n           \\treturn mystery(n-1);\\n\n           }\\n\n           \\n\n           public static void main(String[] args){\\n\n           \\tSystem.out.println(mystery(5));\\n\n           }",
+          "awnser": 120
+        },
+        {
+          "difficulty": 2,
+          "code": "SHORT_AWNSER",
+          "idCode": "4",
+          "prompt": "Replace ??? with the correct awnser (use spaces between tokens):\\n\\n\n            public static void main(String[] args){\\n\n            \\tList<Integer> l = new ArrayList<>();\n            \\tint n = 1;\\n\n            \\tfor(int i = 1 ; ???){\\n\n            \\t\\tn*=i;\\n\n\n            \\t}\n            \\tSystem.out.println(n);\\n\n            }\\n\n            Standard Output: [1,2,6,24,120,720]\\n",
+          "awnser": "i < 7 ; i++"
+        },
+        {
+          "difficulty": 16,
+          "code": "MISSING_WORDS",
+          "keys": {
+            "1": "\"int\"",
+            "2": "\"int sum=0\"",
+            "3": "\"int i=0\"",
+            "4": "\"arr.length()\"",
+            "5": "\"arr[i]==elem\"",
+            "6": "\"sum++\"",
+            "7": "\"return sum\"",
+            "8": "\"5\""
+          },
+          "idCode": "3",
+          "text": "public static @1@ countRepeatedElements(int[] arr, int elem){\\n\n            \\t@2@;\\n\n            \\tfor(@3@;i<@4@;i++){\\n\n                \\t\\tif(@5@){\\n\n                \\t\\t\\t@6@;\\n\n            \\t\\t}\\n\n            @7@;\n            }\\n\n            public static void main(String[] args){\\n\n            \\tSystem.out.println(countRepeatedElements(new int[]{1,5,2,2,4,3,5,5,6,7,8,1},@8@));\n            }\\n\\n\n            Standard Output:\\n3",
+          "prompt": "Complete the following code in such way that the output to the standard output is correct:"
+        },
+        {
+          "difficulty": 8,
+          "code": "MATCHING",
+          "idCode": "1",
+          "questions": [
+            {
+              "iid": 2,
+              "prompt": "What is the defference between static and no static members?"
+            },
+            {
+              "iid": 3,
+              "prompt": "What is the diffference between generic algorithms and non generic algorithms?"
+            },
+            {
+              "iid": 1,
+              "prompt": "What is polymorphism?"
+            },
+            {
+              "iid": 0,
+              "prompt": "What is the difference between fori and foreach in Java?"
+            }
+          ],
+          "awnsers": [
+            {
+              "iid": 1,
+              "prompt": "The property of replacing the implementation of a give protion of code with multiple implementation, given they have the same signature."
+            },
+            {
+              "iid": 2,
+              "prompt": "While the first is not implementation specific, the secound is implementation specific."
+            },
+            {
+              "iid": 0,
+              "prompt": "The first uses a counter to progess the looping logic while the other iterates over a collection of elements."
+            },
+            {
+              "iid": 3,
+              "prompt": "While the first focus on behaviour that is commun to any data type, the secound restricts to a public interface of a given data type."
+            }
+          ],
+          "prompt": "\"Match the following questions to their respective awnser\""
+        }
+      ],
+      "description": "Imperative Programming in Java",
+      "dificulty": 35
+    }
+  ]
+}

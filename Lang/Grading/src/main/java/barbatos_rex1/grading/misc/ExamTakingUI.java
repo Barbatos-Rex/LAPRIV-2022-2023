@@ -47,7 +47,7 @@ public class ExamTakingUI {
         for (Section section : sections) {
             gradableQuestions.addAll(executeSection(section));
         }
-
+        return gradableQuestions;
     }
 
 
@@ -223,7 +223,7 @@ public class ExamTakingUI {
         do {
             System.out.println(question.getPrompt());
             while (l.hasNext()) {
-                sb.append(l.next()).append("__").append(l.next());
+                sb.append(l.next()).append(l.next());
                 if (l.hasNext()) {
                     sb.append(l.next());
                 }
@@ -248,7 +248,7 @@ public class ExamTakingUI {
             }
             int pos = Integer.parseInt(split[0]);
             int key = Integer.parseInt(split[1]);
-            if (question.getKeys().containsKey(key)) {
+            if (!question.getKeys().containsKey(key)) {
                 System.out.println("Try Again!");
                 continue;
             }

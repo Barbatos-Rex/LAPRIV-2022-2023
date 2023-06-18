@@ -13,7 +13,6 @@ import java.util.List;
 @Getter
 @EqualsAndHashCode
 public final class ExamPrototype {
-
     private String id;
     private String title;
     private Header header;

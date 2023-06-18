@@ -22,6 +22,29 @@ public class GradingTrueFalseRules implements GradingRules<GradableTrueFalseQues
 
     @Override
     public long grade(GradableTrueFalseQuestion question) {
-        return question.isAwnser()==question.isSolution() ? max : min;
+        System.out.println();
+        System.out.println();
+        System.out.println("Question: "+question.getIdCode());
+        System.out.println("Prompt: "+question.getPrompt());
+
+        System.out.println();
+        System.out.println();
+        System.out.println("Answer: ");
+        if (question.isAwnser()==question.isSolution()){
+            System.out.print(question.isAwnser()+"  ");
+            System.out.println("✔️");
+            System.out.printf("Awared maximum points: %d%n",max);
+            return max;
+        }else{
+            System.out.print(question.isAwnser()+"  ");
+            System.out.println("❌");
+            System.out.printf("Awared minimum points: %d%n",min);
+            return min;
+        }
+    }
+
+    @Override
+    public long maxGrade() {
+        return max;
     }
 }

@@ -1,0 +1,72 @@
+define grading for matching question "1".
+if all are correct then award 5,
+if 2 are correct then award 2. if all are wrong award -2.
+
+define grading for numerical question "2". may accept:
+-> 120.0
+as correct.
+if correct then award 2.
+
+define grading for missing words question "3".
+if all are correct then award 5, if 4 are correct then award 2, if 2 are correct then award 1.
+if all are wrong award -2.
+
+define grading for short answer question "4".
+may accept:
+-> "i < 7 ; i++"
+as correct.
+if correct then award 2.
+
+define grading for multiple choice question "5".
+if all are correct then award 4. if all are wrong award -4.
+
+define grading for true or false question "6".
+award 1. if all are wrong award -1.
+
+define grading for true or false question "23".
+award 1. if all are wrong award -1.
+
+define grading for true or false question "7".
+award 1. if all are wrong award -1.
+
+define grading for true or false question "8".
+award 1. if all are wrong award -1.
+
+define grading for true or false question "9".
+award 1. if all are wrong award -1.
+
+define grading for true or false question "10".
+award 1. if all are wrong award -1.
+
+define grading for multiple choice question "11".
+if all are correct then award 4. if all are wrong award -4.
+
+define grading for multiple choice question "13".
+if all are correct then award 4. if all are wrong award -4.
+
+define grading for missing words question "14".
+if all are correct then award 5, if 4 are correct then award 2, if 2 are correct then award 1.
+if all are wrong award -2.
+
+define grading for multiple choice question "15".
+if all are correct then award 4. if all are wrong award -4.
+
+define grading for multiple choice question "16".
+if all are correct then award 4. if all are wrong award -4.
+
+define grading for true or false question "17".
+award 1. if all are wrong award -1.
+
+define grading for true or false question "18".
+award 1. if all are wrong award -1.
+
+define grading for true or false question "19".
+award 1. if all are wrong award -1.
+
+define grading for true or false question "20".
+award 1. if all are wrong award -1.
+
+define grading for true or false question "21".
+award 1. if all are wrong award -1.
+
+present grading in fraction.

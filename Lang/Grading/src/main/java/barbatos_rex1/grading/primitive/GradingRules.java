@@ -6,5 +6,7 @@ public interface GradingRules<T extends GradableQuestion> {
 
     long grade(T question);
 
+    long maxGrade();
+
 
 }

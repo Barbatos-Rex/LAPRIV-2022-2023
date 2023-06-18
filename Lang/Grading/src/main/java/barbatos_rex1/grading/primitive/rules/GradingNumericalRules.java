@@ -20,9 +20,6 @@ public class GradingNumericalRules implements GradingRules<GradableNumericalQues
     private int minPoints;
 
 
-
-
-
     @Override
     public String id() {
         return id;
@@ -30,21 +27,44 @@ public class GradingNumericalRules implements GradingRules<GradableNumericalQues
 
     @Override
     public long grade(GradableNumericalQuestion question) {
-        if(lv!=null){
-            if(question.getAwnser()>= lv && question.getAwnser()<= hv){
+        System.out.println();
+        System.out.println();
+        System.out.println("Question: " + question.getIdCode());
+        System.out.println("Prompt: " + question.getPrompt());
+
+        System.out.println();
+        System.out.print("Answer: ");
+        if (lv != null) {
+            if (question.getAwnser() >= lv && question.getAwnser() <= hv) {
+                System.out.print(question.getAwnser());
+                System.out.println("✔️");
+                System.out.printf("Awared maximum points: %d%n", allPoints);
                 return allPoints;
             }
-            if(acceptedValues.contains(question.getAwnser())){
-                return (allPoints+minPoints)/2;
+            if (acceptedValues.contains(question.getAwnser())) {
+                System.out.print(question.getAwnser());
+                System.out.println("❓");
+                System.out.printf("Awared partial points: %d%n", (allPoints + minPoints) / 2);
+                return (allPoints + minPoints) / 2;
             }
             return minPoints;
         }
 
 
-        if(acceptedValues.contains(question.getAwnser())){
+        if (acceptedValues.contains(question.getAwnser())) {
+            System.out.print(question.getAwnser());
+            System.out.println("✔️");
+            System.out.printf("Awared maximum points: %d%n", allPoints);
             return allPoints;
         }
-
+        System.out.print(question.getAwnser());
+        System.out.println("❌");
+        System.out.printf("Awared minimum points: %d%n", minPoints);
         return minPoints;
+    }
+
+    @Override
+    public long maxGrade() {
+        return allPoints;
     }
 }
