@@ -100,6 +100,13 @@ public class StartVisitor extends SimpleGradingGrammarBaseVisitor<GradingRules> 
         if (ctx.lv != null) {
             double lv = Double.parseDouble(ctx.lv.getText());
             double hv = Double.parseDouble(ctx.hV.getText());
+
+            if(lv<hv){
+                double tmp = lv;
+                lv=hv;
+                hv=tmp;
+            }
+
             rulesMap.put(id, new GradingNumericalRules(id, tmpDouble, lv, hv, max, ctx.minPoints != null ? Integer.parseInt(ctx.minPoints.getText()) : 0));
             return null;
         }

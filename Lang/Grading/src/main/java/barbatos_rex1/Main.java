@@ -117,7 +117,7 @@ public class Main {
 
         mapp.put(set1.get(0), set2.get(0));
         mapp.put(set1.get(3), set2.get(3));
-        mapp.put(set1.get(1), set2.get(2));
+        mapp.put(set1.get(2), set2.get(2));
         mapp.put(set1.get(1), set2.get(1));
         gradableQuestions.add(new GradableMatchingQuestion("1",
                 "Match the following questions to their respective awnser", 1, 0,
@@ -130,6 +130,8 @@ public class Main {
         }
         GradingCompiler gc = new GradingCompiler(sb.toString());
         var result = gc.correct(gradableQuestions);
+        System.out.println();
+        System.out.println();
         System.out.println("Final Grade: "+result);
     }
 }
